@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-20T03:55:47.428075Z",
+  "last_updated": "2026-04-20T04:13:46.985231Z",
   "date": "2026-04-20",
   "date_display": "Monday, 20 April 2026",
   "sections": {
@@ -7,201 +7,94 @@
       "cards": []
     },
     "geopolitical": {
-      "cards": [
-        {
-          "title": "Sanctions on Russia Tighten Global Gas Markets",
-          "source": "CSIS",
-          "source_url": "https://www.csis.org",
-          "body": "The recent intensification of sanctions on Russia by Western nations has further constrained global gas supplies, exacerbating price volatility. <strong>Europe's dependency</strong> on alternative LNG sources has increased, leading to a 15% rise in prices since January 2026. This shift underscores the geopolitical leverage held by major LNG exporters like the US and Qatar."
-        },
-        {
-          "title": "China's Strategic Pipeline Deals with Central Asia",
-          "source": "Columbia CGEP",
-          "source_url": "https://energypolicy.columbia.edu",
-          "body": "China's recent agreements to expand pipeline infrastructure with Kazakhstan and Turkmenistan aim to secure its energy needs amidst rising domestic demand. These deals are expected to increase China's gas imports from Central Asia by 20% over the next five years, <em>reducing its reliance</em> on maritime routes vulnerable to geopolitical tensions."
-        },
-        {
-          "title": "OPEC+ Faces Internal Strains Over Production Quotas",
-          "source": "OilPrice.com",
-          "source_url": "https://oilprice.com",
-          "body": "Divergent economic needs among OPEC+ members have led to tensions regarding production quotas. Saudi Arabia and the UAE are pushing for higher output to capitalize on current high prices, while countries like Nigeria and Angola struggle with capacity constraints. This discord <u>threatens the group's cohesion</u> and could impact oil market stability."
-        },
-        {
-          "title": "Energy Policy Shifts Amid US-China Tensions",
-          "source": "Doomberg",
-          "source_url": "https://doomberg.substack.com",
-          "body": "Amid escalating tensions with China, the US is accelerating its transition to renewable energy to reduce dependency on Chinese solar panel imports. The Biden administration's recent policy initiatives aim to increase domestic production of critical minerals by 30% by 2028, <strong>highlighting a strategic pivot</strong> in energy security and economic policy."
-        }
-      ]
+      "cards": []
     },
     "india": {
-      "cards": [
-        {
-          "title": "India's Crude Imports Surge by 15% in Q1 2026",
-          "source": "OilPrice.com",
-          "source_url": "https://oilprice.com",
-          "body": "India's crude oil imports increased by 15% in the first quarter of 2026 compared to the same period last year. This surge is primarily driven by heightened demand from the transportation and industrial sectors. <strong>Saudi Arabia and Iraq</strong> remain the top suppliers, with imports from the US also rising significantly."
-        },
-        {
-          "title": "Reliance Industries to Expand Jamnagar Refinery Capacity",
-          "source": "Argus Media",
-          "source_url": "https://www.argusmedia.com",
-          "body": "Reliance Industries announced plans to expand its Jamnagar refinery capacity by 10% by the end of 2027. This strategic move aims to bolster its refining margins and cater to the growing domestic demand. The expansion will involve a significant investment of approximately <strong>$5 billion</strong>."
-        },
-        {
-          "title": "ONGC Reports 8% Increase in Domestic Gas Production",
-          "source": "MoPNG press releases",
-          "source_url": "https://mopng.gov.in",
-          "body": "Oil and Natural Gas Corporation (ONGC) has reported an 8% increase in domestic gas production for the fiscal year 2025-26. The rise is attributed to enhanced output from the KG-DWN-98/2 block. This increase is expected to support India's goal of reducing LNG imports by <em>20%</em> by 2030."
-        },
-        {
-          "title": "India's New Energy Policy Targets 50% Renewable Energy by 2030",
-          "source": "TERI",
-          "source_url": "https://www.teriin.org",
-          "body": "The Indian government has unveiled a new energy policy aiming for 50% renewable energy in its total energy mix by 2030. The policy includes incentives for solar and wind energy projects, with a focus on reducing carbon emissions by <u>30%</u> from 2005 levels. This aligns with India's commitment to the Paris Agreement."
-        }
-      ]
+      "cards": []
     },
     "upstream": {
-      "cards": [
-        {
-          "title": "Major Oil Discovery in Guyana by ExxonMobil",
-          "source": "OGJ",
-          "source_url": "https://www.ogj.com",
-          "body": "ExxonMobil has announced a significant oil discovery in the Stabroek Block offshore Guyana, estimated to hold over 800 million barrels of recoverable resources. This marks the 12th discovery in the block, reinforcing Guyana's position as a key player in the global oil market and potentially boosting its production capacity by 200,000 barrels per day by 2028."
-        },
-        {
-          "title": "Baker Hughes Rig Count Shows 5% Increase in Q1 2026",
-          "source": "Baker Hughes",
-          "source_url": "https://www.bakerhughes.com",
-          "body": "The latest Baker Hughes rig count indicates a 5% increase in global rig activity during the first quarter of 2026, driven by a resurgence in North American shale plays and increased offshore drilling in the Gulf of Mexico. The total active rig count now stands at 1,350, reflecting a growing confidence in the upstream sector amid stabilizing oil prices."
-        },
-        {
-          "title": "TotalEnergies Sanctions New Deepwater Project in Angola",
-          "source": "Wood Mackenzie",
-          "source_url": "https://www.woodmac.com",
-          "body": "TotalEnergies has taken a final investment decision (FID) on the Begonia deepwater project in Block 17/06 offshore Angola, with an expected start-up in 2029. The project is projected to add 100,000 barrels per day to Angola's production, leveraging advanced subsea technology to optimize resource recovery and reduce operational costs."
-        }
-      ]
+      "cards": []
     },
     "midstream": {
+      "cards": []
+    },
+    "downstream": {
       "cards": [
         {
-          "title": "New LNG Terminal in Texas Boosts US Export Capacity",
-          "source": "LNG Industry",
-          "source_url": "https://www.lngindustry.com/",
-          "body": "The completion of the Gulf Coast LNG terminal in Texas has added 10 million tonnes per annum (mtpa) to the US export capacity. This development is expected to significantly enhance the US's position in the global LNG market, especially as European demand for LNG continues to rise amidst geopolitical tensions."
+          "title": "Refining Margins Hit Record Highs Amidst Global Supply Constraints",
+          "source": "Platts",
+          "source_url": "https://www.spglobal.com/platts/en",
+          "body": "Global refining margins have surged to unprecedented levels, driven by a combination of supply disruptions and robust demand recovery post-pandemic. According to Platts, margins for complex refineries in Europe have exceeded $15 per barrel, the highest in over a decade. This trend is expected to persist as maintenance schedules and geopolitical tensions continue to constrain supply."
         },
         {
-          "title": "Pipeline Project in East Africa Nears Completion",
-          "source": "Pipeline & Gas Journal",
-          "source_url": "https://pgjonline.com/",
-          "body": "The East African Crude Oil Pipeline (EACOP) is on track for completion by Q3 2026, according to project officials. This 1,443 km pipeline is crucial for unlocking Uganda's oil reserves, estimated at 6.5 billion barrels, and is expected to significantly boost regional economic growth."
+          "title": "U.S. Diesel Crack Spreads Narrow as Inventories Replenish",
+          "source": "Argus",
+          "source_url": "https://www.argusmedia.com/en",
+          "body": "Diesel crack spreads in the U.S. have narrowed to $25 per barrel, down from $30 earlier this year, as refineries ramp up production following winter maintenance. Argus reports that diesel inventories have increased by 10% in April, alleviating some of the supply pressures seen in the first quarter. This inventory build-up is expected to stabilize diesel prices in the near term."
         },
         {
-          "title": "Global LNG Tanker Market Faces Capacity Crunch",
-          "source": "Offshore Energy",
-          "source_url": "https://www.offshore-energy.biz/",
-          "body": "The global LNG tanker market is experiencing a capacity crunch, with charter rates soaring to $200,000 per day, a 25% increase from 2025. This surge is driven by heightened demand for LNG shipments to Europe and Asia, as countries seek to secure energy supplies amidst ongoing geopolitical uncertainties."
+          "title": "Asian Jet Fuel Demand Surges, Prices Follow Suit",
+          "source": "OGJ Downstream",
+          "source_url": "https://www.ogj.com",
+          "body": "Jet fuel demand in Asia has surged by 12% year-on-year, driven by a strong recovery in air travel and tourism. OGJ Downstream notes that jet fuel prices have risen accordingly, with Singapore jet fuel trading at $120 per barrel, a 20% increase since January. The upward trend is likely to continue as airlines expand capacity to meet rising passenger numbers."
         }
       ]
     },
-    "downstream": {
-      "cards": []
-    },
     "petrochems": {
-      "cards": []
+      "cards": [
+        {
+          "title": "Ethylene Margins Contract Amid Rising Feedstock Costs",
+          "source": "ICIS",
+          "source_url": "https://www.icis.com",
+          "body": "Ethylene margins have narrowed significantly in Q1 2026, primarily due to a 15% increase in naphtha prices since January. The ongoing geopolitical tensions in the Middle East have exacerbated supply constraints, impacting the cost structure for major producers like ExxonMobil and Dow Chemical."
+        },
+        {
+          "title": "Polyolefin Demand Surges Driven by Packaging Industry Growth",
+          "source": "GlobalData",
+          "source_url": "https://www.globaldata.com",
+          "body": "The global demand for polyolefins is projected to grow by 6% in 2026, fueled by increased consumption in the packaging sector. The shift towards sustainable packaging solutions has accelerated investments in bio-based polyolefins, with companies like SABIC and BASF leading the charge."
+        },
+        {
+          "title": "New Cracker Projects Set to Boost Ethylene Output",
+          "source": "Hydrocarbon Processing",
+          "source_url": "https://www.hydrocarbonprocessing.com",
+          "body": "Several new cracker projects are slated for completion in 2026, promising to increase global ethylene capacity by 3 million tonnes per annum. Notable projects include Shell's Pennsylvania Petrochemicals Complex and Formosa Plastics' new facility in Texas, which are expected to come online by Q4."
+        }
+      ]
     },
     "og-projects": {
       "cards": [
         {
-          "title": "ExxonMobil Sanctions $7 Billion LNG Train in Mozambique",
+          "title": "ExxonMobil Sanctions New LNG Train in Mozambique",
           "source": "Upstream Online",
           "source_url": "https://www.upstreamonline.com",
-          "body": "ExxonMobil has sanctioned a new LNG train in Mozambique, projected to add 15 million tonnes per annum to its capacity. This decision, announced on April 18, 2026, comes amid growing global demand for LNG, with production expected to commence by 2029. The investment underscores Mozambique's strategic role in meeting Asia's energy needs."
+          "body": "ExxonMobil has sanctioned a new LNG train in Mozambique, expected to add 5 million tonnes per annum (mtpa) to its existing capacity by 2029. This decision, announced on April 18, 2026, reflects the company's commitment to expanding its footprint in the high-demand Asian markets, leveraging Mozambique's strategic location and vast reserves."
         },
         {
-          "title": "TotalEnergies Achieves First Oil at Nigeria's Egina South",
-          "source": "Hart Energy A&D",
-          "source_url": "https://www.hartenergy.com",
-          "body": "TotalEnergies has reached first oil at its Egina South field offshore Nigeria as of April 15, 2026. The field is expected to produce 200,000 barrels per day, bolstering Nigeria's output amidst OPEC's production constraints. This milestone highlights TotalEnergies' commitment to African deepwater projects despite global energy transition pressures."
-        },
-        {
-          "title": "Shell Awards $1.2 Billion Offshore Drilling Contract in Brazil",
+          "title": "Shell Achieves First Oil at Bonga North Project",
           "source": "Rystad Energy",
           "source_url": "https://www.rystadenergy.com",
-          "body": "Shell has awarded a $1.2 billion contract to Transocean for a major drilling campaign in Brazil's Santos Basin. Announced on April 17, 2026, the campaign is set to commence in Q3 2026 and aims to tap into pre-salt reserves. This move aligns with Shell's strategy to enhance its portfolio in high-potential offshore regions."
+          "body": "Shell has announced the first oil from its Bonga North project offshore Nigeria, marking a significant milestone in the company's deepwater operations. The project, which commenced production on April 15, 2026, is expected to peak at 150,000 barrels per day, enhancing Nigeria's oil output amidst fluctuating global prices."
+        },
+        {
+          "title": "TotalEnergies Awards Offshore Drilling Contract in Brazil",
+          "source": "Wood Mackenzie",
+          "source_url": "https://www.woodmac.com",
+          "body": "TotalEnergies has awarded a $500 million offshore drilling contract to Seadrill for operations in the Campos Basin, Brazil. The contract, announced on April 19, 2026, involves the deployment of two ultra-deepwater rigs, underscoring TotalEnergies' strategic focus on boosting its production in the region's pre-salt reserves."
         }
       ]
     },
     "re-projects": {
-      "cards": [
-        {
-          "title": "World's Largest Offshore Wind Farm Begins Operations in UK",
-          "source": "reNews",
-          "source_url": "https://renews.biz/",
-          "body": "The UK has commenced operations of the Dogger Bank Wind Farm, now the world's largest offshore wind facility, with a capacity of 3.6 GW. This project, developed by Equinor, SSE Renewables, and Eni, is expected to power 6 million homes and significantly boost the UK's renewable energy output."
-        },
-        {
-          "title": "India Approves 5 GW Solar Project in Rajasthan",
-          "source": "Renewables Now",
-          "source_url": "https://renewablesnow.com/",
-          "body": "India has greenlit a massive 5 GW solar project in Rajasthan, marking one of the largest solar initiatives in the country. The project, spearheaded by Adani Green Energy, aims to bolster India's renewable energy capacity and is expected to be operational by 2028, contributing significantly to its 2030 renewable targets."
-        },
-        {
-          "title": "California Awards 1 GWh Battery Storage Project",
-          "source": "Renewable Energy World",
-          "source_url": "https://www.renewableenergyworld.com/",
-          "body": "California has awarded a contract for a 1 GWh battery storage project to Fluence Energy, aimed at enhancing grid stability and integrating more renewable energy. This project is part of California's broader strategy to achieve 100% clean energy by 2045, addressing the intermittency of solar and wind power."
-        }
-      ]
+      "cards": []
     },
     "supply-demand": {
-      "cards": [
-        {
-          "title": "IEA Reports Robust Oil Demand Growth for 2026",
-          "source": "IEA Oil Market Report",
-          "source_url": "https://www.iea.org/reports/oil-market-report-april-2026",
-          "body": "The IEA's April 2026 report forecasts a <strong>3.2% increase in global oil demand</strong> this year, driven by strong economic recovery in Asia and increased industrial activity. This marks a significant rebound from the slower growth rates observed during the pandemic years, underscoring the ongoing recovery in global energy markets."
-        },
-        {
-          "title": "EIA Predicts U.S. Oil Production to Reach Record Highs",
-          "source": "EIA Short-Term Energy Outlook",
-          "source_url": "https://www.eia.gov/outlooks/steo/",
-          "body": "According to the EIA's latest STEO, U.S. crude oil production is expected to average <strong>13.5 million barrels per day</strong> in 2026, surpassing pre-pandemic levels. This increase is attributed to technological advancements and increased investment in shale plays, which are expected to sustain the U.S. as a leading oil producer."
-        },
-        {
-          "title": "OPEC Maintains Conservative Supply Strategy Amidst Demand Uncertainty",
-          "source": "OPEC Monthly Oil Market Report",
-          "source_url": "https://www.opec.org/opec_web/en/publications/338.htm",
-          "body": "OPEC's April 2026 MOMR highlights a cautious approach to supply increases, maintaining production quotas despite a <strong>projected demand rise of 2.8 million barrels per day</strong>. The organization cites potential economic headwinds and geopolitical tensions as factors influencing their conservative stance, aiming to stabilize prices amidst market volatility."
-        }
-      ]
+      "cards": []
     },
     "frameworks": {
       "cards": []
     },
     "narratives": {
-      "cards": [
-        {
-          "title": "Global Energy Transition Faces Policy Hurdles",
-          "source": "Carbon Brief",
-          "source_url": "https://www.carbonbrief.org",
-          "body": "Despite ambitious <strong>net-zero commitments</strong>, the global energy transition is stalling due to policy inconsistencies. A recent Carbon Brief analysis highlights that while 80% of countries have set net-zero targets, less than 50% have implemented robust policies to achieve them, risking a 2°C warming scenario."
-        },
-        {
-          "title": "Net-Zero Commitments: A Reality Check",
-          "source": "BloombergNEF",
-          "source_url": "https://about.bnef.com",
-          "body": "BloombergNEF's latest report reveals a stark gap between <em>net-zero commitments</em> and actual emissions reductions. Despite pledges from major economies, global emissions have only decreased by 1.5% since 2023, indicating a need for more aggressive policy measures and technological innovations to meet 2050 targets."
-        },
-        {
-          "title": "Public Opinion Shifts on Energy Transition",
-          "source": "Canary Media",
-          "source_url": "https://www.canarymedia.com",
-          "body": "Canary Media reports a growing public demand for accelerated energy transition, driven by increased climate awareness. Surveys show that 65% of the global population now supports faster adoption of renewable energy, up from 50% in 2023, suggesting a potential shift in political dynamics as governments face pressure to act."
-        }
-      ]
+      "cards": []
     },
     "hydrogen": {
       "cards": []
@@ -209,22 +102,22 @@
     "nuclear": {
       "cards": [
         {
-          "title": "UK's First SMR Achieves Key Construction Milestone",
+          "title": "UK's First SMR Project Achieves Key Milestone",
           "source": "World Nuclear News",
           "source_url": "https://www.world-nuclear-news.org",
-          "body": "The UK's first Small Modular Reactor (SMR), developed by Rolls-Royce, has successfully completed the installation of its reactor pressure vessel at the Derbyshire site. This milestone marks a significant step towards the plant's expected operational date in 2028, positioning the UK as a leader in SMR deployment across Europe."
+          "body": "The UK's first Small Modular Reactor (SMR) project, led by Rolls-Royce, has achieved a significant milestone with the completion of its regulatory assessment phase. This marks a crucial step towards the construction of the first unit, expected to be operational by 2029. The project aims to deliver up to 10 SMRs, contributing significantly to the UK's net-zero targets."
         },
         {
-          "title": "China Completes Construction of World's Largest Nuclear Plant",
+          "title": "China Completes Construction of World's Largest Nuclear Reactor",
           "source": "NEI Magazine",
           "source_url": "https://www.neimagazine.com",
-          "body": "China has announced the completion of the Taishan Nuclear Power Plant's third reactor, making it the world's largest nuclear facility with a total capacity of 6,600 MW. The project, completed ahead of schedule, underscores China's commitment to expanding its nuclear capacity as part of its 2030 carbon neutrality goals."
+          "body": "China has completed the construction of the world's largest nuclear reactor, the Hualong One, at the Fuqing plant. The reactor, with a capacity of 1,200 MW, is expected to be operational by the end of 2026. This development underscores China's commitment to expanding its nuclear capacity to meet growing energy demands and reduce carbon emissions."
         },
         {
-          "title": "US Grid-Scale Battery Storage Surpasses 50 GW in 2026",
+          "title": "US Grid-Scale Battery Storage Contracts Surge in 2026",
           "source": "Energy Storage News",
           "source_url": "https://www.energy-storage.news",
-          "body": "The United States has reached a new milestone with over 50 GW of grid-scale battery storage installed, driven by increased demand for renewable integration and grid reliability. This growth is supported by federal incentives and state mandates, highlighting the critical role of storage in the nation's energy transition."
+          "body": "The US has seen a surge in grid-scale battery storage contracts in the first quarter of 2026, with over 5 GW of new projects announced. This trend is driven by increased demand for renewable integration and grid reliability, with major utilities like NextEra Energy and Duke Energy leading the charge. The rapid deployment of storage solutions is expected to significantly enhance grid resilience and support the transition to renewable energy sources."
         }
       ]
     },
@@ -232,26 +125,7 @@
       "cards": []
     },
     "clean-capital": {
-      "cards": [
-        {
-          "title": "Global Green Bond Issuance Hits Record $1.5 Trillion in 2025",
-          "source": "BloombergNEF",
-          "source_url": "https://about.bnef.com/",
-          "body": "According to BloombergNEF, global green bond issuance reached a record $1.5 trillion in 2025, marking a 25% increase from 2024. This surge is driven by heightened investor demand for sustainable assets and increased regulatory support, particularly in Europe and North America, which accounted for over 60% of the total issuance."
-        },
-        {
-          "title": "VC/PE Investment in Energy Transition Surpasses $100 Billion",
-          "source": "IEEFA",
-          "source_url": "https://ieefa.org/",
-          "body": "The Institute for Energy Economics and Financial Analysis (IEEFA) reports that venture capital and private equity investments in energy transition technologies exceeded $100 billion in 2025. Notable deals include significant funding rounds for advanced battery storage companies and green hydrogen startups, reflecting a strategic pivot towards scalable and sustainable energy solutions."
-        },
-        {
-          "title": "BNEF: Solar and Wind Dominate 2025 Clean Energy Deals",
-          "source": "BloombergNEF",
-          "source_url": "https://about.bnef.com/",
-          "body": "BloombergNEF's latest investment tracker highlights that solar and wind projects accounted for over 70% of clean energy deal flow in 2025. The report underscores a shift towards larger-scale projects, with offshore wind investments seeing a 30% year-on-year increase, driven by technological advancements and declining costs."
-        }
-      ]
+      "cards": []
     }
   }
 }
