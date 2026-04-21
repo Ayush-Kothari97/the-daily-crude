@@ -1,371 +1,55 @@
 {
-  "last_updated": "2026-04-20T05:00:39.985960Z",
-  "date": "2026-04-20",
-  "date_display": "Monday, 20 April 2026",
+  "last_updated": "2026-04-21T07:14:05.364874Z",
+  "date": "2026-04-21",
+  "date_display": "Tuesday, 21 April 2026",
   "sections": {
     "market-pulse": {
-      "cards": [
-        {
-          "title": "Brent Crude Prices Surge to $110 Amid Supply Concerns",
-          "source": "OilPrice.com",
-          "source_url": "https://oilprice.com",
-          "body": "Brent crude prices have surged to $110 per barrel, marking a 5% increase since last week. The rise is attributed to ongoing geopolitical tensions in the Middle East, which have raised concerns over potential supply disruptions. Analysts predict further volatility as the situation develops."
-        },
-        {
-          "title": "WTI Crude Steadies at $105 Following U.S. Inventory Report",
-          "source": "EIA",
-          "source_url": "https://eia.gov",
-          "body": "WTI crude oil is holding steady at $105 per barrel after the latest U.S. inventory report showed a drawdown of 3 million barrels. The Energy Information Administration (EIA) noted that this drawdown is larger than the expected 2 million barrels, suggesting robust domestic demand."
-        },
-        {
-          "title": "Henry Hub Natural Gas Prices Dip to $3.20 per MMBtu",
-          "source": "Platts/S&P Global",
-          "source_url": "https://spglobal.com",
-          "body": "Henry Hub natural gas prices have dipped to $3.20 per MMBtu, down 10 cents from last week. The decline is attributed to milder weather forecasts across the Midwest and Northeast, reducing heating demand. Analysts expect prices to remain under pressure unless a cold snap occurs."
-        },
-        {
-          "title": "OPEC+ Agrees to Maintain Current Production Levels Until June",
-          "source": "Argus Media",
-          "source_url": "https://argusmedia.com",
-          "body": "OPEC+ has decided to maintain its current production levels through June 2026, following a virtual meeting on April 18. The decision aims to stabilize the market amid fluctuating demand and geopolitical uncertainties. Saudi Arabia and Russia continue to play pivotal roles in the alliance's strategy."
-        },
-        {
-          "title": "Major Fire Shuts Down Port Arthur Refinery Operations",
-          "source": "World Oil",
-          "source_url": "https://worldoil.com",
-          "body": "A major fire broke out at the Port Arthur refinery in Texas on April 19, halting operations. The refinery, operated by Motiva Enterprises, has a capacity of 630,000 barrels per day. The shutdown could impact gasoline supplies in the Gulf Coast region if repairs are delayed."
-        }
-      ]
+      "cards": []
     },
     "geopolitical": {
-      "cards": [
-        {
-          "title": "Sanctions on Russia Reduce European Gas Imports by 40%",
-          "source": "CSIS",
-          "source_url": "https://csis.org",
-          "body": "New sanctions imposed on Russia have led to a significant 40% reduction in gas imports to Europe as of April 2026. The European Union has accelerated its shift towards alternative energy sources, increasing LNG imports from the United States and Qatar. This shift is part of a broader strategy to diversify energy supply and reduce dependency on Russian gas."
-        },
-        {
-          "title": "China-Pakistan Pipeline Deal Strengthens Regional Energy Security",
-          "source": "Columbia CGEP",
-          "source_url": "https://energypolicy.columbia.edu",
-          "body": "China and Pakistan have finalized a $6 billion pipeline agreement aimed at enhancing energy security in South Asia. The pipeline, expected to be operational by 2028, will transport 500,000 barrels of oil per day from Gwadar Port to China's Xinjiang region. This deal underscores China's Belt and Road Initiative efforts to secure energy routes and reduce maritime dependency."
-        },
-        {
-          "title": "OPEC+ Faces Internal Tensions Over Production Quotas",
-          "source": "OIES",
-          "source_url": "https://oxfordenergy.org",
-          "body": "OPEC+ is experiencing internal discord as members like Nigeria and Iraq push for higher production quotas amidst recovering global oil demand. Saudi Arabia and Russia, however, advocate for maintaining current levels to stabilize prices. The next OPEC+ meeting in May 2026 will be crucial in determining the group's production strategy for the second half of the year."
-        },
-        {
-          "title": "Yemen Conflict Disrupts Oil Exports from Aden Port",
-          "source": "OilPrice.com",
-          "source_url": "https://oilprice.com",
-          "body": "The ongoing conflict in Yemen has led to disruptions at the Aden Port, affecting approximately 200,000 barrels per day of oil exports. Houthi attacks on infrastructure have intensified since March 2026, causing significant delays and raising concerns over regional energy security. The situation remains volatile, with potential impacts on global oil prices if disruptions persist."
-        }
-      ]
+      "cards": []
     },
     "india": {
-      "cards": [
-        {
-          "title": "India's Crude Oil Imports Rise by 5% in Q1 2026",
-          "source": "OilPrice.com",
-          "source_url": "https://oilprice.com",
-          "body": "India's crude oil imports increased by 5% in the first quarter of 2026, reaching 5.1 million barrels per day. This growth is attributed to increased demand from the transportation and industrial sectors. The largest suppliers were Iraq, Saudi Arabia, and the United Arab Emirates, accounting for over 60% of total imports."
-        },
-        {
-          "title": "BPCL Expands Kochi Refinery Capacity by 20%",
-          "source": "Argus Media",
-          "source_url": "https://argusmedia.com",
-          "body": "Bharat Petroleum Corporation Limited (BPCL) announced the completion of its Kochi refinery expansion, increasing its capacity by 20% to 360,000 barrels per day. The project, which cost approximately $3 billion, aims to enhance production of cleaner fuels and improve energy efficiency. The expansion is expected to meet rising domestic demand and support export growth."
-        },
-        {
-          "title": "India's LNG Imports Surge 15% Amid Domestic Gas Shortages",
-          "source": "TERI",
-          "source_url": "https://teri.in",
-          "body": "India's LNG imports rose by 15% year-on-year in March 2026, driven by domestic gas shortages and increased consumption in the power and fertilizer sectors. The country imported 3.2 million tonnes of LNG, with Qatar, Australia, and the United States being the top suppliers. The government plans to further diversify its LNG sources to ensure energy security."
-        },
-        {
-          "title": "India Introduces New Renewable Energy Policy to Boost Solar",
-          "source": "MoPNG",
-          "source_url": "https://mopng.gov.in",
-          "body": "The Ministry of Petroleum and Natural Gas (MoPNG) announced a new renewable energy policy aimed at increasing solar capacity to 200 GW by 2030. The policy includes incentives for domestic manufacturing and grid integration, with a focus on reducing reliance on fossil fuels. This initiative aligns with India's commitment to achieving net-zero emissions by 2070."
-        }
-      ]
+      "cards": []
     },
     "upstream": {
-      "cards": [
-        {
-          "title": "ExxonMobil Announces Major Oil Discovery Offshore Guyana",
-          "source": "OGJ",
-          "source_url": "https://www.ogj.com",
-          "body": "ExxonMobil has reported a significant oil discovery at the Fangtooth-2 well in the Stabroek Block offshore Guyana. The discovery, announced on 19 April 2026, is estimated to contain over 500 million barrels of oil equivalent. This marks the 25th discovery in the block, further enhancing Guyana's potential to become a leading oil producer."
-        },
-        {
-          "title": "Baker Hughes Reports Global Rig Count Increase in April 2026",
-          "source": "Baker Hughes",
-          "source_url": "https://www.bakerhughes.com",
-          "body": "As of 17 April 2026, Baker Hughes reported an increase in the global rig count to 1,750, up by 50 rigs from the previous month. The U.S. rig count rose by 20 to 750, driven by heightened activity in the Permian Basin. This rise reflects a continued recovery in upstream investments amid stable oil prices."
-        },
-        {
-          "title": "Chevron Sanctions Anchor Deepwater Project in Gulf of Mexico",
-          "source": "Hart Energy",
-          "source_url": "https://www.hartenergy.com",
-          "body": "Chevron has given the final investment decision for the Anchor project, a deepwater development in the U.S. Gulf of Mexico. Announced on 18 April 2026, the project is expected to produce up to 75,000 barrels of oil per day by 2028. The development will utilize advanced high-pressure technology to tap into reserves at depths exceeding 30,000 feet."
-        }
-      ]
+      "cards": []
     },
     "midstream": {
-      "cards": [
-        {
-          "title": "Qatar's North Field Expansion Boosts LNG Capacity by 30%",
-          "source": "LNG Industry",
-          "source_url": "https://www.lngindustry.com",
-          "body": "QatarEnergy announced the completion of the North Field Expansion project, increasing its LNG production capacity by 30% to 126 million tonnes per annum (mtpa). The expansion, which began in 2020, involved the construction of four new mega trains. This development solidifies Qatar's position as the world's largest LNG producer, with the first cargoes expected to ship by June 2026."
-        },
-        {
-          "title": "Trans-Caspian Pipeline Nears Completion Amid Geopolitical Tensions",
-          "source": "Pipeline & Gas Journal",
-          "source_url": "https://www.pgjonline.com",
-          "body": "The Trans-Caspian Pipeline, designed to transport natural gas from Turkmenistan to Azerbaijan, is now 85% complete and expected to be operational by Q4 2026. Despite regional geopolitical tensions, the project has progressed steadily, aiming to deliver 30 billion cubic meters of gas annually to European markets. The pipeline is a joint venture between TurkmenGas and SOCAR."
-        },
-        {
-          "title": "VLCC Freight Rates Surge 15% Amid Rising Asian Demand",
-          "source": "Offshore Energy",
-          "source_url": "https://www.offshore-energy.biz",
-          "body": "Very Large Crude Carrier (VLCC) freight rates have surged by 15% in April 2026, driven by increased crude oil demand in Asia, particularly from China and India. The average rate for Middle East to Asia routes has reached $45,000 per day, marking a significant recovery from the previous quarter. Analysts attribute this rise to the reopening of Asian economies and strategic stockpiling ahead of anticipated supply constraints."
-        }
-      ]
+      "cards": []
     },
     "downstream": {
-      "cards": [
-        {
-          "title": "Refining Margins Surge Amid Rising Crude Prices",
-          "source": "Hydrocarbon Processing",
-          "source_url": "https://hydrocarbonprocessing.com",
-          "body": "Global refining margins have increased by 15% in Q1 2026 compared to the previous quarter, driven by a surge in crude oil prices reaching $95 per barrel. This trend is particularly evident in the Asia-Pacific region, where refiners are benefiting from strong demand for petrochemical feedstocks."
-        },
-        {
-          "title": "Diesel Crack Spreads Narrow as Supply Outpaces Demand",
-          "source": "OGJ Downstream",
-          "source_url": "https://ogjdownstream.com",
-          "body": "The diesel crack spread has narrowed to $18 per barrel as of April 2026, down from $22 in March. This decline is attributed to increased diesel production in Europe and North America, which has outpaced the current demand growth, leading to a temporary oversupply in the market."
-        },
-        {
-          "title": "U.S. Gasoline Inventories Drop Amidst Rising Summer Demand",
-          "source": "Platts",
-          "source_url": "https://platts.com",
-          "body": "U.S. gasoline inventories fell by 2.5 million barrels in the week ending April 17, 2026. The drop is largely due to the early onset of the summer driving season, which has seen gasoline demand rise by 3% compared to the same period last year, according to the latest EIA data."
-        }
-      ]
+      "cards": []
     },
     "petrochems": {
-      "cards": [
-        {
-          "title": "Ethylene Margins Surge by 15% Amid Supply Constraints",
-          "source": "ICIS",
-          "source_url": "https://www.icis.com",
-          "body": "Ethylene margins in Asia have increased by 15% to $450 per ton as of April 2026, driven by ongoing supply constraints and robust demand from the packaging sector. Production disruptions in South Korea and Japan have exacerbated the supply issues, leading to tighter market conditions. <strong>Analysts expect</strong> these elevated margins to persist through Q2 2026."
-        },
-        {
-          "title": "Naphtha Prices Drop 10% Due to Increased Middle East Exports",
-          "source": "Hydrocarbon Processing",
-          "source_url": "https://www.hydrocarbonprocessing.com",
-          "body": "Naphtha feedstock prices have decreased by 10% to $650 per ton in April 2026, as increased exports from the Middle East flood the market. Saudi Arabia and the UAE have ramped up production, leveraging their low-cost advantage. <em>This price reduction</em> is expected to provide some relief to European and Asian petrochemical producers."
-        },
-        {
-          "title": "New Petrochemical Complex Announced in Texas by ExxonMobil",
-          "source": "GlobalData",
-          "source_url": "https://www.globaldata.com",
-          "body": "ExxonMobil has announced plans to construct a new $2 billion petrochemical complex in Baytown, Texas, slated to begin operations in 2028. The facility will include a world-scale ethane cracker with a capacity of 1.5 million tons per year. <u>This project</u> aims to capitalize on the abundant shale gas supply in the region and is expected to create over 1,000 jobs during construction."
-        }
-      ]
+      "cards": []
     },
     "og-projects": {
-      "cards": [
-        {
-          "title": "Equinor Sanctions $3 Billion Rosebank Project in UK North Sea",
-          "source": "Upstream Online",
-          "source_url": "https://www.upstreamonline.com",
-          "body": "Equinor has sanctioned the $3 billion Rosebank project located in the UK North Sea, with first oil expected by 2028. The project, which holds an estimated 300 million barrels of recoverable oil, aims to boost the region's production capacity significantly. This decision follows a comprehensive environmental review and strategic partnerships with local stakeholders."
-        },
-        {
-          "title": "TotalEnergies Achieves First Oil at Brazil's Mero-3 Field",
-          "source": "Hart Energy A&D",
-          "source_url": "https://www.hartenergy.com",
-          "body": "TotalEnergies has announced first oil from its Mero-3 field in the Santos Basin, offshore Brazil, on April 18, 2026. The field is expected to produce 180,000 barrels per day at peak capacity. This milestone marks a significant step in TotalEnergies' strategy to enhance its presence in the pre-salt region, leveraging advanced subsea technologies."
-        },
-        {
-          "title": "Saipem Secures $1.2 Billion Contract for Guyana Offshore Project",
-          "source": "Rystad Energy",
-          "source_url": "https://www.rystadenergy.com",
-          "body": "Saipem has been awarded a $1.2 billion contract for the development of the Yellowtail project offshore Guyana. The contract includes engineering, procurement, construction, and installation of subsea systems. This award underscores Saipem's strategic focus on expanding its footprint in the burgeoning Guyanese oil sector, with project completion slated for 2027."
-        }
-      ]
+      "cards": []
     },
     "re-projects": {
-      "cards": [
-        {
-          "title": "World's Largest Solar Farm Commissioned in Saudi Arabia",
-          "source": "Renewables Now",
-          "source_url": "https://www.renewablesnow.com",
-          "body": "Saudi Arabia has commissioned the world's largest solar farm, the 3.6 GW Al Shuaiba project, on 19 April 2026. Developed by ACWA Power, the project is expected to generate enough electricity to power 1.2 million homes annually. This marks a significant milestone in Saudi Arabia's Vision 2030 plan to diversify its energy sources."
-        },
-        {
-          "title": "Tesla Wins Contract for 500 MWh Battery Storage in California",
-          "source": "reNews",
-          "source_url": "https://www.renews.biz",
-          "body": "Tesla has been awarded a contract to build a 500 MWh battery storage facility in Kern County, California. The project, set to be operational by Q4 2027, aims to enhance grid stability and integrate renewable energy sources. This facility will be one of the largest of its kind in the United States, supporting California's goal of 100% clean energy by 2045."
-        },
-        {
-          "title": "UK Approves 1.5 GW Offshore Wind Farm in North Sea",
-          "source": "Renewable Energy World",
-          "source_url": "https://www.renewableenergyworld.com",
-          "body": "The UK government has approved the development of a 1.5 GW offshore wind farm, known as the Hornsea Four, located in the North Sea. Ørsted, the Danish energy company, will oversee the construction, which is expected to commence in early 2027. Once operational, the project will provide electricity to over 1.3 million UK homes, furthering the country's commitment to offshore wind expansion."
-        }
-      ]
+      "cards": []
     },
     "supply-demand": {
-      "cards": [
-        {
-          "title": "IEA Predicts Global Oil Demand to Rise by 1.5% in 2026",
-          "source": "IEA Oil Market Report",
-          "source_url": "https://www.iea.org/reports/oil-market-report",
-          "body": "The International Energy Agency forecasts a 1.5% increase in global oil demand for 2026, reaching 103.5 million barrels per day. This growth is primarily driven by increased consumption in Asia, with China and India leading the demand surge."
-        },
-        {
-          "title": "EIA Projects U.S. Crude Production to Hit 13.8 Million BPD",
-          "source": "EIA Short-Term Energy Outlook",
-          "source_url": "https://www.eia.gov/outlooks/steo/",
-          "body": "According to the latest EIA Short-Term Energy Outlook, U.S. crude oil production is expected to average 13.8 million barrels per day in 2026. This marks a 4% increase from 2025, supported by technological advancements and higher investment in shale regions."
-        },
-        {
-          "title": "OPEC Sees Oil Demand Growth Slowing to 1.2% in 2026",
-          "source": "OPEC Monthly Oil Market Report",
-          "source_url": "https://www.opec.org/opec_web/en/publications/338.htm",
-          "body": "OPEC's latest report forecasts a 1.2% growth in global oil demand in 2026, reaching approximately 102.8 million barrels per day. The report highlights potential economic slowdowns and energy transition policies as factors moderating demand growth."
-        }
-      ]
+      "cards": []
     },
     "frameworks": {
-      "cards": [
-        {
-          "title": "Porter's Five Forces Analyzes 2026 Renewable Energy Market",
-          "source": "McKinsey Energy",
-          "source_url": "https://mckinseyenergy.com",
-          "body": "The renewable energy market in 2026 faces moderate competitive rivalry due to increased consolidation among major players like NextEra and Iberdrola. <strong>Bargaining power of suppliers</strong> remains low as technological advancements have diversified sources for key components. However, <em>barriers to entry</em> are rising with significant capital requirements and regulatory hurdles, particularly in emerging markets. According to McKinsey Energy, the <u>threat of substitutes</u> is low, with fossil fuels continuing to decline in competitiveness due to carbon pricing and environmental regulations."
-        }
-      ]
+      "cards": []
     },
     "narratives": {
-      "cards": [
-        {
-          "title": "Global Solar Capacity Surpasses 2 Terawatts Milestone",
-          "source": "BloombergNEF",
-          "source_url": "https://www.bloombergnef.com",
-          "body": "Global solar capacity has reached a significant milestone, surpassing 2 terawatts as of April 2026, according to BloombergNEF. This achievement marks a doubling of capacity since 2023, driven by rapid installations in China and India, which together accounted for 45% of new capacity additions last year."
-        },
-        {
-          "title": "EU Tightens Carbon Emission Caps in New Net-Zero Policy",
-          "source": "Carbon Brief",
-          "source_url": "https://www.carbonbrief.org",
-          "body": "The European Union has announced stricter carbon emission caps as part of its enhanced net-zero policy framework, effective from 2027. The new measures aim to reduce emissions by 65% compared to 1990 levels, accelerating the phase-out of coal and increasing investments in green hydrogen and offshore wind."
-        },
-        {
-          "title": "Gerard Reid Analyzes Impact of Lithium Prices on EV Market",
-          "source": "Gerard Reid",
-          "source_url": "https://www.gerardreid.com",
-          "body": "In a recent analysis, Gerard Reid discusses how the recent surge in lithium prices, which have increased by 40% over the past year, is affecting the electric vehicle market. He argues that while battery costs are rising, innovations in battery technology and recycling could mitigate long-term impacts on EV affordability."
-        }
-      ]
+      "cards": []
     },
     "hydrogen": {
-      "cards": [
-        {
-          "title": "Australia's Green Hydrogen Project Reaches FID with $2 Billion Investment",
-          "source": "H2 Bulletin",
-          "source_url": "https://h2bulletin.com",
-          "body": "Australia's largest green hydrogen project, led by Fortescue Future Industries, has reached its final investment decision (FID) with a $2 billion commitment. The project, located in Western Australia, aims to produce 300,000 tons of green hydrogen annually by 2028, utilizing 1.5 GW of renewable energy capacity."
-        },
-        {
-          "title": "Electrolyser Costs Drop 20% Due to Technological Advancements",
-          "source": "Hydrogen Insight",
-          "source_url": "https://hydrogeninsight.com",
-          "body": "The global average cost of electrolysers has decreased by 20% over the past year, driven by advancements in PEM and alkaline technologies. According to the Hydrogen Council, this reduction is expected to accelerate green hydrogen adoption, with costs projected to fall below $500 per kW by 2027."
-        },
-        {
-          "title": "Germany Secures Major Hydrogen Offtake Agreement with BASF",
-          "source": "H2Tech",
-          "source_url": "https://h2-tech.com",
-          "body": "BASF has signed a long-term agreement to purchase 100,000 tons of green hydrogen annually from Linde's new facility in Germany, starting in 2027. This offtake agreement supports BASF's commitment to reducing its carbon footprint and aligns with Germany's national hydrogen strategy."
-        }
-      ]
+      "cards": []
     },
     "nuclear": {
-      "cards": [
-        {
-          "title": "UK's First SMR Project Secures Key Construction Permit",
-          "source": "World Nuclear News",
-          "source_url": "https://world-nuclear-news.org",
-          "body": "The UK's first Small Modular Reactor (SMR) project, led by Rolls-Royce, has secured a crucial construction permit from the Office for Nuclear Regulation. The permit allows for the commencement of site preparation at the West Cumbria location, with construction expected to begin in Q3 2026. The project aims to deliver up to 440 MW of electricity by 2030."
-        },
-        {
-          "title": "Australia Deploys Largest Grid-Scale Battery in Victoria",
-          "source": "Energy Storage News",
-          "source_url": "https://energystoragenews.com",
-          "body": "Australia has launched its largest grid-scale battery storage system in Victoria, with a capacity of 500 MW/1,000 MWh. Operated by Neoen, the Victorian Big Battery is expected to enhance grid stability and support renewable energy integration. The project received AU$160 million in government funding and is set to be fully operational by June 2026."
-        },
-        {
-          "title": "Japan Increases Nuclear Financing to Accelerate Energy Transition",
-          "source": "NEI Magazine",
-          "source_url": "https://neimagazine.com",
-          "body": "The Japanese government announced a new financing package worth ¥2 trillion to support the development of nuclear energy projects. This initiative aims to boost the country's energy transition efforts and reduce reliance on fossil fuels. The funding will be available for both domestic and international nuclear projects, with a focus on advanced reactor technologies."
-        }
-      ]
+      "cards": []
     },
     "ccus": {
-      "cards": [
-        {
-          "title": "Norway's Longship CCS Project Reaches Full Operational Capacity",
-          "source": "Carbon Capture Journal",
-          "source_url": "https://carboncapturejournal.com",
-          "body": "Norway's Longship CCS project has achieved full operational capacity as of April 2026, capturing 1.5 million tonnes of CO2 annually. The project, which began operations in 2024, is a collaboration between Equinor, Shell, and TotalEnergies, and aims to store CO2 in the North Sea's subsurface formations."
-        },
-        {
-          "title": "EU ETS Carbon Prices Surge to €120 per Tonne",
-          "source": "Carbon Brief",
-          "source_url": "https://carbonbrief.org",
-          "body": "The European Union Emissions Trading System (EU ETS) saw carbon prices rise to €120 per tonne on April 19, 2026, driven by increased regulatory pressure and a reduction in free allowances. Analysts predict further price increases as the EU aims to meet its 2030 emission reduction targets."
-        },
-        {
-          "title": "Climeworks Expands DAC Operations with New Facility in Texas",
-          "source": "Global CCS Institute",
-          "source_url": "https://globalccsinstitute.com",
-          "body": "Climeworks has inaugurated a new Direct Air Capture (DAC) facility in Texas, set to remove 500,000 tonnes of CO2 annually by 2028. This expansion is part of the company's strategy to scale up its carbon removal capacity to 1 million tonnes per year by 2030, leveraging advanced sorbent technology."
-        }
-      ]
+      "cards": []
     },
     "clean-capital": {
-      "cards": [
-        {
-          "title": "NextEra Energy Raises $1.5 Billion for Solar Expansion",
-          "source": "BloombergNEF",
-          "source_url": "https://www.bloombergnef.com",
-          "body": "NextEra Energy announced the successful completion of a $1.5 billion equity raise to fund its ambitious solar expansion projects across the United States. The company plans to add 5 GW of solar capacity by 2028, significantly boosting its renewable energy portfolio. This move aligns with NextEra's goal to achieve a 70% carbon reduction by 2030."
-        },
-        {
-          "title": "Germany Issues €2 Billion Green Bond for Offshore Wind",
-          "source": "Carbon Tracker",
-          "source_url": "https://www.carbontracker.org",
-          "body": "The German government has issued a €2 billion green bond to finance new offshore wind projects in the North Sea. The bond, which matures in 2036, is part of Germany's strategy to reach 80% renewable energy by 2030. The funds will support the construction of 3 GW of offshore wind capacity, expected to be operational by 2029."
-        },
-        {
-          "title": "Global Clean Energy Investment Reaches $1.2 Trillion in 2025",
-          "source": "IRENA",
-          "source_url": "https://www.irena.org",
-          "body": "According to IRENA's latest report, global investment in clean energy hit $1.2 trillion in 2025, marking a 15% increase from the previous year. The report highlights significant growth in solar and wind sectors, with Asia-Pacific leading the charge, accounting for 45% of total investments. This trend underscores the accelerating shift towards renewable energy worldwide."
-        }
-      ]
+      "cards": []
     }
   }
 }
