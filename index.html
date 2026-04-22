@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Energy Intelligence Brief</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -1546,11 +1547,18 @@ var CONTENT_URL_FALLBACK = 'https://raw.githubusercontent.com/Ayush-Kothari97/en
 var digestData = null;
 
 function renderCard(card, sectionId) {
+  // Guard all fields — any could be undefined if JSON is malformed
+  var sid      = sectionId || '';
+  var title    = String(card.title    || 'Untitled');
+  var source   = String(card.source   || '');
+  var url      = String(card.source_url || '#');
+  var body     = String(card.body     || '');
+  var isLong   = card.long_read === true;
+
   var el = document.createElement('div');
-  var isLong = card.long_read === true;
   el.className = isLong ? 'card card-longread' : 'card';
 
-  var aiNote = (sectionId === 'frameworks')
+  var aiNote = (sid === 'frameworks')
     ? '<div class="ai-disclaimer">&#x2022; AI-generated analysis &mdash; for reference only. Verify before citing.</div>'
     : '';
   var readTime = isLong
@@ -1558,26 +1566,24 @@ function renderCard(card, sectionId) {
     : '';
 
   if (isLong) {
-    // Long-read: full article layout
     el.innerHTML =
       '<div class="lr-header">' +
-        '<div class="lr-eyebrow">' + escHtml(sectionId.replace(/-/g,' ').toUpperCase()) + ' &middot; IN DEPTH</div>' +
-        '<div class="lr-title">' + escHtml(card.title) + '</div>' +
+        '<div class="lr-eyebrow">' + escHtml(sid.replace(/-/g,' ').toUpperCase()) + ' &middot; IN DEPTH</div>' +
+        '<div class="lr-title">' + escHtml(title) + '</div>' +
         '<div class="lr-meta">' +
-          '<em>Source: <a href="' + escHtml(card.source_url) + '" target="_blank" rel="noopener">' + escHtml(card.source) + '</a></em>' +
+          '<em>Source: <a href="' + escHtml(url) + '" target="_blank" rel="noopener">' + escHtml(source) + '</a></em>' +
           readTime +
         '</div>' +
       '</div>' +
-      '<div class="lr-body">' + card.body + '</div>' +
+      '<div class="lr-body">' + body + '</div>' +
       aiNote;
   } else {
-    // Standard card
     el.innerHTML =
       '<div class="card-hdr">' +
-        '<div class="card-title">' + escHtml(card.title) + '</div>' +
+        '<div class="card-title">' + escHtml(title) + '</div>' +
       '</div>' +
-      '<div class="card-src-line"><em>Source: <a href="' + escHtml(card.source_url) + '" target="_blank" rel="noopener">' + escHtml(card.source) + '</a></em></div>' +
-      '<div class="card-body">' + card.body + '</div>' +
+      '<div class="card-src-line"><em>Source: <a href="' + escHtml(url) + '" target="_blank" rel="noopener">' + escHtml(source) + '</a></em></div>' +
+      '<div class="card-body">' + body + '</div>' +
       aiNote;
   }
   return el;
@@ -1598,7 +1604,7 @@ function populateSection(sectionId, cards) {
     return;
   }
   cards.forEach(function(card) {
-    container.appendChild(renderCard(card));
+    container.appendChild(renderCard(card, sectionId));
   });
 }
 
@@ -1610,10 +1616,14 @@ function loadDigest() {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     })
-    .catch(function() {
+    .catch(function(err) {
+      console.warn('Primary fetch failed:', err);
       // Fallback: fetch directly from GitHub raw content
       return fetch(CONTENT_URL_FALLBACK + '?v=' + Date.now())
-        .then(function(r) { return r.json(); });
+        .then(function(r) {
+          if (!r.ok) throw new Error('Fallback HTTP ' + r.status);
+          return r.json();
+        });
     })
     .then(function(data) {
       digestData = data;
@@ -1630,10 +1640,9 @@ function loadDigest() {
       // frameworks section rendered via populateSection like all others
     })
     .catch(function(err) {
-      console.warn('Digest not yet available:', err.message);
-      // Show empty state in all containers
+      console.error('Digest load failed (both primary and fallback):', err);
       document.querySelectorAll('.cards-container').forEach(function(c) {
-        c.innerHTML = '<div class="cards-empty">Content will appear here after 7 AM IST.</div>';
+        c.innerHTML = '<div class="cards-empty">Could not load today's digest. Error: ' + err.message + '</div>';
       });
     });
 }
