@@ -12,6 +12,7 @@ Never written to disk, never logged, never in any file.
 import os, json, datetime, sys, time, re
 from openai import OpenAI, RateLimitError, APITimeoutError, APIConnectionError
 
+# ── Key from environment only ──────────────────────────────────────────────
 _key = os.environ.get("OPENAI_API_KEY", "")
 if not _key:
     print("ERROR: OPENAI_API_KEY not found.", file=sys.stderr)
@@ -19,10 +20,12 @@ if not _key:
 client = OpenAI(api_key=_key, timeout=90.0)
 del _key
 
+# ── Date (IST = UTC+5:30) ──────────────────────────────────────────────────
 today     = datetime.datetime.utcnow() + datetime.timedelta(hours=5, minutes=30)
 date_str  = today.strftime("%A, %d %B %Y")
 date_iso  = today.strftime("%Y-%m-%d")
 
+# ── Section configs ────────────────────────────────────────────────────────
 SECTIONS = {
     "market-pulse": {
         "card_count": 5, "long_read": False,
@@ -53,8 +56,9 @@ Cite sources from: {sources}."""
         "sources": "SPE/JPT, Wood Mackenzie, Rystad Energy, Hart Energy, OGJ",
         "prompt": """Write a detailed 8-10 minute read analytical article on the
 most significant upstream oil & gas development relevant to {date}.
-Structure: intro, 4-5 analytical sections with subheadings, key takeaways.
-At least 600 words. Cite a source from: {sources}."""
+Cover: exploration, production, field development, FIDs, or drilling technology.
+Structure: intro paragraph, 4-5 analytical sections with subheadings, key takeaways.
+Write at least 600 words. Cite a source from: {sources}."""
     },
     "midstream": {
         "card_count": 1, "long_read": True,
@@ -70,6 +74,7 @@ Cite a source from: {sources}."""
         "sources": "Hydrocarbon Processing, OGJ Downstream, Platts, Argus",
         "prompt": """Write a detailed 8-10 minute read analytical article on the
 most significant downstream/refining development relevant to {date}.
+Cover refining margins, crack spreads, product markets, or refinery operations.
 Structure: intro, 4-5 analytical sections, key takeaways. At least 600 words.
 Cite a source from: {sources}."""
     },
@@ -100,8 +105,8 @@ Cite sources from: {sources}."""
         "card_count": 3, "long_read": False,
         "sources": "IEA Oil Market Report, EIA Short-Term Energy Outlook, OPEC Monthly Oil Market Report",
         "prompt": """Write {n} supply & demand forecast cards for {date}.
-One card per agency: IEA, EIA, and OPEC with their most recent demand/supply figures.
-Cite sources from: {sources}."""
+One card per agency: IEA, EIA, and OPEC — with their most recent demand/supply figures.
+Cite specific report URLs from: {sources}."""
     },
     "frameworks": {
         "card_count": 1, "long_read": True,
@@ -109,8 +114,10 @@ Cite sources from: {sources}."""
         "prompt": """Choose the single most relevant strategic consulting framework for
 today's energy market context ({date}).
 Write a detailed 8-10 minute read applying it analytically to the energy sector.
-Structure: framework overview, application to energy sector (4-5 sections),
-strategic implications. At least 600 words. Cite a source from: {sources}.
+Reference specific companies, market conditions, and current dynamics.
+Structure: framework overview, application to energy sector today (4-5 sections),
+conclusion with strategic implications. At least 600 words.
+Cite a source from: {sources}.
 End with: [AI-generated analysis — for educational purposes only]"""
     },
     "narratives": {
@@ -150,6 +157,7 @@ Cite sources from: {sources}."""
     },
 }
 
+# ── System prompts ─────────────────────────────────────────────────────────
 SYSTEM_SHORT = """You are a senior energy intelligence analyst writing a professional daily digest.
 Today is {date}.
 
@@ -167,7 +175,7 @@ Each card must have exactly:
 
 Rules:
 - Be specific: cite real companies, real numbers, real geographies
-- source_url: use the publication homepage
+- source_url: use the publication homepage (e.g. https://oilprice.com)
 - Return ONLY the JSON, nothing else
 """
 
@@ -176,19 +184,28 @@ Today is {date}.
 
 Return ONLY a valid JSON object. No markdown, no backticks, no preamble.
 
-Format: {{"cards": [{{"title": "Headline max 15 words", "source": "Publication name", "source_url": "https://publication-homepage.com", "body": "Full article. Use <p> tags for paragraphs. <strong> for key terms. Minimum 600 words.", "long_read": true}}]}}
+Format: {{"cards": [{{
+  "title": "Headline, max 15 words",
+  "source": "Publication or organisation name",
+  "source_url": "https://homepage-url-of-this-publication.com",
+  "body": "Full article text. Use <p> tags for paragraphs. Use <strong> for key terms and company names. Use <em> for analytical emphasis. Structure with clear sections. Minimum 600 words.",
+  "long_read": true
+}}]}}
 
 Rules:
-- Write genuine analytical 8-10 minute read
-- Include specific numbers, companies, market data
+- Write a genuine, analytical, well-structured 8-10 minute read
+- Include specific numbers, companies, market data, and expert context
 - Return ONLY the JSON, nothing else
 """
 
+# ── Generate one section ───────────────────────────────────────────────────
 def generate_section(sid, config, max_retries=3):
     long_read = config["long_read"]
     n         = config["card_count"]
-    prompt    = config["prompt"].format(date=date_str, n=n, sources=config["sources"])
-    system    = (SYSTEM_LONG if long_read else SYSTEM_SHORT).format(date=date_str)
+    prompt    = config["prompt"].format(
+        date=date_str, n=n, sources=config["sources"]
+    )
+    system = (SYSTEM_LONG if long_read else SYSTEM_SHORT).format(date=date_str)
 
     for attempt in range(max_retries):
         try:
@@ -203,6 +220,8 @@ def generate_section(sid, config, max_retries=3):
                 max_tokens=4000 if long_read else 2000,
             )
             raw = (resp.choices[0].message.content or "").strip()
+
+            # Strip accidental markdown fences
             raw = re.sub(r'^```(?:json)?\s*', '', raw)
             raw = re.sub(r'\s*```$', '', raw)
 
@@ -220,4 +239,74 @@ def generate_section(sid, config, max_retries=3):
             for c in cards[:15]:
                 if not isinstance(c, dict): continue
                 clean.append({
-                    "tit
+                    "title":      str(c.get("title",  "Untitled")).strip(),
+                    "source":     str(c.get("source",  "")).strip(),
+                    "source_url": str(c.get("source_url", "#")).strip(),
+                    "body":       str(c.get("body",    "")).strip(),
+                    "long_read":  bool(c.get("long_read", long_read)),
+                })
+            return clean
+
+        except RateLimitError:
+            wait = 30 * (attempt + 1)
+            print(f"\n    Rate limited — waiting {wait}s...", flush=True)
+            time.sleep(wait)
+        except (APITimeoutError, APIConnectionError):
+            wait = 15 * (attempt + 1)
+            print(f"\n    Timeout — waiting {wait}s...", flush=True)
+            time.sleep(wait)
+        except json.JSONDecodeError as e:
+            print(f"\n    JSON error attempt {attempt+1}: {e}", flush=True)
+            if attempt == max_retries - 1: return []
+            time.sleep(5)
+        except Exception as e:
+            print(f"\n    Error attempt {attempt+1}: {type(e).__name__}: {e}", flush=True)
+            if attempt == max_retries - 1: return []
+            time.sleep(10)
+    return []
+
+# ── Main ───────────────────────────────────────────────────────────────────
+print(f"The Energy Intelligence Brief — {date_str}")
+print(f"Generating {len(SECTIONS)} sections...\n")
+
+output = {
+    "last_updated": datetime.datetime.utcnow().isoformat() + "Z",
+    "date":         date_iso,
+    "date_display": date_str,
+    "sections":     {}
+}
+
+DELAY = 3  # seconds between calls
+
+for i, (sid, config) in enumerate(SECTIONS.items(), 1):
+    label = "long-read" if config["long_read"] else f"{config['card_count']} cards"
+    print(f"  [{i:02d}/{len(SECTIONS)}] {sid} ({label})...", end=" ", flush=True)
+
+    cards = generate_section(sid, config)
+    output["sections"][sid] = {"cards": cards}
+    print(f"✓ {len(cards)}" if cards else "✗ empty")
+
+    if not cards:
+        print(f"         Retrying {sid} in 20s...")
+        time.sleep(20)
+        cards = generate_section(sid, config)
+        output["sections"][sid] = {"cards": cards}
+        print(f"         Retry: {len(cards)} cards")
+
+    if i < len(SECTIONS):
+        time.sleep(DELAY)
+
+# ── Write ──────────────────────────────────────────────────────────────────
+out_path = os.path.normpath(
+    os.path.join(os.path.dirname(__file__), "..", "data", "content.json")
+)
+with open(out_path, "w", encoding="utf-8") as f:
+    json.dump(output, f, indent=2, ensure_ascii=False)
+
+total = sum(len(s["cards"]) for s in output["sections"].values())
+empty = [k for k, v in output["sections"].items() if not v["cards"]]
+print(f"\n{'='*50}")
+print(f"Complete: {total} cards across {len(SECTIONS)} sections.")
+if empty: print(f"Empty: {', '.join(empty)}")
+else:     print("All sections populated.")
+print(f"Saved: {out_path}")
