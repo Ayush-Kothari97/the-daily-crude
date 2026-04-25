@@ -47,7 +47,7 @@ SECTIONS = {
             "(mix of E&P, integrated major, refiner, utility — vary the companies daily). "
             "ticker_reasons (5): one brief reason PER TICKER in the same order "
             "(Brent, WTI, Henry Hub, TTF, Newcastle coal). "
-            "Each reason is 1-2 sentences explaining ONLY that commodity's price driver. "
+            "Each reason is 2-3 sentences with specific numbers and context for that commodity. "
             "financial_news (4): COMPLETELY DIFFERENT stories from ticker_reasons — "
             "broader market intelligence: OPEC+ policy, refinery/shipping events, "
             "demand outlook, energy policy, or notable trade flows. "
