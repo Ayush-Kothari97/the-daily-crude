@@ -43,8 +43,8 @@ SECTIONS = {
         "prompt": (
             "Generate today's energy market intelligence for {date}. "
             "Tickers (5): Brent crude, WTI crude, Henry Hub natural gas, TTF European gas, Newcastle coal. "
-            "Key movers (3): the 3 most significant energy company movers today "
-            "(publicly traded E&P, integrated major, or utility). "
+            "Key movers (6): the 6 most significant energy company movers today "
+            "(mix of E&P, integrated major, refiner, utility — vary the companies daily). "
             "ticker_reasons (5): one brief reason PER TICKER in the same order "
             "(Brent, WTI, Henry Hub, TTF, Newcastle coal). "
             "Each reason is 1-2 sentences explaining ONLY that commodity's price driver. "
@@ -226,7 +226,8 @@ _MARKET_SYS = (
     "tickers — 5 items, one per commodity:\n"
     '  {{"symbol":"BRENT","label":"Brent Crude Oil","price":"$82.45","unit":"/bbl","change":"+1.2%","dir":"up"}}\n'
     '  dir must be \"up\", \"down\", or \"flat\". price includes currency symbol.\n\n'
-    "key_movers — 3 items, most significant publicly-traded energy company movers today:\n"
+    "key_movers — 6 items, the most significant publicly-traded energy company movers today\n"
+    "(mix of E&Ps, integrated majors, refiners, utilities — different companies each day):\n"
     '  {{"name":"Saudi Aramco","ticker":"2222.SR","move":"+2.1%","note":"One-line reason","dir":"up"}}\n\n'
     "ticker_reasons — 5 items in SAME ORDER as tickers (Brent, WTI, HH, TTF, Newcastle coal).\n"
     "Each explains ONLY that commodity's price driver in 1-2 sentences. Fields:\n"

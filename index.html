@@ -479,8 +479,8 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
 /* ── Financial News (replaces Key Movers — compact grid) ─────────────────*/
 #fn-wrap{margin-bottom:1.4rem}
 .fn-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:0.75rem}
-.fn-movers{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem}
-.fn-chip{display:flex;align-items:baseline;gap:0.4rem;background:var(--sf2);border:1px solid var(--bd);border-radius:6px;padding:0.4rem 0.75rem;font-size:11.5px;flex-wrap:wrap}
+.fn-movers{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-bottom:1rem}
+.fn-chip{display:flex;align-items:baseline;gap:0.4rem;background:var(--sf2);border:1px solid var(--bd);border-radius:6px;padding:0.5rem 0.85rem;font-size:11.5px;flex-wrap:wrap;width:100%}
 .fn-chip-name{font-family:'Source Serif 4',serif;font-weight:600;color:var(--t1)}
 .fn-chip-ticker{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--t4)}
 .fn-chip-move{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500}
