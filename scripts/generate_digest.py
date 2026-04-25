@@ -8,7 +8,8 @@ Improvements over prior build:
   • Short sections run in parallel (4 workers) — cuts runtime ~60 %
   • Falls back to previous day's content if a section fails
   • Jittered exponential backoff (no retry storms)
-  • No unused dependencies
+  • Market Pulse returns tickers + key movers + cards (rich UI)
+  • Archive: saves dated JSON + updates manifest (30-day rolling window)
 """
 
 import json, os, re, sys, time, random, datetime
@@ -28,6 +29,9 @@ DATE_ISO = today.strftime("%Y-%m-%d")
 DATA_PATH = os.path.normpath(
     os.path.join(os.path.dirname(__file__), "..", "data", "content.json")
 )
+ARCHIVE_DIR = os.path.normpath(
+    os.path.join(os.path.dirname(__file__), "..", "data", "archive")
+)
 
 # ── Section definitions ────────────────────────────────────────────────────
 # long=True  → 1 card, 600-word analytical essay, 4 096 tokens
@@ -37,8 +41,11 @@ SECTIONS = {
         "cards": 5, "long": False,
         "src": "OGJ, OilPrice.com, EIA, Platts/S&P Global, Argus Media",
         "prompt": (
-            "Write {n} energy market intelligence cards for {date}. "
-            "Cover: Brent crude price/movement, WTI, Henry Hub gas, "
+            "Generate today's energy market intelligence for {date}. "
+            "Tickers (5): Brent crude, WTI crude, Henry Hub natural gas, TTF European gas, Newcastle coal. "
+            "Key movers (3): the 3 most significant energy company movers today "
+            "(publicly traded E&P, integrated major, or utility). "
+            "Cards (5): Brent price/movement, WTI spread vs Brent, Henry Hub gas levels, "
             "a key OPEC+/supply development, and one refinery or shipping disruption. "
             "Cite from: {src}."
         ),
@@ -208,9 +215,23 @@ _LONG_SYS = (
     '"long_read":true}}\n'
     "No markdown fences. No preamble. JSON only."
 )
+# Special prompt for market-pulse — three arrays in one response
+_MARKET_SYS = (
+    "You are a senior energy intelligence analyst. Today: {date}.\n"
+    "Return ONLY a valid JSON object with exactly three keys: tickers, key_movers, cards.\n\n"
+    "tickers — array of 5 items, one per commodity:\n"
+    '  {{"symbol":"BRENT","label":"Brent Crude Oil","price":"$82.45","unit":"/bbl","change":"+1.2%","dir":"up"}}\n'
+    '  dir must be "up", "down", or "flat". price includes the $ sign.\n\n'
+    "key_movers — array of 3 items, most significant publicly-traded energy company movers today:\n"
+    '  {{"name":"Saudi Aramco","ticker":"2222.SR","move":"+2.1%","note":"Brief one-line reason","dir":"up"}}\n\n'
+    "cards — array of 5 market intelligence cards:\n"
+    '  {{"title":"Headline max 12 words","source":"Publication","source_url":"https://url.com",'
+    '"body":"2-3 analytical sentences with specific numbers.","long_read":false}}\n\n'
+    "No markdown fences. No preamble. JSON only."
+)
 
 
-# ── Core API call (retry with jitter) ─────────────────────────────────────
+# ── Core API call — standard sections (retry with jitter) ─────────────────
 def _call(sid: str, cfg: dict) -> list:
     """Call GPT-4o for one section. Returns list of card dicts, or [] on failure."""
     is_long = cfg["long"]
@@ -231,10 +252,8 @@ def _call(sid: str, cfg: dict) -> list:
                 max_tokens=tokens,
             )
             raw = (resp.choices[0].message.content or "").strip()
-            # Strip any accidental markdown fences
             raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.MULTILINE)
             parsed = json.loads(raw)
-            # Accept both {"cards":[...]} and a bare list
             if isinstance(parsed, list):
                 cards = parsed
             elif isinstance(parsed, dict):
@@ -256,7 +275,6 @@ def _call(sid: str, cfg: dict) -> list:
             ]
 
         except RateLimitError:
-            # Jittered backoff: 30s / 60s / 90s + random 0-10s
             wait = 30 * (attempt + 1) + random.uniform(0, 10)
             print(f"  [{sid}] rate-limited — wait {wait:.0f}s", flush=True)
             time.sleep(wait)
@@ -281,6 +299,97 @@ def _call(sid: str, cfg: dict) -> list:
     return []
 
 
+# ── Market Pulse: special call — returns tickers + key_movers + cards ─────
+def _call_market() -> dict:
+    """Call GPT-4o for market-pulse. Returns {"tickers":[...], "key_movers":[...], "cards":[...]}."""
+    _empty = {"tickers": [], "key_movers": [], "cards": []}
+    system = _MARKET_SYS.format(date=DATE_STR)
+    cfg    = SECTIONS["market-pulse"]
+    prompt = cfg["prompt"].format(date=DATE_STR, n=cfg["cards"], src=cfg["src"])
+
+    def _tk(lst):
+        return [
+            {
+                "symbol": str(t.get("symbol", "")).strip(),
+                "label":  str(t.get("label",  "")).strip(),
+                "price":  str(t.get("price",  "—")).strip(),
+                "unit":   str(t.get("unit",   "")).strip(),
+                "change": str(t.get("change", "")).strip(),
+                "dir":    str(t.get("dir",    "flat")).strip(),
+            }
+            for t in (lst or [])[:10] if isinstance(t, dict)
+        ]
+
+    def _mv(lst):
+        return [
+            {
+                "name":   str(m.get("name",   "")).strip(),
+                "ticker": str(m.get("ticker", "")).strip(),
+                "move":   str(m.get("move",   "")).strip(),
+                "note":   str(m.get("note",   "")).strip(),
+                "dir":    str(m.get("dir",    "flat")).strip(),
+            }
+            for m in (lst or [])[:10] if isinstance(m, dict)
+        ]
+
+    def _cd(lst):
+        return [
+            {
+                "title":      str(c.get("title",      "Untitled")).strip(),
+                "source":     str(c.get("source",     "")).strip(),
+                "source_url": str(c.get("source_url", "#")).strip(),
+                "body":       str(c.get("body",       "")).strip(),
+                "long_read":  False,
+            }
+            for c in (lst or [])[:15] if isinstance(c, dict)
+        ]
+
+    for attempt in range(3):
+        try:
+            resp = client.chat.completions.create(
+                model="gpt-4o",
+                messages=[
+                    {"role": "system", "content": system},
+                    {"role": "user",   "content": prompt},
+                ],
+                response_format={"type": "json_object"},
+                temperature=0.35,
+                max_tokens=3000,
+            )
+            raw = (resp.choices[0].message.content or "").strip()
+            raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.MULTILINE)
+            parsed = json.loads(raw)
+            return {
+                "tickers":    _tk(parsed.get("tickers",    [])),
+                "key_movers": _mv(parsed.get("key_movers", [])),
+                "cards":      _cd(parsed.get("cards",      [])),
+            }
+
+        except RateLimitError:
+            wait = 30 * (attempt + 1) + random.uniform(0, 10)
+            print(f"  [market-pulse] rate-limited — wait {wait:.0f}s", flush=True)
+            time.sleep(wait)
+
+        except (APITimeoutError, APIConnectionError) as exc:
+            wait = 20 * (attempt + 1) + random.uniform(0, 5)
+            print(f"  [market-pulse] {type(exc).__name__} — wait {wait:.0f}s", flush=True)
+            time.sleep(wait)
+
+        except json.JSONDecodeError as exc:
+            print(f"  [market-pulse] JSON parse error (attempt {attempt + 1}): {exc}", flush=True)
+            if attempt == 2:
+                return _empty
+            time.sleep(5)
+
+        except Exception as exc:
+            print(f"  [market-pulse] {type(exc).__name__}: {exc}", flush=True)
+            if attempt == 2:
+                return _empty
+            time.sleep(10)
+
+    return _empty
+
+
 # ── Load previous content (fallback on section failure) ────────────────────
 def _load_previous() -> dict:
     try:
@@ -290,36 +399,83 @@ def _load_previous() -> dict:
         return {}
 
 
+# ── Save archive file + update manifest ────────────────────────────────────
+def _save_archive(content: dict) -> None:
+    """Save today's content to data/archive/YYYY-MM-DD.json and update manifest.json."""
+    os.makedirs(ARCHIVE_DIR, exist_ok=True)
+
+    # Write dated archive file
+    arc_path = os.path.join(ARCHIVE_DIR, f"{DATE_ISO}.json")
+    with open(arc_path, "w", encoding="utf-8") as fh:
+        json.dump(content, fh, indent=2, ensure_ascii=False)
+
+    # Load existing manifest
+    manifest_path = os.path.join(ARCHIVE_DIR, "manifest.json")
+    try:
+        with open(manifest_path, encoding="utf-8") as fh:
+            manifest = json.load(fh)
+    except Exception:
+        manifest = {"dates": []}
+
+    # Add today, deduplicate, keep newest 30, sort descending
+    dates = list(set(manifest.get("dates", []) + [DATE_ISO]))
+    dates = sorted(dates, reverse=True)[:30]
+
+    manifest["dates"] = dates
+    manifest["last_updated"] = datetime.datetime.utcnow().isoformat() + "Z"
+
+    with open(manifest_path, "w", encoding="utf-8") as fh:
+        json.dump(manifest, fh, indent=2, ensure_ascii=False)
+
+    print(f"Archive: {arc_path}  |  manifest: {len(dates)} dates", flush=True)
+
+
 # ── Main ───────────────────────────────────────────────────────────────────
 def main() -> None:
     prev = _load_previous()
 
     print(f"\nThe Energy Intelligence Brief — {DATE_STR}")
-    print(f"Sections: {len(SECTIONS)} total | Strategy: short=parallel(4), long=sequential\n")
+    print(f"Sections: {len(SECTIONS)} total\n")
 
-    results: dict[str, list] = {}
+    results: dict = {}
 
-    short_sids = [s for s, c in SECTIONS.items() if not c["long"]]
+    short_sids = [s for s, c in SECTIONS.items() if not c["long"] and s != "market-pulse"]
     long_sids  = [s for s, c in SECTIONS.items() if     c["long"]]
 
+    # ── Market Pulse (special structure) ──────────────────────────────────
+    print("[0/3] Market Pulse (tickers + movers + cards)")
+    print("  → market-pulse ...", end=" ", flush=True)
+    mp = _call_market()
+    if mp["tickers"] or mp["cards"]:
+        results["market-pulse"] = mp
+        print(f"✓  {len(mp['tickers'])} tickers | {len(mp['key_movers'])} movers | {len(mp['cards'])} cards", flush=True)
+    else:
+        prev_mp = prev.get("market-pulse", {})
+        # Handle old format (plain list) gracefully
+        if isinstance(prev_mp, list):
+            prev_mp = {"tickers": [], "key_movers": [], "cards": prev_mp}
+        results["market-pulse"] = prev_mp or {"tickers": [], "key_movers": [], "cards": []}
+        print("✗ failed — using previous", flush=True)
+
     # ── Short sections: 4 parallel workers ────────────────────────────────
-    print(f"[1/2] Short sections ({len(short_sids)} sections, 4 parallel workers)")
+    print(f"\n[1/3] Short sections ({len(short_sids)} sections, 4 parallel workers)")
     with ThreadPoolExecutor(max_workers=4) as pool:
         fmap = {pool.submit(_call, sid, SECTIONS[sid]): sid for sid in short_sids}
         for fut in as_completed(fmap):
-            sid   = fmap[fut]
+            sid = fmap[fut]
             cards = fut.result() if not fut.exception() else []
             if cards:
                 results[sid] = cards
                 print(f"  ✓ {sid}: {len(cards)} cards", flush=True)
             else:
-                fallback = prev.get(sid, {}).get("cards", [])
-                results[sid] = fallback
+                prev_sec = prev.get(sid, {})
+                fallback = prev_sec.get("cards", []) if isinstance(prev_sec, dict) else prev_sec
+                results[sid] = fallback or []
                 tag = f"prev {len(fallback)}" if fallback else "EMPTY"
                 print(f"  ✗ {sid}: failed — {tag}", flush=True)
 
     # ── Long reads: sequential (avoid token hammering) ────────────────────
-    print(f"\n[2/2] Long reads ({len(long_sids)} sections, sequential)")
+    print(f"\n[2/3] Long reads ({len(long_sids)} sections, sequential)")
     for sid in long_sids:
         print(f"  → {sid} ...", end=" ", flush=True)
         cards = _call(sid, SECTIONS[sid])
@@ -327,25 +483,40 @@ def main() -> None:
             results[sid] = cards
             print(f"✓ {len(cards)}", flush=True)
         else:
-            fallback = prev.get(sid, {}).get("cards", [])
-            results[sid] = fallback
+            prev_sec = prev.get(sid, {})
+            fallback = prev_sec.get("cards", []) if isinstance(prev_sec, dict) else prev_sec
+            results[sid] = fallback or []
             tag = f"prev {len(fallback)}" if fallback else "EMPTY"
             print(f"✗ failed — {tag}", flush=True)
 
-    # ── Write content.json ─────────────────────────────────────────────────
+    # ── Build output ───────────────────────────────────────────────────────
+    sections_out: dict = {}
+    for sid in SECTIONS:
+        r = results.get(sid, [])
+        if sid == "market-pulse":
+            # r is already {"tickers":[...], "key_movers":[...], "cards":[...]}
+            sections_out[sid] = r if isinstance(r, dict) else {"tickers": [], "key_movers": [], "cards": r}
+        else:
+            sections_out[sid] = {"cards": r if isinstance(r, list) else []}
+
     out = {
         "last_updated": datetime.datetime.utcnow().isoformat() + "Z",
         "date":         DATE_ISO,
         "date_display": DATE_STR,
-        "sections":     {sid: {"cards": results.get(sid, [])} for sid in SECTIONS},
+        "sections":     sections_out,
     }
+
+    # ── Write content.json ─────────────────────────────────────────────────
     os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
     with open(DATA_PATH, "w", encoding="utf-8") as fh:
         json.dump(out, fh, indent=2, ensure_ascii=False)
 
-    total = sum(len(v["cards"]) for v in out["sections"].values())
-    empty = [k for k, v in out["sections"].items() if not v["cards"]]
-    truly_new = [k for k in results if results[k] and k not in (prev or {})]
+    # ── Write archive ──────────────────────────────────────────────────────
+    _save_archive(out)
+
+    # ── Summary ────────────────────────────────────────────────────────────
+    total = sum(len(v.get("cards", [])) for v in out["sections"].values())
+    empty = [k for k, v in out["sections"].items() if not v.get("cards")]
 
     print(f"\n{'='*54}")
     print(f"Done  : {total} cards across {len(SECTIONS)} sections")

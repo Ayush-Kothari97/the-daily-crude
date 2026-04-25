@@ -10,21 +10,36 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --sw:268px;--bh:240px;
-  --bg:#0c0f0e;--sf:#141917;--sf2:#1b1f1d;--sf3:#232825;
-  --bd:rgba(255,255,255,0.08);--bd2:rgba(255,255,255,0.14);
-  --gold:#d9b06e;--gold-d:#a07a42;
-  --sage:#90bfa0;--sage-d:#5e8a72;
-  --t1:#f0ede6;--t2:#ccc9c0;--t3:#999790;--t4:#5a5c58;
-  --abg:rgba(217,176,110,0.1);--hbg:rgba(255,255,255,0.04);
+  /* Backgrounds — deep slate navy */
+  --bg:#0d1117;--sf:#161b22;--sf2:#21262d;--sf3:#2d333b;
+  --bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.13);
+  /* Primary accents */
+  --gold:#e3a838;--gold-d:#b8832a;
+  --teal:#3dcfcf;--teal-d:#27a0a0;
+  --rust:#d4614e;--rust-d:#a84535;
+  --blue:#5e9bce;--blue-d:#3d7aad;
+  --sage:#4db88c;--sage-d:#348a68;
+  --purple:#9b7fe8;--purple-d:#7559c4;
+  --saffron:#e8863a;--saffron-d:#b86628;
+  /* Text hierarchy */
+  --t1:#e6edf3;--t2:#b1bac4;--t3:#848d97;--t4:#484f58;
+  /* UI utility */
+  --abg:rgba(227,168,56,0.1);--hbg:rgba(255,255,255,0.04);
+  /* Per-section accent variables */
+  --c-market:var(--gold);--c-geo:var(--blue);--c-india:var(--saffron);
+  --c-upstream:var(--teal);--c-midstream:var(--purple);--c-downstream:var(--rust);
+  --c-petrochems:var(--sage);--c-frameworks:#b39ddb;
+  --c-hydrogen:#42a5f5;--c-nuclear:#c9a227;--c-ccus:#78909c;--c-capital:#26a69a;
+  --c-narratives:var(--sage);--c-re:#7ab648;
 }
 html,body{height:100%}
 body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);display:flex;flex-direction:column;height:100vh;overflow:hidden}
 
 #banner{position:relative;height:var(--bh);flex-shrink:0;overflow:hidden}
-#bimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.32) saturate(0.85)}
+#bimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.42) saturate(0.72);opacity:0.85}
 #bgrad{position:absolute;inset:0;background:linear-gradient(105deg,rgba(12,15,14,0.97) 0%,rgba(12,15,14,0.65) 45%,rgba(12,15,14,0.1) 100%)}
 #bcontent{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:1.8rem 2.4rem 1.6rem}
-#beyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.26em;text-transform:uppercase;color:var(--sage);margin-bottom:0.5rem}
+#beyebrow{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;letter-spacing:0.26em;text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem}
 #bheadline{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:500;color:#f7f4ed;line-height:1.1;text-shadow:0 2px 24px rgba(0,0,0,0.75)}
 #bdateline{font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;font-weight:500;color:var(--gold);margin-top:0.5rem;text-shadow:0 1px 10px rgba(0,0,0,0.8)}
 
@@ -32,8 +47,8 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
 
 #abar-right{display:flex;align-items:center;gap:0.7rem;margin-left:auto}
 .adot{width:5px;height:5px;border-radius:50%;background:var(--sage);flex-shrink:0}
-#alabel{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t4)}
-#abtn{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);background:var(--sf2);border:1px solid rgba(217,176,110,0.22);border-radius:5px;padding:4px 11px;cursor:pointer;transition:all 0.14s}
+#alabel{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--t2)}
+#abtn{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--gold);background:var(--sf2);border:1px solid rgba(227,168,56,0.35);border-radius:5px;padding:5px 13px;cursor:pointer;transition:all 0.14s}
 #abtn:hover{background:var(--abg);border-color:var(--gold)}
 
 #cmodal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:999;align-items:center;justify-content:center}
@@ -63,13 +78,13 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
 
 .ni{display:flex;align-items:center;gap:9px;padding:0.72rem 1.1rem;font-family:'Source Serif 4',serif;font-size:14px;font-weight:400;color:var(--t2);cursor:pointer;transition:all 0.12s;border-left:2px solid transparent;line-height:1.3;user-select:none}
 .ni:hover{background:var(--hbg);color:var(--t1)}
-.ni.active{background:var(--abg);color:var(--gold);border-left-color:var(--gold);font-weight:600}
+.ni.active{background:var(--abg);color:var(--gold);border-left-color:var(--gold);font-weight:600;border-left-width:3px}
 .nic{font-size:12px;flex-shrink:0;width:15px;text-align:center;opacity:0.65;line-height:1}
 .ni.active .nic{opacity:1}
 
 .npar{display:flex;align-items:center;gap:9px;padding:0.72rem 1.1rem;font-family:'Source Serif 4',serif;font-size:14px;font-weight:400;color:var(--t2);cursor:pointer;transition:all 0.12s;border-left:2px solid transparent;user-select:none}
 .npar:hover{background:var(--hbg);color:var(--t1)}
-.npar.has-active{color:var(--gold);border-left-color:var(--gold)}
+.npar.has-active{color:var(--gold);border-left-color:var(--gold);border-left-width:3px}
 .npar.open .nchv{transform:rotate(90deg)}
 .nchv{margin-left:auto;font-size:9px;color:var(--t4);transition:transform 0.2s;flex-shrink:0}
 
@@ -86,7 +101,7 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
 .sv.visible{display:block}
 @keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-.sey{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--sage);margin-bottom:0.4rem}
+.sey{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--teal);margin-bottom:0.4rem}
 .stitle{font-family:'Playfair Display',serif;font-size:2rem;font-weight:500;color:var(--t1);line-height:1.15;margin-bottom:0.5rem;text-decoration:underline;text-decoration-color:rgba(217,176,110,0.35);text-underline-offset:5px}
 .sdesc{font-size:15.5px;font-weight:300;color:var(--t2);line-height:1.78;margin-bottom:1.5rem;padding-bottom:1.3rem;border-bottom:1px solid var(--bd)}
 
@@ -109,7 +124,7 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
 .tag.am{background:rgba(217,176,110,0.1);color:var(--gold)}
 .tag.rd{background:rgba(200,90,80,0.1);color:#d07060}
 
-.ssub{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage);margin:1.4rem 0 0.75rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(144,191,160,0.15)}
+.ssub{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--teal);margin:1.4rem 0 0.75rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(61,207,207,0.15)}
 
 .ph{background:var(--sf2);border:1px dashed rgba(255,255,255,0.07);border-radius:10px;padding:2.4rem;text-align:center;margin-bottom:0.9rem}
 .phi{font-size:1.5rem;opacity:0.2;margin-bottom:0.7rem}
@@ -143,7 +158,7 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
 /* Cards container + loading state */
 .cards-container{margin-top:0}
 .cards-loading{display:flex;align-items:center;justify-content:center;gap:6px;padding:3rem 0}
-.loading-dot{width:6px;height:6px;border-radius:50%;background:var(--sage);opacity:0.3;animation:ldot 1.2s ease-in-out infinite}
+.loading-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);opacity:0.3;animation:ldot 1.2s ease-in-out infinite}
 .loading-dot:nth-child(2){animation-delay:0.2s}
 .loading-dot:nth-child(3){animation-delay:0.4s}
 @keyframes ldot{0%,80%,100%{opacity:0.3;transform:scale(1)}40%{opacity:1;transform:scale(1.3)}}
@@ -152,7 +167,7 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
 
 /* Card source line — italics, before body */
 .card-src-line{font-family:'Source Serif 4',serif;font-size:13px;font-style:italic;color:var(--t3);margin-bottom:0.6rem;line-height:1.5}
-.card-src-line a{color:var(--sage);text-decoration:none;font-style:italic}
+.card-src-line a{color:var(--teal);text-decoration:none;font-style:italic}
 .card-src-line a:hover{color:var(--t1);text-decoration:underline}
 
 /* ── Section-specific card styles ─────────────────────────────────────────── */
@@ -167,10 +182,9 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
   grid-template-columns: 1fr;
 }
 [data-section="market-pulse"] .card-title {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.95rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
   text-decoration: none;
   color: var(--gold);
 }
@@ -178,7 +192,7 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
 /* 2. Geopolitical — dark newspaper style with top border */
 [data-section="geopolitical"] .card {
   border: none;
-  border-top: 2px solid var(--sage);
+  border-top: 2px solid var(--blue);
   border-radius: 0;
   background: transparent;
   padding: 1.2rem 0;
@@ -187,21 +201,23 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
 }
 [data-section="geopolitical"] .card:last-child { border-bottom: none; }
 [data-section="geopolitical"] .card-title {
+  font-family: 'Playfair Display', serif;
   font-size: 1.25rem;
   font-weight: 700;
   text-decoration: none;
-  color: var(--t1);
+  color: var(--blue);
 }
 
 /* 3. India Monitor — warm saffron-tinted cards */
 [data-section="india"] .card {
-  background: rgba(217,176,110,0.06);
-  border: 1px solid rgba(217,176,110,0.2);
+  background: rgba(232,134,58,0.06);
+  border: 1px solid rgba(232,134,58,0.22);
   border-radius: 8px;
 }
 [data-section="india"] .card-title {
-  color: var(--gold);
+  color: var(--saffron);
   font-size: 1.1rem;
+  font-family: 'Playfair Display', serif;
 }
 
 /* 4. Upstream — industrial dark panels */
@@ -218,30 +234,30 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--sage) 0%, transparent 100%);
+  background: linear-gradient(90deg, var(--teal) 0%, transparent 100%);
 }
 
 /* 5. Midstream — pipeline horizontal flow style */
 [data-section="midstream"] .card {
   border-radius: 0 8px 8px 0;
-  border-left: 4px solid var(--sage-d);
+  border-left: 4px solid var(--purple);
   background: var(--sf2);
   padding: 1.2rem 1.5rem;
 }
-[data-section="midstream"] .card-title { color: var(--sage); }
+[data-section="midstream"] .card-title { color: var(--purple); font-family: 'Playfair Display', serif; }
 
 /* 6. Downstream — refinery blueprint style */
 [data-section="downstream"] .card {
-  background: rgba(26,34,31,0.9);
-  border: 1px dashed rgba(144,191,160,0.3);
+  background: rgba(26,20,20,0.9);
+  border: 1px dashed rgba(212,97,78,0.35);
   border-radius: 8px;
   padding: 1.3rem 1.5rem;
 }
-[data-section="downstream"] .card-title { font-size: 1.05rem; }
+[data-section="downstream"] .card-title { font-size: 1.05rem; color: var(--rust); font-family: 'Playfair Display', serif; }
 
 /* 7. Petrochemicals — molecule chain style with right accent */
 [data-section="petrochems"] .card {
-  border-right: 3px solid var(--sage-d);
+  border-right: 3px solid var(--sage);
   border-left: none;
   border-top: 1px solid var(--bd);
   border-bottom: 1px solid var(--bd);
@@ -273,12 +289,12 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
 
 /* 9. Renewable Projects — clean white-space style */
 [data-section="re-projects"] .card {
-  background: rgba(144,191,160,0.06);
-  border: 1px solid rgba(144,191,160,0.22);
+  background: rgba(122,182,72,0.06);
+  border: 1px solid rgba(122,182,72,0.22);
   border-radius: 12px;
   padding: 1.4rem 1.6rem;
 }
-[data-section="re-projects"] .card-title { color: var(--sage); font-size: 1.1rem; }
+[data-section="re-projects"] .card-title { color: var(--c-re); font-size: 1.1rem; font-family: 'Playfair Display', serif; }
 
 /* 10. Supply & Demand — data table style */
 [data-section="supply-demand"] .card {
@@ -286,14 +302,14 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
   border: 1px solid var(--bd2);
   border-radius: 6px;
   padding: 1.1rem 1.4rem;
-  border-top: 2px solid rgba(144,191,160,0.5);
+  border-top: 2px solid rgba(61,207,207,0.6);
 }
 [data-section="supply-demand"] .card-title {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
   text-decoration: none;
-  letter-spacing: 0.03em;
+  color: var(--c-market);
 }
 
 /* 11. Strategic Frameworks — essay/longread style */
@@ -309,7 +325,7 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
   font-size: 1.55rem;
   font-weight: 700;
   text-decoration: none;
-  color: var(--t1);
+  color: var(--c-frameworks);
   line-height: 1.25;
   margin-bottom: 0.3rem;
 }
@@ -328,7 +344,7 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
   padding: 1.6rem 1.8rem;
   margin-bottom: 1rem;
 }
-[data-section="narratives"] .card-title { font-size: 1.2rem; font-weight: 700; }
+[data-section="narratives"] .card-title { font-size: 1.2rem; font-weight: 700; color: var(--sage); font-family: 'Playfair Display', serif; }
 
 /* 13. Hydrogen — tech startup card style */
 [data-section="hydrogen"] .card {
@@ -347,7 +363,7 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
   color: rgba(106,184,212,0.4);
   letter-spacing: 0.1em;
 }
-[data-section="hydrogen"] .card-title { color: #6ab8d4; }
+[data-section="hydrogen"] .card-title { color: var(--c-hydrogen); font-family: 'Playfair Display', serif; }
 
 /* 14. Nuclear & Storage — atom/circuit board style */
 [data-section="nuclear"] .card {
@@ -366,12 +382,12 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
   border-radius: 8px;
   padding: 1.2rem 1.5rem;
 }
-[data-section="ccus"] .card-title { color: var(--t2); font-size: 1.05rem; }
+[data-section="ccus"] .card-title { color: var(--c-ccus); font-size: 1.05rem; font-family: 'Playfair Display', serif; }
 
 /* 16. Clean Capital — finance/deal flow style */
 [data-section="clean-capital"] .card {
   background: var(--sf2);
-  border-left: 3px solid rgba(144,191,160,0.6);
+  border-left: 3px solid var(--c-capital);
   border-right: none;
   border-top: none;
   border-bottom: none;
@@ -379,11 +395,11 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
   padding: 1.1rem 1.4rem;
 }
 [data-section="clean-capital"] .card-title {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.92rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
   text-decoration: none;
+  color: var(--c-capital);
 }
 
 .ai-disclaimer{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t4);margin-top:1rem;padding-top:0.7rem;border-top:1px solid var(--bd);letter-spacing:0.05em}
@@ -403,7 +419,7 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--sage);
+  color: var(--teal);
   margin-bottom: 0.6rem;
 }
 .lr-title {
@@ -425,7 +441,7 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
   padding-bottom: 1.4rem;
   border-bottom: 1px solid var(--bd);
 }
-.lr-meta a { color: var(--sage); text-decoration: none; font-style: italic; }
+.lr-meta a { color: var(--teal); text-decoration: none; font-style: italic; }
 .lr-meta a:hover { color: var(--t1); }
 .read-time { color: var(--t4); font-style: normal; }
 .lr-body {
@@ -440,6 +456,35 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
 .lr-body strong { font-weight: 600; color: var(--t1); }
 .lr-body em { font-style: italic; color: var(--sage); }
 .lr-body u { text-decoration: underline; text-decoration-color: rgba(217,176,110,0.5); text-underline-offset: 2px; }
+
+/* ── Market Pulse Ticker ────────────────────────────────────────────────── */
+#ticker-strip{display:flex;flex-wrap:wrap;gap:0;margin-bottom:1.4rem;background:var(--sf);border:1px solid var(--bd2);border-radius:8px;overflow:hidden}
+.tk-item{display:flex;flex-direction:column;padding:0.8rem 1.2rem;border-right:1px solid var(--bd);flex:1;min-width:140px;position:relative}
+.tk-item:last-child{border-right:none}
+.tk-symbol{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--t4);margin-bottom:2px}
+.tk-name{font-family:'Source Serif 4',serif;font-size:12px;color:var(--t3);margin-bottom:4px;line-height:1.2}
+.tk-price{font-family:'JetBrains Mono',monospace;font-size:1.25rem;font-weight:500;color:var(--t1);line-height:1;margin-bottom:3px}
+.tk-unit{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--t4);display:inline;margin-left:3px}
+.tk-change{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;margin-bottom:3px}
+.tk-up .tk-change,.tk-up .tk-price{color:var(--teal)}
+.tk-down .tk-change,.tk-down .tk-price{color:var(--rust)}
+.tk-asof{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t4);letter-spacing:0.05em}
+
+#key-movers-wrap{margin-bottom:1.4rem}
+.km-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal);margin-bottom:0.7rem}
+#key-movers{display:flex;flex-wrap:wrap;gap:0.7rem}
+.km-card{background:var(--sf2);border:1px solid var(--bd);border-radius:8px;padding:0.75rem 1rem;flex:1;min-width:150px;max-width:220px}
+.km-name{font-family:'Source Serif 4',serif;font-size:13px;font-weight:600;color:var(--t1);margin-bottom:1px;line-height:1.2}
+.km-sym{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--t4);margin-bottom:5px}
+.km-chg{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;margin-bottom:5px}
+.km-up .km-chg{color:var(--teal)}
+.km-down .km-chg{color:var(--rust)}
+.km-note{font-size:11.5px;font-weight:300;color:var(--t3);line-height:1.4;font-family:'Source Serif 4',serif}
+
+/* Archive viewing banner */
+#archive-banner{display:none;background:var(--abg);border:1px solid rgba(227,168,56,0.3);border-radius:6px;padding:0.5rem 1rem;margin-bottom:1rem;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:0.06em;display:flex;align-items:center;gap:0.7rem;justify-content:space-between}
+#archive-banner span{opacity:0.7;cursor:pointer;font-size:13px}
+#archive-banner span:hover{opacity:1}
 </style>
 </head>
 <body>
@@ -461,6 +506,7 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
   </div>
 </div>
 
+<div id="archive-banner" style="display:none;margin:0.5rem 1.5rem 0;"></div>
 <div id="cmodal" onclick="if(event.target===this)closeCal()">
   <div id="cbox">
     <div id="chdr"><h3>Select Date</h3><button id="cclose" onclick="closeCal()">&#x2715;</button></div>
@@ -519,6 +565,8 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
     <div class="sv visible" id="section-market-pulse">
       <div class="sey">Daily Market Pulse</div><div class="stitle">Oil &amp; Gas Commodity Markets</div>
       <div class="sdesc">Benchmark prices, commodity flows, and the market-moving stories of the day &mdash; the raw signal before the interpretation.</div>
+      <div id="ticker-strip"></div>
+      <div id="key-movers-wrap" style="display:none"><div class="km-label">Key Movers</div><div id="key-movers"></div></div>
       <div id="cards-market-pulse" class="cards-container" data-section="market-pulse">
       <div class="cards-loading">
         <div class="loading-dot"></div>
@@ -718,7 +766,7 @@ body{font-family:'Source Serif 4',serif;background:var(--bg);color:var(--t1);dis
   </main>
 </div>
 <script>
-const BANNER_IMGS=['1506905925346-21bda4d32df4', '1464822759023-fed622ff2c3b', '1519681393784-d120267933ba', '1486870591958-9b9d0d1dda99', '1454496522488-7a8e488e8606', '1434394354755-5f2b4dd02cb6', '1448375240586-882707db888b', '1441974231531-c6227db76b6e', '1501854140801-50d01698950b', '1447752875215-b2761acb3c5d', '1507525428034-b723cf961d3e', '1518543396467-b7f27e58c3c4', '1505118380757-91f5f5632de0', '1437622368342-7a3d73a34c8f', '1505765539314-a9090b5b0e26', '1469474968028-56623f02e42e', '1509316785289-025f5b846b35', '1682686580391-615b1f28e5ee', '1432462770865-65b70566d673', '1416339442236-8ceb164046f8', '1531366936337-7c912a4589a7', '1504701954957-2010ec3bcec1', '1475924156734-496f6cac6ec1', '1446329813274-7c9036bd9b1f', '1470252649378-9c29740c9fa8', '1504700610630-ac6aba3536d3', '1516912481800-0788d785db24', '1476610182048-b716b8518aae', '1520808663517-b0f2a4dca504', '1548199973-03cce0bbc87b', '1467269204165-bdbdd9e01bef', '1558618666-fcd25c85cd64', '1533929736458-ca588d08c8be', '1539650116574-75c0c65ec5ef', '1512917774080-9991f1c4c750', '1520250497591-112f2f40a3f4', '1541888946425-d81bb19240f5', '1477959858617-67f85cf4f1df', '1555952517-2e8e729e0960', '1502786129703-90c633553893', '1513635269975-59663e0ac1ad', '1519389950473-47ba0277781c', '1465146344425-f00d5f5c8f07', '1523496922380-91d5afba98ea', '1476673160081-cf065607f449', '1470770903676-25b14979c03c', '1491555103944-7c647fd857e6', '1507003211169-0a1dd7228f2d', '1426604966848-d7adac402bff', '1501436513145-30f24e19fcc8', '1470770841072-f978cf4d7691'];
+var BANNER_TOPICS=['oil-refinery-industrial','offshore-oil-rig','petroleum-pipeline-industry','gas-flare-night-industrial','lng-terminal-port','oil-drilling-rig','petrochemical-plant-night','crude-oil-refinery','energy-industrial-plant','refinery-night-industrial','oil-pump-jack-field','pipeline-industrial-energy','chemical-plant-factory','offshore-oil-platform-ocean','tanker-ship-ocean','natural-gas-plant','oil-field-energy','industrial-factory-night','steel-industrial','power-plant-industrial'];
 const MONTH_NAMES=['January','February','March','April','May','June','July','August','September','October','November','December'];
 
 function dateGetDOY(d){return Math.floor((d-new Date(d.getFullYear(),0,0))/864e5)}
@@ -736,29 +784,42 @@ function seededShuffle(arr, seed) {
   return a;
 }
 function bannerSet(dateObj) {
-  // Shuffle by year*12+month so order changes monthly, no repeats within year
+  // Shuffle topics monthly, index by day-of-year — changes daily, cycles monthly
   var seed = dateObj.getFullYear() * 12 + dateObj.getMonth();
-  var shuffled = seededShuffle(BANNER_IMGS, seed);
-  // Index by day-of-year within the shuffled array
+  var shuffled = seededShuffle(BANNER_TOPICS, seed);
   var doy = dateGetDOY(dateObj);
   var idx = doy % shuffled.length;
+  var sig = seed * 400 + doy;  // unique number per day for Unsplash cache-bust
   var img = document.getElementById('bimg');
   if (!img) return;
   img.style.opacity = 0;
-  img.src = 'https://images.unsplash.com/photo-' + shuffled[idx] + '?w=1600&q=80&fit=crop';
+  img.src = 'https://source.unsplash.com/featured/1600x900/?' + shuffled[idx] + '&sig=' + sig;
   img.onload = function() { img.style.opacity = 1; };
   var el = document.getElementById('bdateline');
   if (el) el.textContent = dateFmt(dateObj);
 }
 
-var ARCH_KEY='eib_v5';
-function archGet(){try{return JSON.parse(localStorage.getItem(ARCH_KEY)||'{}')}catch(e){return {}}}
-function archSaveToday(){var a=archGet(),k=dateKey(new Date());if(!a[k]){a[k]=1;localStorage.setItem(ARCH_KEY,JSON.stringify(a))}}
+// Archive — backed by GitHub (data/archive/manifest.json), no localStorage dependency
+var _archManifest=null;
+function archGet(){return _archManifest||{}}
+function archSaveToday(){/* no-op: archive is written server-side by generate_digest.py */}
+function loadManifest(){
+  if(_archManifest)return Promise.resolve(_archManifest);
+  return fetch('data/archive/manifest.json?v='+Date.now())
+    .then(function(r){return r.ok?r.json():{}})
+    .catch(function(){return {}})
+    .then(function(m){
+      _archManifest={};
+      (m.dates||[]).forEach(function(d){_archManifest[d]=1});
+      return _archManifest;
+    });
+}
 
 var calY,calM,calSelK;
 function openCal(){
   var n=new Date();calY=n.getFullYear();calM=n.getMonth();calSelK=dateKey(n);
-  calBuildYears();document.getElementById('cmonth').value=calM;calRender();
+  calBuildYears();document.getElementById('cmonth').value=calM;
+  loadManifest().then(function(){calRender()});
   document.getElementById('cmodal').classList.add('open');
 }
 function closeCal(){document.getElementById('cmodal').classList.remove('open')}
@@ -781,7 +842,7 @@ function calRender(){
     var cls='cday',isT=(k===tk),hasD=(arch[k]||isT),isSel=(k===calSelK);
     if(hasD)cls+=' has';if(isT)cls+=' today';if(isSel)cls+=' sel';
     el.className=cls;el.textContent=d+(isT?' \u00b7':'');
-    if(hasD){(function(k2){el.onclick=function(){calSelK=k2;var pts=k2.split('-');bannerSet(new Date(+pts[0],+pts[1]-1,+pts[2]));closeCal();calRender()}})(k)}
+    if(hasD){(function(k2){el.onclick=function(){calSelK=k2;var pts=k2.split('-');bannerSet(new Date(+pts[0],+pts[1]-1,+pts[2]));closeCal();calRender();loadArchiveDate(k2)}})(k)}
     g.appendChild(el);
   }
 }
@@ -1627,23 +1688,104 @@ function loadDigest() {
     })
     .then(function(data) {
       digestData = data;
-      // Update banner date if content has a display date
       if (data.date_display) {
         var bdEl = document.getElementById('bdateline');
         if (bdEl) bdEl.textContent = data.date_display;
       }
-      // Populate all sections
-      var secs = data.sections || {};
-      Object.keys(secs).forEach(function(sid) {
-        populateSection(sid, secs[sid].cards);
-      });
-      // frameworks section rendered via populateSection like all others
+      renderAllSections(data);
     })
     .catch(function(err) {
       console.error('Digest load failed (both primary and fallback):', err);
       document.querySelectorAll('.cards-container').forEach(function(c) {
         c.innerHTML = '<div class="cards-empty">Could not load today\'s digest. Error: ' + err.message + '</div>';
       });
+    });
+}
+
+
+// ── Ticker + section rendering ─────────────────────────────────────────────
+function renderMarketPulse(sec) {
+  // Ticker strip
+  var strip = document.getElementById('ticker-strip');
+  if (strip && sec.tickers && sec.tickers.length) {
+    strip.innerHTML = '';
+    sec.tickers.forEach(function(tk) {
+      var dir = (tk.dir||'').toLowerCase();
+      var arrow = dir==='up' ? '▲' : dir==='down' ? '▼' : '●';
+      var item = document.createElement('div');
+      item.className = 'tk-item tk-' + (dir||'flat');
+      item.innerHTML =
+        '<div class="tk-symbol">' + escHtml(tk.symbol||'') + '</div>' +
+        '<div class="tk-name">' + escHtml(tk.label||'') + '</div>' +
+        '<div class="tk-price">' + escHtml(tk.price||'—') + '<span class="tk-unit">' + escHtml(tk.unit||'') + '</span></div>' +
+        '<div class="tk-change">' + arrow + ' ' + escHtml(tk.change||'') + '</div>' +
+      strip.appendChild(item);
+    });
+  }
+  // Key movers
+  var kmw = document.getElementById('key-movers-wrap');
+  var km = document.getElementById('key-movers');
+  if (km && sec.key_movers && sec.key_movers.length) {
+    km.innerHTML = '';
+    sec.key_movers.forEach(function(m) {
+      var dir = (m.dir||'').toLowerCase();
+      var card = document.createElement('div');
+      card.className = 'km-card km-' + (dir||'flat');
+      card.innerHTML =
+        '<div class="km-name">' + escHtml(m.name||'') + '</div>' +
+        '<div class="km-sym">' + escHtml(m.ticker||'') + '</div>' +
+        '<div class="km-chg">' + escHtml(m.move||'') + '</div>' +
+        '<div class="km-note">' + escHtml(m.note||'') + '</div>';
+      km.appendChild(card);
+    });
+    if(kmw) kmw.style.display='block';
+  }
+  // Analysis cards
+  populateSection('market-pulse', sec.cards || []);
+}
+
+function renderAllSections(data) {
+  var secs = data.sections || {};
+  Object.keys(secs).forEach(function(sid) {
+    if (sid === 'market-pulse') {
+      renderMarketPulse(secs[sid]);
+    } else {
+      populateSection(sid, secs[sid].cards);
+    }
+  });
+}
+
+// ── Archive loading ────────────────────────────────────────────────────────
+function loadArchiveDate(dateStr) {
+  var today = dateKey(new Date());
+  var banner = document.getElementById('archive-banner');
+  if (dateStr === today) {
+    if(banner) banner.style.display='none';
+    loadDigest(); return;
+  }
+  // Show archive banner
+  if (banner) {
+    banner.style.display = 'flex';
+    banner.innerHTML = '<div>&#x1F4C5; Viewing archive: <strong>' + dateStr + '</strong></div><span onclick="loadArchiveDate(''+dateKey(new Date())+'')" title="Back to today">&#x2715;</span>';
+  }
+  // Show loading spinners
+  document.querySelectorAll('.cards-container').forEach(function(c){
+    c.innerHTML='<div class="cards-loading"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>';
+  });
+  var strip=document.getElementById('ticker-strip');if(strip)strip.innerHTML='';
+  var kmw=document.getElementById('key-movers-wrap');if(kmw)kmw.style.display='none';
+  // Fetch archive file
+  var url = 'data/archive/' + dateStr + '.json?v=' + Date.now();
+  fetch(url)
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .catch(function(err){
+      document.querySelectorAll('.cards-container').forEach(function(c){
+        c.innerHTML='<div class="cards-empty">Archive for '+dateStr+' not available. '+err.message+'</div>';
+      });
+    })
+    .then(function(data){
+      if(!data) return;
+      renderAllSections(data);
     });
 }
 
