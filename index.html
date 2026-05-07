@@ -1228,6 +1228,7 @@ window.DAILY_DATA = {
       "audience": "IOCs · NOCs · Private Equity · Strategy Consultants · EPC PMOs",
       "read_time": "~9 min read",
       "sources": "McKinsey, BCG, Wood Mackenzie",
+      "url": "https://www.mckinsey.com/industries/oil-and-gas/our-insights/global-energy-perspective",
       "intro": "Energy companies face an unprecedented capital allocation dilemma: continue sweating hydrocarbon assets that still generate the bulk of their cash flows, or accelerate transition investments that currently return below WACC but de-risk the long-term portfolio.",
       "framework_title": "The Framework — Two Horizons, One Portfolio",
       "framework_desc": "The Dual-Horizon Capital Framework separates capital decisions into two concurrent tracks — maximising present-value hydrocarbon returns whilst building the transition option value — rather than treating them as mutually exclusive.",
@@ -1249,7 +1250,8 @@ window.DAILY_DATA = {
         "read_time": "~8 min",
         "tag": "E&P / Consultant",
         "tag_bg": "var(--tag-bg)",
-        "tag_color": "var(--ink)"
+        "tag_color": "var(--ink)",
+        "url": "https://www.rystadenergy.com/research/upstream/ucube/"
       },
       {
         "label": "🛢️ Midstream · LNG Strategy",
@@ -1258,7 +1260,8 @@ window.DAILY_DATA = {
         "read_time": "~8 min",
         "tag": "LNG / Trading",
         "tag_bg": "var(--steel-light)",
-        "tag_color": "var(--steel)"
+        "tag_color": "var(--steel)",
+        "url": "https://www.woodmac.com/market/upstream-oil-and-gas/lng/"
       },
       {
         "label": "⚙️ Operations · EPC",
@@ -1267,7 +1270,8 @@ window.DAILY_DATA = {
         "read_time": "~9 min",
         "tag": "PMC / EPC",
         "tag_bg": "var(--steel-light)",
-        "tag_color": "var(--steel)"
+        "tag_color": "var(--steel)",
+        "url": "https://www.offshore-technology.com/features/understanding-the-stages-of-oil-and-gas-project-development/"
       }
     ]
   },
@@ -1584,11 +1588,6 @@ window.DAILY_DATA = {
           <span class="strategy-tag">Consultant</span>
         </div>
       </div>
-      <div>
-        <div style="font-size:12px; color:#aaa; margin-bottom:6px; font-family:'DM Mono',monospace">Relevance to:</div>
-        <div style="font-size:13px; color:#ccc; margin-bottom:16px" class="js-strategy-audience">IOCs · NOCs · Private Equity · Strategy Consultants · EPC PMOs</div>
-        <div class="strategy-read-time js-strategy-read-time">⏱ ~9 min read &nbsp;·&nbsp; Sources: McKinsey, BCG, Wood Mackenzie</div>
-      </div>
     </div>
 
     <div class="strategy-body">
@@ -1608,14 +1607,14 @@ window.DAILY_DATA = {
       <div class="strategy-section-head js-strategy-watchpoints-title">Key Watchpoints for Consultants</div>
       <p class="js-strategy-watchpoints" style="font-size:13px; color:var(--muted); line-height:1.65">Watch for NOC clients (e.g., Aramco, ADNOC, ONGC) where national mandate often overrides pure capital efficiency logic — portfolio decisions are as much geopolitical as economic. For IOC clients (Shell, bp, TotalEnergies), the capital allocation conversation is frequently a board-level negotiation between short-cycle shale returns and long-cycle LNG/deepwater FIDs. Break-even analysis against the forward Brent curve remains the most effective decision-support tool in volatile markets.</p>
 
-      <button class="strategy-cta" onclick="window.print()">Read Full 1-Pager →</button>
+      <button class="strategy-cta js-strategy-cta" data-url="https://www.mckinsey.com/industries/oil-and-gas/our-insights/global-energy-perspective" onclick="var u=this.dataset.url;if(u)window.open(u,'_blank')">Read Full 1-Pager →</button>
     </div>
   </div>
 
   <!-- Mini strategy cards -->
   <div style="margin-bottom:16px; font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted); font-weight:600">More Frameworks This Week</div>
   <div class="strategy-grid js-strategy-mini-grid">
-    <div class="strategy-mini" data-search="Rystad UCube supply cost curves upstream asset screening">
+    <div class="strategy-mini" data-url="https://www.rystadenergy.com/research/upstream/ucube/">
       <div class="strategy-mini-label">🔍 Upstream · Due Diligence</div>
       <div class="strategy-mini-title">Rystad UCube in Practice: Reading Supply Cost Curves for Asset Screening</div>
       <div class="strategy-mini-desc">A step-by-step guide to interpreting Rystad Energy's UCube output for upstream M&amp;A screening, cost benchmarking, and reserve life analysis.</div>
@@ -1624,7 +1623,7 @@ window.DAILY_DATA = {
         <span style="font-size:10px; padding:3px 8px; background:var(--tag-bg); border-radius:2px; font-weight:600">E&amp;P / Consultant</span>
       </div>
     </div>
-    <div class="strategy-mini" data-search="Tolling vs Equity LNG commercial models liquefaction capacity">
+    <div class="strategy-mini" data-url="https://www.woodmac.com/market/upstream-oil-and-gas/lng/">
       <div class="strategy-mini-label">🛢️ Midstream · LNG Strategy</div>
       <div class="strategy-mini-title">Tolling vs. Equity LNG: Structuring Commercial Models for New Liquefaction Capacity</div>
       <div class="strategy-mini-desc">How IOCs and NOCs choose between tolling arrangements and equity stakes in LNG projects — risk allocation, offtake structures, and IRR implications in a volatile gas market.</div>
@@ -1633,7 +1632,7 @@ window.DAILY_DATA = {
         <span style="font-size:10px; padding:3px 8px; background:var(--steel-light); border-radius:2px; font-weight:600; color:var(--steel)">LNG / Trading</span>
       </div>
     </div>
-    <div class="strategy-mini" data-search="FEED to FID stage-gate framework LNG project sanctioning">
+    <div class="strategy-mini" data-url="https://www.offshore-technology.com/features/understanding-the-stages-of-oil-and-gas-project-development/">
       <div class="strategy-mini-label">⚙️ Operations · EPC</div>
       <div class="strategy-mini-title">FEED to FID: A Stage-Gate Framework for LNG Project Sanctioning</div>
       <div class="strategy-mini-desc">How global project teams use stage-gate governance from Pre-FEED through FEED and into EPC—illustrated with reference to recent brownfield LNG projects in Qatar and the US Gulf Coast.</div>
@@ -2010,10 +2009,10 @@ function sendContact(){
 document.addEventListener('click', function(e){ if(e.target.id==='contact-modal') closeContact(); });
 document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeContact(); });
 
-// Strategy mini-card search
+// Strategy mini-card link
 document.addEventListener('click', function(e) {
-  var card = e.target.closest('.strategy-mini[data-search]');
-  if (card) window.open('https://www.google.com/search?q=' + encodeURIComponent(card.dataset.search), '_blank');
+  var card = e.target.closest('.strategy-mini[data-url]');
+  if (card && card.dataset.url) window.open(card.dataset.url, '_blank');
 });
 
 // ══════════════════════════════════════════════════════
@@ -2187,9 +2186,10 @@ function renderStrategy(s) {
 
     set('.js-strategy-label', f.label);
     set('.js-strategy-title', f.title);
-    set('.js-strategy-audience', f.audience);
-    set('.js-strategy-read-time', '⏱ ' + f.read_time + '  ·  Sources: ' + f.sources);
     set('.js-strategy-intro', f.intro);
+
+    var ctaBtn = document.querySelector('.js-strategy-cta');
+    if (ctaBtn && f.url) ctaBtn.dataset.url = f.url;
     set('.js-strategy-framework-title', f.framework_title);
     set('.js-strategy-framework-desc', f.framework_desc);
     set('.js-strategy-watchpoints-title', f.watchpoints_title);
@@ -2212,7 +2212,7 @@ function renderStrategy(s) {
     var grid = document.querySelector('.js-strategy-mini-grid');
     if (grid) {
       grid.innerHTML = s.mini_cards.map(function(c) {
-        return '<div class="strategy-mini" data-search="' + esc(c.title) + '">'
+        return '<div class="strategy-mini" data-url="' + esc(c.url || '') + '">'
           + '<div class="strategy-mini-label">' + esc(c.label) + '</div>'
           + '<div class="strategy-mini-title">' + esc(c.title) + '</div>'
           + '<div class="strategy-mini-desc">' + esc(c.desc) + '</div>'

@@ -209,6 +209,7 @@ Return this exact JSON structure (fill all values with real data):
       "audience": "IOCs · NOCs · Private Equity · Strategy Consultants · EPC PMOs",
       "read_time": "~X min read",
       "sources": "McKinsey, BCG, Wood Mackenzie",
+      "url": "https://actual-article-url.com/full-article",
       "intro": "Opening italic paragraph.",
       "framework_title": "The Framework — subtitle",
       "framework_desc": "One paragraph describing the framework.",
@@ -230,7 +231,8 @@ Return this exact JSON structure (fill all values with real data):
         "read_time": "~X min",
         "tag": "E&P / Consultant",
         "tag_bg": "var(--tag-bg)",
-        "tag_color": "var(--ink)"
+        "tag_color": "var(--ink)",
+        "url": "https://actual-article-url.com/upstream-article"
       }},
       {{
         "label": "🛢️ Midstream · LNG Strategy",
@@ -239,7 +241,8 @@ Return this exact JSON structure (fill all values with real data):
         "read_time": "~X min",
         "tag": "LNG / Trading",
         "tag_bg": "var(--steel-light)",
-        "tag_color": "var(--steel)"
+        "tag_color": "var(--steel)",
+        "url": "https://actual-article-url.com/lng-article"
       }},
       {{
         "label": "⚙️ Operations · EPC",
@@ -248,7 +251,8 @@ Return this exact JSON structure (fill all values with real data):
         "read_time": "~X min",
         "tag": "PMC / EPC",
         "tag_bg": "var(--tag-bg)",
-        "tag_color": "var(--ink)"
+        "tag_color": "var(--ink)",
+        "url": "https://actual-article-url.com/epc-article"
       }}
     ]
   }},
@@ -374,7 +378,7 @@ Use web search to gather all current data. Search for:
 2. Top oil & gas news from the last 24 hours across: upstream E&P, LNG markets, offshore, midstream pipelines, downstream refining, petrochemicals, OPEC+ policy, geopolitics/sanctions affecting oil flows, O&G M&A
 3. India-specific O&G news: crude imports, refinery throughput, LNG imports, ONGC/IOC/BPCL/Reliance updates, government petroleum policy
 4. Major O&G project updates: FIDs, EPC awards, FEED commencements, first oil milestones, LNG project sanctions, refinery expansions
-5. An O&G strategy framework relevant to today's upstream, midstream, or downstream market conditions
+5. An O&G strategy framework relevant to today's upstream, midstream, or downstream market conditions — include a real published article URL for the featured framework and for each of the 3 mini cards (use web_search to find actual URLs from McKinsey, BCG, Wood Mackenzie, Rystad, S&P, Offshore Technology, or similar authoritative O&G sources)
 
 Focus strictly on oil & gas. Do not include renewables, wind, solar, hydrogen, CCUS, nuclear, or carbon markets.
 Search broadly and return the complete JSON as specified. Be precise with numbers and attribute all data to real sources."""
