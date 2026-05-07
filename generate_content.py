@@ -396,39 +396,46 @@ Use web search to gather all current data. Search for:
 Search broadly and return the complete JSON as specified. Be precise with numbers and attribute all data to real sources."""
 
 # ── API Call ───────────────────────────────────────────────────────────────────
+MAX_RETRIES = 3
+
 def fetch_content() -> dict:
     _key = os.environ.get("OPENAI_API_KEY", "")
     if not _key:
         sys.exit("ERROR: OPENAI_API_KEY not set in environment.")
-    client = OpenAI(api_key=_key, timeout=180.0)
+    client = OpenAI(api_key=_key, timeout=240.0)
     del _key
 
-    print("Calling OpenAI API with web search...")
-    response = client.responses.create(
-        model="gpt-4o",
-        tools=[{"type": "web_search_preview"}],
-        instructions=SYSTEM_PROMPT,
-        input=USER_PROMPT,
-    )
+    for attempt in range(1, MAX_RETRIES + 1):
+        print(f"Calling OpenAI API with web search (attempt {attempt}/{MAX_RETRIES})...")
+        response = client.responses.create(
+            model="gpt-4o",
+            tools=[{"type": "web_search_preview"}],
+            instructions=SYSTEM_PROMPT,
+            input=USER_PROMPT,
+            max_output_tokens=16000,
+        )
 
-    raw = ""
-    for item in response.output:
-        if item.type == "message":
-            for block in item.content:
-                if block.type == "output_text":
-                    raw = block.text
+        raw = ""
+        for item in response.output:
+            if item.type == "message":
+                for block in item.content:
+                    if block.type == "output_text":
+                        raw = block.text
 
-    raw = re.sub(r"```json|```", "", raw).strip()
+        raw = re.sub(r"```json|```", "", raw).strip()
 
-    try:
-        data = json.loads(raw)
-    except json.JSONDecodeError as e:
-        print(f"JSON parse error: {e}")
-        print(f"Raw response snippet: {raw[:500]}")
-        sys.exit(1)
+        try:
+            data = json.loads(raw)
+            print("Content fetched and parsed successfully.")
+            return data
+        except json.JSONDecodeError as e:
+            print(f"JSON parse error (attempt {attempt}): {e}")
+            print(f"Response length: {len(raw)} chars — Raw tail: ...{raw[-200:]}")
+            if attempt == MAX_RETRIES:
+                sys.exit(f"Failed after {MAX_RETRIES} attempts — last error: {e}")
+            print("Retrying...")
 
-    print("Content fetched and parsed successfully.")
-    return data
+    sys.exit("Unreachable")
 
 
 # ── HTML Injection ─────────────────────────────────────────────────────────────
