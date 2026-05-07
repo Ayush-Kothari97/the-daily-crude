@@ -3,7 +3,7 @@
 A personal daily energy intelligence dashboard — automatically updated every day at 7:00 AM IST.
 
 ## Live Dashboard
-**[ayush-kothari97.github.io/energy-brief](https://ayush-kothari97.github.io/energy-brief)**
+**[ayush-kothari97.github.io/energy-brief](https://ayush-kothari97.github.io/the-daily-crude)**
 
 ## How it works
 
