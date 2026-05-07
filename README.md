@@ -1,73 +1,99 @@
-# The Energy Intelligence Brief
+# The Daily Crude
 
-A personal daily energy intelligence dashboard — automatically updated every day at 7:00 AM IST.
+A professional daily energy intelligence brief — automatically updated every day at 08:00 IST.
 
-## Live Dashboard
+## Live Site
 **[ayush-kothari97.github.io/the-daily-crude](https://ayush-kothari97.github.io/the-daily-crude)**
 
 ## How it works
 
 ```
-7:00 AM IST (01:30 UTC)
+08:00 IST (02:30 UTC) — GitHub Actions cron
         │
         ▼
-GitHub Actions runner (Ubuntu, server-side)
+generate_content.py
         │  reads OPENAI_API_KEY from GitHub Secrets
+        │  calls OpenAI Responses API (gpt-4o + web_search_preview)
+        │  fetches live prices, news, project updates
         ▼
-OpenAI GPT-4o searches and writes all digest sections
+index.html updated
+        │  window.DAILY_DATA injected as inline <script>
+        ▼
+commit + push to main
         │
         ▼
-data/content.json committed to repo
-        │
-        ▼
-GitHub Pages serves updated dashboard
-        │
-        ▼
-Browser loads index.html → fetches content.json → populates cards
+GitHub Pages serves updated index.html
 ```
 
 ## Repository structure
 
 ```
-energy-brief/
-├── index.html                   ← Dashboard (self-contained, all map data inline)
-├── data/
-│   └── content.json             ← Daily generated content (auto-committed)
-├── scripts/
-│   └── generate_digest.py       ← OpenAI generation script
+the-daily-crude/
+├── index.html                        ← Single-file frontend (self-contained)
+├── generate_content.py               ← Content generator (OpenAI Responses API)
+├── requirements.txt                  ← Pinned Python dependencies
 ├── .github/
 │   └── workflows/
-│       └── daily-digest.yml     ← GitHub Actions cron job
+│       └── daily_update.yml          ← GitHub Actions cron job (08:00 IST)
+├── .gitignore
 └── README.md
 ```
 
-## Security
+## Branches
 
-- The `OPENAI_API_KEY` is stored **only** in GitHub Secrets (Settings → Secrets → Actions)
-- It is **never** written to any file in this repository
-- It is **never** printed or logged during the workflow
-- It is injected into the Actions runner memory at runtime only
-- Users of the dashboard download `index.html` and `content.json` — neither contains any key
+| Branch | Purpose |
+|---|---|
+| `main` | Production — GitHub Pages serves from here |
+| `develop` | Staging — all active development and testing |
+
+Merge `develop` → `main` only when changes are verified.
+
+## Local development
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Set your API key
+export OPENAI_API_KEY=sk-...
+
+# Run the generator
+python generate_content.py
+
+# Open index.html in a browser to verify output
+```
+
+## GitHub Actions setup
+
+One secret required in **Settings → Secrets and variables → Actions**:
+
+| Secret | Value |
+|---|---|
+| `OPENAI_API_KEY` | Your OpenAI API key |
 
 ## Manual trigger
 
-To regenerate the digest at any time:
-1. Go to **Actions** tab in this repository
-2. Select **Daily Energy Digest**
+To regenerate content at any time:
+1. Go to **Actions** tab
+2. Select **Daily Crude — Content Update**
 3. Click **Run workflow**
 
-## Sections covered
+## Coverage
 
-| Section | Sources |
+| Section | Data |
 |---|---|
-| Daily Market Pulse | OGJ, OilPrice.com, EIA, Platts, Argus |
-| Geopolitical Lens | CSIS, Columbia CGEP, OIES, Doomberg |
-| India Monitor | India Energy Week, TERI, MoPNG |
-| Sector Deep Dive | SPE/JPT, Wood Mackenzie, Rystad, ICIS |
-| Project Tracker | Hart Energy, Upstream Online, Renewables Now |
-| Supply & Demand | IEA OMR, EIA STEO, OPEC MOMR |
-| Strategic Frameworks | McKinsey, BCG, Deloitte |
-| Energy Transition | Canary Media, Carbon Brief, BNEF, H2 Bulletin, World Nuclear News |
+| Ticker bar | Brent, WTI, Dubai, JKM LNG, TTF, Henry Hub, EU ETS, OPEC Basket, Naphtha, Gasoil |
+| Market pulse | Macro signal, price cards, carbon credits, market drivers |
+| India monitor | Headline story, news cards, key stats |
+| Global news | 9 sectors: Upstream, Policy, Renewables, Hydrogen, Midstream, Offshore, CCUS, Nuclear, Downstream |
+| Strategy | Framework of the Day + 3 mini cards |
+| Project tracker | 9 active global energy projects |
+
+## Security
+
+- `OPENAI_API_KEY` is stored **only** in GitHub Secrets
+- Never written to any file, never logged, never committed
+- Injected into the Actions runner at runtime only
 
 ## Built by
-Ayush Kothari · [Substack](https://substack.com) · Mumbai, India
+Ayush Kothari · Mumbai, India
