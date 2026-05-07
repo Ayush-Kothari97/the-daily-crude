@@ -107,16 +107,14 @@ Return this exact JSON structure (fill all values with real data):
         "sector_color": "#c57800",
         "title": "News card title",
         "summary": "2-3 sentence summary.",
-        "source": "Source Name",
-        "time": "XX:XX IST"
+        "source": "Source Name"
       }},
       {{
         "sector": "Upstream",
         "sector_color": "#c8401a",
         "title": "News card title",
         "summary": "2-3 sentence summary.",
-        "source": "Source Name",
-        "time": "XX:XX IST"
+        "source": "Source Name"
       }}
     ],
     "stats": [
@@ -135,8 +133,7 @@ Return this exact JSON structure (fill all values with real data):
       "dot_color": "#c8401a",
       "title": "News headline",
       "summary": "2-3 sentence summary.",
-      "source": "Source",
-      "time": "XX:XX IST"
+      "source": "Source"
     }},
     {{
       "sector": "Policy · Regulation",
@@ -144,8 +141,7 @@ Return this exact JSON structure (fill all values with real data):
       "dot_color": "#5a3a00",
       "title": "News headline",
       "summary": "2-3 sentence summary.",
-      "source": "Source",
-      "time": "XX:XX IST"
+      "source": "Source"
     }},
     {{
       "sector": "Midstream · LNG",
@@ -153,8 +149,7 @@ Return this exact JSON structure (fill all values with real data):
       "dot_color": "#8b4500",
       "title": "News headline",
       "summary": "2-3 sentence summary.",
-      "source": "Source",
-      "time": "XX:XX IST"
+      "source": "Source"
     }},
     {{
       "sector": "Offshore · Subsea",
@@ -162,8 +157,7 @@ Return this exact JSON structure (fill all values with real data):
       "dot_color": "#1e4a7a",
       "title": "News headline",
       "summary": "2-3 sentence summary.",
-      "source": "Source",
-      "time": "XX:XX IST"
+      "source": "Source"
     }},
     {{
       "sector": "Downstream · Petrochemicals",
@@ -171,8 +165,7 @@ Return this exact JSON structure (fill all values with real data):
       "dot_color": "#1e3a5f",
       "title": "News headline",
       "summary": "2-3 sentence summary.",
-      "source": "Source",
-      "time": "XX:XX IST"
+      "source": "Source"
     }},
     {{
       "sector": "OPEC+ · Supply",
@@ -180,8 +173,7 @@ Return this exact JSON structure (fill all values with real data):
       "dot_color": "#8b1a00",
       "title": "News headline",
       "summary": "2-3 sentence summary.",
-      "source": "Source",
-      "time": "XX:XX IST"
+      "source": "Source"
     }},
     {{
       "sector": "Refining · Margins",
@@ -189,8 +181,7 @@ Return this exact JSON structure (fill all values with real data):
       "dot_color": "#1e3a5f",
       "title": "News headline",
       "summary": "2-3 sentence summary.",
-      "source": "Source",
-      "time": "XX:XX IST"
+      "source": "Source"
     }},
     {{
       "sector": "Geopolitics · Sanctions",
@@ -198,8 +189,7 @@ Return this exact JSON structure (fill all values with real data):
       "dot_color": "#5a3a00",
       "title": "News headline",
       "summary": "2-3 sentence summary.",
-      "source": "Source",
-      "time": "XX:XX IST"
+      "source": "Source"
     }},
     {{
       "sector": "M&A · Corporate",
@@ -207,8 +197,7 @@ Return this exact JSON structure (fill all values with real data):
       "dot_color": "#c8401a",
       "title": "News headline",
       "summary": "2-3 sentence summary.",
-      "source": "Source",
-      "time": "XX:XX IST"
+      "source": "Source"
     }}
   ],
 

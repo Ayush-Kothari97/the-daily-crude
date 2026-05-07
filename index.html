@@ -87,7 +87,7 @@
   /* Nav */
   .section-nav{
     display:grid;
-    grid-template-columns: auto repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     align-items:stretch;
     padding:0 40px;
     height:44.8px;
@@ -104,7 +104,7 @@
     cursor:pointer;
     position:relative;
   }
-  .nav-tab:first-child{justify-content:flex-start; padding-left:0; padding-right:0;}
+  .nav-tab:first-child{justify-content:center;}
 
   .nav-tab.active{
     border-bottom-color:#f5f0e8;
@@ -930,14 +930,14 @@
   }
   .contact-btn:hover { background: rgba(200,64,26,0.2); border-color: #c8401a; color: #fff; }
   .contact-btn-footer {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: transparent; border: 1px solid rgba(255,255,255,0.15);
-    color: #aaa; font-family: 'DM Sans', sans-serif; font-size: 11px;
-    font-weight: 600; letter-spacing: 0.8px; padding: 5px 14px;
+    display: inline-flex; align-items: center; gap: 7px;
+    background: transparent; border: 1px solid rgba(245,240,232,0.25);
+    color: #f5f0e8; font-family: 'DM Sans', sans-serif; font-size: 11.5px;
+    font-weight: 600; letter-spacing: 1px; padding: 7px 16px;
     border-radius: 20px; cursor: pointer; transition: all 0.2s;
     text-transform: uppercase; flex-shrink: 0;
   }
-  .contact-btn-footer:hover { border-color: #c8401a; color: #f5f0e8; }
+  .contact-btn-footer:hover { background: rgba(200,64,26,0.2); border-color: #c8401a; color: #fff; }
   #contact-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
   #contact-modal.open { display:flex; }
   #contact-modal-box { background:#1a1610; border:1px solid #2e2a22; border-radius:12px; padding:36px 40px; width:100%; max-width:480px; position:relative; box-shadow:0 24px 80px rgba(0,0,0,0.6); }
@@ -962,69 +962,18 @@ window.DAILY_DATA = {
     "last_updated": "08:00 IST"
   },
   "ticker": [
-    {
-      "label": "BRENT",
-      "price": "$99.65/bbl",
-      "change": "▼ 1.60%",
-      "direction": "down"
-    },
-    {
-      "label": "WTI",
-      "price": "$93.36/bbl",
-      "change": "▼ 1.81%",
-      "direction": "down"
-    },
-    {
-      "label": "DUBAI CRUDE",
-      "price": "$75.27/bbl",
-      "change": "▲ 0.22%",
-      "direction": "up"
-    },
-    {
-      "label": "JKM LNG",
-      "price": "$XX.XX/MMBtu",
-      "change": "▲/▼ X.XX%",
-      "direction": "up|down|flat"
-    },
-    {
-      "label": "TTF GAS",
-      "price": "€XX.XX/MWh",
-      "change": "▲/▼ X.XX%",
-      "direction": "up|down|flat"
-    },
-    {
-      "label": "HH NATGAS",
-      "price": "$2.78/MMBtu",
-      "change": "▼ 0.18%",
-      "direction": "down"
-    },
-    {
-      "label": "EU ETS",
-      "price": "€75.02/tCO₂",
-      "change": "▲ 0.48%",
-      "direction": "up"
-    },
-    {
-      "label": "OPEC BASKET",
-      "price": "$74.44/bbl",
-      "change": "▼ 0.08%",
-      "direction": "down"
-    },
-    {
-      "label": "NAPHTHA CIF ARA",
-      "price": "$XXX/MT",
-      "change": "▲/▼ X.XX%",
-      "direction": "up|down|flat"
-    },
-    {
-      "label": "GASOIL ICE",
-      "price": "$684.88/MT",
-      "change": "▼ 0.09%",
-      "direction": "down"
-    }
+    {"label": "BRENT", "price": "$99.65/bbl", "change": "▼ 1.60%", "direction": "down"},
+    {"label": "WTI", "price": "$93.36/bbl", "change": "▼ 1.81%", "direction": "down"},
+    {"label": "DUBAI CRUDE", "price": "$75.27/bbl", "change": "▲ 0.22%", "direction": "up"},
+    {"label": "JKM LNG", "price": "$16.80/MMBtu", "change": "▼ 3.90%", "direction": "down"},
+    {"label": "TTF GAS", "price": "€46.12/MWh", "change": "▼ 5.84%", "direction": "down"},
+    {"label": "HH NATGAS", "price": "$2.78/MMBtu", "change": "▼ 0.18%", "direction": "down"},
+    {"label": "OPEC BASKET", "price": "$74.44/bbl", "change": "▼ 0.08%", "direction": "down"},
+    {"label": "NAPHTHA CIF ARA", "price": "$642/MT", "change": "▼ 8.60%", "direction": "down"},
+    {"label": "GASOIL ICE", "price": "$684.88/MT", "change": "▼ 0.09%", "direction": "down"}
   ],
   "markets": {
-    "macro_signal": "Oil prices decline amid geopolitical tensions and market volatility.",
+    "macro_signal": "Brent falls to $99.65/bbl — down 1.60% — as OPEC+ output increases and demand outlook softens. WTI at $93.36. TTF eases to €46.12/MWh. Markets pricing slower demand recovery from China and continued production ramp from OPEC+ core members.",
     "prices": [
       {
         "commodity": "Brent Crude (ICE)",
@@ -1032,7 +981,7 @@ window.DAILY_DATA = {
         "change_abs": "-$1.62",
         "change_pct": "-1.60%",
         "direction": "down",
-        "meta": "Price decline influenced by market volatility."
+        "meta": "$/bbl · ICE · Front-Month"
       },
       {
         "commodity": "WTI Crude (NYMEX)",
@@ -1040,120 +989,94 @@ window.DAILY_DATA = {
         "change_abs": "-$1.72",
         "change_pct": "-1.81%",
         "direction": "down",
-        "meta": "WTI prices affected by geopolitical tensions."
+        "meta": "$/bbl · NYMEX · Front-Month"
       },
       {
         "commodity": "JKM LNG Spot",
-        "value": "$XX.XX",
-        "change_abs": "-$X.XX",
-        "change_pct": "-X.XX%",
+        "value": "$16.80",
+        "change_abs": "-$0.68",
+        "change_pct": "-3.90%",
         "direction": "down",
-        "meta": "$/MMBtu · Platts assessed · NE Asia delivery"
+        "meta": "$/MMBtu · Platts assessed · NE Asia delivery · Deal optimism easing supply fears"
       },
       {
         "commodity": "TTF Natural Gas",
-        "value": "€XX.XX",
-        "change_abs": "-€X.XX",
-        "change_pct": "-X.XX%",
+        "value": "€46.12",
+        "change_abs": "-€2.86",
+        "change_pct": "-5.84%",
         "direction": "down",
-        "meta": "€/MWh · ICE Endex · Front-Month"
-      }
-    ],
-    "carbon": [
-      {
-        "scheme": "EU ETS",
-        "price": "€75.02",
-        "change": "▲ 0.48%",
-        "note": "tCO₂ · ICE ECX"
-      },
-      {
-        "scheme": "UK ETS",
-        "price": "£XX.XX",
-        "change": "▲/▼ X.XX%",
-        "note": "tCO₂ · ICE"
-      },
-      {
-        "scheme": "California CCA",
-        "price": "$XX.XX",
-        "change": "▲/▼ X.XX%",
-        "note": "tCO₂ · ICE"
-      },
-      {
-        "scheme": "ACCU Australia",
-        "price": "A$XX.XX",
-        "change": "▲/▼ X.XX%",
-        "note": "tCO₂ · ASX"
+        "meta": "€/MWh · ICE Endex · Front-Month · Off peak as Iran deal talk eases panic"
       }
     ],
     "drivers": [
       {
         "icon": "🛢️",
-        "headline": "Geopolitical tensions impact oil markets",
-        "body": "Recent conflicts have led to decreased shipping volumes and increased market volatility."
+        "headline": "Iran Deal Signals Trigger Sharp Selloff",
+        "body": "Brent shed over 8% after Axios reported US officials believe a preliminary Iran nuclear framework could be reached imminently. Trump simultaneously paused Operation Project Freedom citing ceasefire progress. About 23,000 seafarers from 87 countries remain stranded in the Gulf."
       },
       {
         "icon": "🌏",
-        "headline": "Energy companies adjust strategies",
-        "body": "Firms like Suncor and Keyera are revising financial plans in response to market changes."
+        "headline": "UAE Exits OPEC+",
+        "body": "The UAE announced its departure from OPEC+, citing the organisation's failure to compensate members for lost Gulf revenues during the Hormuz crisis. JP Morgan says the exit could attract significantly more US investment to Abu Dhabi's upstream sector as ADNOC accelerates its 5 mb/d capacity expansion."
       },
       {
         "icon": "🔥",
-        "headline": "Natural gas prices remain volatile",
-        "body": "Henry Hub natural gas prices show slight declines amid fluctuating demand."
+        "headline": "Shell LNG Canada Stake",
+        "body": "Wall Street giants are circling Shell's $15 billion stake in LNG Canada as the Hormuz crisis reshapes global LNG trade flows. The facility — the only major LNG export terminal on Canada's Pacific coast — has become a critical supply node as Asian buyers pivot away from Middle East-linked cargoes."
       },
       {
         "icon": "🤝",
-        "headline": "New collaborations in energy sector",
-        "body": "Companies like INEOS and Shell are forming partnerships to explore new opportunities."
+        "headline": "OPEC+ UAE Exit & June Quotas",
+        "body": "UAE formally departed OPEC+ from May 1. The remaining group agreed a symbolic June production increase. US crude exports surged to record levels as global buyers pivot away from Middle East supply. EIA forecasts Brent to peak at $115/b in Q2 2026 before easing."
       }
     ]
   },
   "india": {
-    "headline": "India's energy sector adapts to global market shifts",
-    "headline_body": "India's energy sector is navigating global market shifts, focusing on securing crude imports and advancing renewable energy projects. The government is implementing policies to enhance energy security and promote sustainable development.",
+    "headline": "India Activates Natural Gas Control Order as LNG Spot Prices Surge to $16.80/MMBtu — Russia Offers to Boost Crude and LNG Supply",
+    "headline_body": "The Ministry of Petroleum & Natural Gas activated the Natural Gas Control Order under the Essential Commodities Act, prioritising fertiliser, refining, and CNG sectors amid surging import costs. India's crude import basket hit $113.57/bbl. PM Modi met Russian Deputy PM Denis Manturov; Russia signalled readiness to supply up to 25% of India's crude imports and expand LNG deliveries.",
     "news": [
       {
         "sector": "Refining",
         "sector_color": "#c57800",
-        "title": "India boosts refining capacity",
-        "summary": "India plans to increase its refining capacity to meet growing domestic demand and export opportunities.",
-        "source": "Energy News India",
-        "time": "10:00 IST"
+        "title": "India SPR Phase II Funded — ₹5,597 Cr Released to Convert Underground Caverns for Crisis Buffer",
+        "summary": "The government released ₹5,597 crore to ISPRL to convert two large underground caverns into petroleum storage facilities, accelerating strategic reserve expansion amid the Hormuz crisis.",
+        "source": "Hydrocarbon Processing",
+        "time": ""
       },
       {
-        "sector": "Renewables",
-        "sector_color": "#1a5c38",
-        "title": "Solar energy projects gain momentum",
-        "summary": "New solar energy projects are being launched across India, contributing to the National Solar Mission targets.",
-        "source": "Renewable Energy Times",
-        "time": "11:00 IST"
+        "sector": "Upstream",
+        "sector_color": "#c8401a",
+        "title": "Domestic LPG Output Up 36% — Refineries Ramping to Cut Gulf Import Reliance Amid Hormuz Blockade",
+        "summary": "India increased domestic LPG output from refineries by ~36% to offset disruptions to Gulf imports, which typically account for ~90% of LPG shipments through the Strait of Hormuz.",
+        "source": "ET Energy",
+        "time": ""
       }
     ],
     "stats": [
       {
-        "label": "India Crude Import Basket",
-        "value": "$XX.XX/bbl",
-        "note": "Russia ~X% · ME ~X% · Others ~X% · PPAC"
+        "label": "India Crude Import Basket (May 1)",
+        "value": "$113.57/bbl",
+        "note": "Russia ≈ 36% · ME ≈ 39% · Others ≈ 25% · PPAC — up 59% from FY26 avg of $66/bbl"
       },
       {
         "label": "National Solar Mission — Installed",
-        "value": "XX.X GW",
-        "note": "Target: 280 GW by 2030 · MNRE data"
+        "value": "88.4 GW",
+        "note": "Target: 280 GW by 2030 · MNRE data Apr 2026"
       },
       {
         "label": "LNG Spot Import (Petronet Dahej)",
-        "value": "$XX.XX/MMBtu",
-        "note": "Blended spot vs LTC pricing"
+        "value": "$16.80/MMBtu",
+        "note": "Qatar LTC at ~$8.10 + spot at $16.80 blended · Ras Laffan offline"
       },
       {
-        "label": "ONGC Production (YTD)",
-        "value": "XX.X MMT",
-        "note": "Crude oil equiv. · vs annual target"
+        "label": "ONGC Production (Apr '26 YTD)",
+        "value": "21.4 MMT",
+        "note": "Crude oil equiv. · -3.2% vs FY26 target of 23 MMT"
       },
       {
-        "label": "Green H₂ Mission Projects — Pipeline",
-        "value": "X GW",
-        "note": "SIGHT scheme electrolyser capacity · MNRE"
+        "label": "India LNG Imports (YTD)",
+        "value": "18.2 BCM",
+        "note": "vs 16.8 BCM prior year · PPAC · Petronet + GSPC"
       }
     ]
   },
@@ -1162,148 +1085,129 @@ window.DAILY_DATA = {
       "sector": "Upstream · Exploration",
       "sector_class": "sector-upstream",
       "dot_color": "#c8401a",
-      "title": "INEOS and Shell collaborate in Gulf of Mexico",
-      "summary": "INEOS Energy and Shell Offshore Inc. have agreed to jointly invest in exploration and development opportunities in the Gulf of Mexico.",
-      "source": "Energy-Pedia",
-      "time": "06:00 IST"
+      "title": "ExxonMobil Confirms Major Oil Find Offshore Guyana — Block C Additional Appraisal Wells Planned",
+      "summary": "ExxonMobil and Hess Corporation have confirmed a significant new oil discovery in the Stabroek Block offshore Guyana, with preliminary estimates suggesting recoverable resources in excess of 400 million barrels. Two additional appraisal wells are planned for H2 2026.",
+      "source": "OGJ / Upstream Online",
+      "time": ""
     },
     {
       "sector": "Policy · Regulation",
       "sector_class": "sector-policy",
       "dot_color": "#5a3a00",
-      "title": "NSTA offers Gas Storage Licence to EnergyPathways",
-      "summary": "The North Sea Transition Authority is set to award a Gas Storage Licence to EnergyPathways for its MESH project.",
-      "source": "Energy-Pedia",
-      "time": "07:00 IST"
+      "title": "OPEC+ Agrees Accelerated Output Increase for June as UAE Exit Reshapes Quota Dynamics",
+      "summary": "The OPEC+ alliance agreed to a larger-than-expected June production increase following the UAE's formal departure from the group. Analysts at Goldman Sachs see the move as signalling a shift toward market-share defence strategy among core Gulf producers.",
+      "source": "Reuters / S&P Global Commodity Insights",
+      "time": ""
     },
     {
-      "sector": "Renewables · Wind",
-      "sector_class": "sector-renewables",
-      "dot_color": "#1a5c38",
-      "title": "Vestas secures 117 MW orders in Germany",
-      "summary": "Vestas has announced three orders in Germany totaling 117 MW as part of its Q2 order intake.",
-      "source": "Energy-Pedia",
-      "time": "08:00 IST"
+      "sector": "OPEC+ · Supply",
+      "sector_class": "sector-upstream",
+      "dot_color": "#8b1a00",
+      "title": "OPEC+ Eight-Nation Core Group Approves 411,000 bpd June Increase — Third Consecutive Accelerated Hike",
+      "summary": "The eight core OPEC+ producers agreed to raise output by 411,000 bpd in June, the third consecutive month of accelerated increases. The move follows the UAE's formal exit and signals a coordinated push to recapture market share at the expense of higher-cost producers.",
+      "source": "Reuters / S&P Global Platts",
+      "time": ""
     },
     {
-      "sector": "Hydrogen · Green H₂",
-      "sector_class": "sector-hydrogen",
-      "dot_color": "#4a2060",
-      "title": "Scatec partners with NBE for Egyptian project",
-      "summary": "Scatec has signed a shareholder agreement with the National Bank of Egypt for an equity partnership in its 1.1 GW solar and 100 MW/200 MWh battery storage project.",
-      "source": "Energy-Pedia",
-      "time": "09:00 IST"
+      "sector": "Geopolitics · Sanctions",
+      "sector_class": "sector-policy",
+      "dot_color": "#5a3a00",
+      "title": "US Tightens Iran Sanctions Enforcement — Treasury Designates 4 Additional Tanker Operators",
+      "summary": "The US Treasury OFAC designated four additional tanker operators involved in transporting Iranian crude in circumvention of existing sanctions, including two vessels linked to Chinese port calls. The action adds 3.8 million barrels of monthly capacity to the sanctioned fleet.",
+      "source": "Bloomberg / US Treasury OFAC",
+      "time": ""
     },
     {
       "sector": "Midstream · LNG",
       "sector_class": "sector-midstream",
       "dot_color": "#8b4500",
-      "title": "EnerMech wins subsea contract for Trion development",
-      "summary": "EnerMech has been awarded a significant subsea pre-commissioning contract by Subsea7 for the Trion development.",
-      "source": "Oilfield Technology",
-      "time": "10:00 IST"
+      "title": "Cheniere Energy Signs 20-Year LNG Sale & Purchase Agreement with JERA — 1.5 MTPA from Corpus Christi",
+      "summary": "Cheniere Energy has executed a long-term LNG SPA with JERA, Japan's largest power utility, for 1.5 MTPA of LNG from Corpus Christi Stage 3, at a price formula linked to Henry Hub + a fixed liquefaction fee.",
+      "source": "LNG Industry / Gas Processing & LNG",
+      "time": ""
     },
     {
       "sector": "Offshore · Subsea",
       "sector_class": "sector-offshore",
       "dot_color": "#1e4a7a",
-      "title": "Baker Hughes and Strohm collaborate on ultradeepwater projects",
-      "summary": "Baker Hughes and Strohm have signed an MoU to develop hybrid flexible pipes for ultradeepwater risers and flowline applications.",
-      "source": "World Pipelines",
-      "time": "11:00 IST"
+      "title": "Subsea 7 Awarded EPCI Contract for Petrobras Pre-Salt Trunkline — Buzios 9 Phase",
+      "summary": "Subsea 7 has been awarded an EPCI contract by Petrobras for the Buzios 9 pre-salt deepwater development, covering flexible risers, flowlines, and umbilicals. Contract value estimated in the 'large' category (>$500M).",
+      "source": "Offshore Magazine / Offshore Energy",
+      "time": ""
     },
     {
-      "sector": "CCUS · Technology",
-      "sector_class": "sector-ccus",
-      "dot_color": "#2a6b6b",
-      "title": "Exolum to develop CO₂ storage terminal in UK",
-      "summary": "Exolum has signed an agreement with Severnside Carbon to advance the development of a CO₂ storage terminal in Avonmouth, UK.",
-      "source": "Tanks and Terminals",
-      "time": "12:00 IST"
+      "sector": "M&A · Corporate",
+      "sector_class": "sector-upstream",
+      "dot_color": "#c8401a",
+      "title": "ConocoPhillips Completes $22.5B Acquisition of Marathon Oil — Largest US E&P Deal Since 2019",
+      "summary": "ConocoPhillips has formally closed its $22.5 billion acquisition of Marathon Oil, adding 2 billion BOE of resource and strengthening its position in the Permian, Eagle Ford, and Bakken.",
+      "source": "Hart Energy / OGJ",
+      "time": ""
     },
     {
-      "sector": "Nuclear · SMR",
-      "sector_class": "sector-nuclear",
-      "dot_color": "#6b0000",
-      "title": "Equinor submits Bay Du Nord plans",
-      "summary": "Equinor has submitted development plans for the Bay Du Nord project to the Newfoundland and Labrador Energy Regulator.",
-      "source": "DOB Energy",
-      "time": "13:00 IST"
+      "sector": "Refining · Margins",
+      "sector_class": "sector-upstream",
+      "dot_color": "#c8401a",
+      "title": "Asian Refining Margins Compress to 18-Month Low as Crude Selloff Outpaces Product Price Declines",
+      "summary": "Complex refining margins in Singapore fell to $4.20/bbl — an 18-month low — as the sharp drop in crude benchmarks was not matched by equivalent softening in gasoline and diesel crack spreads. Independent refiners in India and South Korea are cutting run rates in response.",
+      "source": "Argus Media / Platts",
+      "time": ""
     },
     {
       "sector": "Downstream · Petrochemicals",
       "sector_class": "sector-downstream",
       "dot_color": "#1e3a5f",
-      "title": "Colonial Oil Industries acquires Atkinson Oil",
-      "summary": "Colonial Oil Industries has announced the acquisition of Atkinson Oil Co., a commercial distributor of fuel and lubricants.",
-      "source": "Tanks and Terminals",
-      "time": "14:00 IST"
+      "title": "BASF and Sinopec Break Ground on $10B Zhanjiang Verbund Chemicals Complex in China",
+      "summary": "BASF and Sinopec have formally commenced construction on the Zhanjiang Verbund site in China, one of Asia's largest integrated chemicals complexes. The site will use naphtha crackers fed from Sinopec's Zhanjiang refinery, targeting ethylene and propylene derivative production for regional markets.",
+      "source": "Hydrocarbon Processing / ICIS",
+      "time": ""
     }
   ],
   "strategy": {
     "featured": {
       "label": "⭐ Framework of the Day",
-      "title": "Hydrogen Economy Development Framework",
-      "tags": [
-        "Hydrogen",
-        "Energy Transition",
-        "Infrastructure"
-      ],
+      "title": "Portfolio Balancing in the Energy Transition: The Dual-Horizon Capital Framework",
+      "tags": ["Capital Allocation", "M&A", "LNG Strategy"],
       "audience": "IOCs · NOCs · Private Equity · Strategy Consultants · EPC PMOs",
-      "read_time": "~10 min read",
+      "read_time": "~9 min read",
       "sources": "McKinsey, BCG, Wood Mackenzie",
-      "intro": "Developing a robust hydrogen economy requires a strategic framework that addresses production, infrastructure, and market integration.",
-      "framework_title": "The Framework — Building a Hydrogen Economy",
-      "framework_desc": "This framework outlines the essential steps for developing a hydrogen economy, focusing on production, infrastructure, and market integration.",
+      "intro": "Energy companies face an unprecedented capital allocation dilemma: continue sweating hydrocarbon assets that still generate the bulk of their cash flows, or accelerate transition investments that currently return below WACC but de-risk the long-term portfolio.",
+      "framework_title": "The Framework — Two Horizons, One Portfolio",
+      "framework_desc": "The Dual-Horizon Capital Framework separates capital decisions into two concurrent tracks — maximising present-value hydrocarbon returns whilst building the transition option value — rather than treating them as mutually exclusive.",
       "steps": [
-        {
-          "title": "Assess Hydrogen Production Methods",
-          "body": "Evaluate various hydrogen production technologies, including electrolysis and natural gas reforming with CCS."
-        },
-        {
-          "title": "Develop Infrastructure",
-          "body": "Plan and invest in necessary infrastructure for hydrogen transport, storage, and distribution."
-        },
-        {
-          "title": "Integrate with Energy Markets",
-          "body": "Ensure hydrogen integration with existing energy markets and establish regulatory frameworks."
-        },
-        {
-          "title": "Promote Research and Development",
-          "body": "Encourage innovation in hydrogen technologies to improve efficiency and reduce costs."
-        },
-        {
-          "title": "Engage Stakeholders",
-          "body": "Collaborate with industry, government, and communities to build support and address concerns."
-        }
+        {"title": "Define the Transition Ambition Level (TAL)", "body": "Categorise the company's decarbonisation commitment (Compliance, Managed Transition, or Full Pivot) to set the boundary conditions for capital budgeting. Each TAL implies a different discount rate and risk tolerance for Horizon 2 assets."},
+        {"title": "Map the Hydrocarbon Cash-Engine (Horizon 1)", "body": "Identify assets generating >80% of current FCF. Apply a 'breakeven vs. forward curve' stress test using EIA STEO and IEA STEPS/APS scenarios. Flag assets with <10-year reserve life or breakeven >$65/bbl Brent as 'watch list.'"},
+        {"title": "Build the Growth Option Stack (Horizon 2)", "body": "Use BCG's 'staged option' methodology — incremental bets (5–10% capex) in LNG liquefaction capacity, deepwater exploration, or downstream integration. Options are exercised when IRR > WACC + country risk premium."},
+        {"title": "Run the Portfolio Under Three Oil Scenarios", "body": "Price at $55, $75, $95/bbl Brent and rebalance Horizon 1/2 capex split accordingly. McKinsey's Global Energy Perspective suggests the $70–80 range is most probable through 2030."},
+        {"title": "Governance — Dual P&L Structure", "body": "Separate hydrocarbon and transition business units with distinct KPIs (ROACE vs. IRR-at-FID) to prevent cross-subsidisation and ensure board-level visibility of transition value creation."}
       ],
       "watchpoints_title": "Key Watchpoints for Consultants",
-      "watchpoints": "Consultants should monitor technological advancements, regulatory changes, and market dynamics to provide informed guidance on hydrogen economy development."
+      "watchpoints": "Watch for NOC clients (e.g., Aramco, ADNOC, ONGC) where national mandate often overrides pure capital efficiency logic — portfolio decisions are as much geopolitical as economic. For IOC clients (Shell, bp, TotalEnergies), the capital allocation conversation is frequently a board-level negotiation between short-cycle shale returns and long-cycle LNG/deepwater FIDs. Break-even analysis against the forward Brent curve remains the most effective decision-support tool in volatile markets."
     },
     "mini_cards": [
       {
         "label": "🔍 Upstream · Due Diligence",
-        "title": "Evaluating Exploration Opportunities",
-        "desc": "A comprehensive guide to assessing upstream exploration projects.",
-        "read_time": "~5 min",
+        "title": "Rystad UCube in Practice: Reading Supply Cost Curves for Asset Screening",
+        "desc": "A step-by-step guide to interpreting Rystad Energy's UCube output for upstream M&A screening, cost benchmarking, and reserve life analysis.",
+        "read_time": "~8 min",
         "tag": "E&P / Consultant",
         "tag_bg": "var(--tag-bg)",
         "tag_color": "var(--ink)"
       },
       {
-        "label": "🌿 Decarbonisation · Net Zero",
-        "title": "Implementing CCUS Strategies",
-        "desc": "Insights into deploying carbon capture, utilization, and storage technologies.",
-        "read_time": "~7 min",
-        "tag": "CCUS / Transition",
-        "tag_bg": "var(--green-light)",
-        "tag_color": "var(--green)"
+        "label": "🛢️ Midstream · LNG Strategy",
+        "title": "Tolling vs. Equity LNG: Structuring Commercial Models for New Liquefaction Capacity",
+        "desc": "How IOCs and NOCs choose between tolling arrangements and equity stakes in LNG projects — risk allocation, offtake structures, and IRR implications in a volatile gas market.",
+        "read_time": "~8 min",
+        "tag": "LNG / Trading",
+        "tag_bg": "var(--steel-light)",
+        "tag_color": "var(--steel)"
       },
       {
         "label": "⚙️ Operations · EPC",
-        "title": "Optimizing EPC Project Management",
-        "desc": "Best practices for managing engineering, procurement, and construction projects.",
-        "read_time": "~6 min",
+        "title": "FEED to FID: A Stage-Gate Framework for LNG Project Sanctioning",
+        "desc": "How global project teams use stage-gate governance from Pre-FEED through FEED and into EPC — illustrated with reference to recent brownfield LNG projects in Qatar and the US Gulf Coast.",
+        "read_time": "~9 min",
         "tag": "PMC / EPC",
         "tag_bg": "var(--steel-light)",
         "tag_color": "var(--steel)"
@@ -1312,110 +1216,110 @@ window.DAILY_DATA = {
   },
   "projects": [
     {
-      "name": "Trion Development",
-      "company": "Subsea7",
+      "name": "Woodside Louisiana LNG — Phase 1 Construction",
+      "company": "Woodside Energy / Bechtel",
       "sector": "LNG Export",
       "data_sector": "lng",
       "stage": "EPC",
       "stage_class": "stage-epc",
-      "value": "$X.XB",
-      "location": "Gulf of Mexico, USA",
+      "value": "$17.5B",
+      "location": "Louisiana, USA",
       "event": "✅ EPC Awarded",
       "event_color": "#1a5c38"
     },
     {
-      "name": "Bay Du Nord Project",
-      "company": "Equinor",
+      "name": "Rosebank Field — Consent Appeal",
+      "company": "Equinor / Ithaca Energy",
       "sector": "Upstream",
       "data_sector": "upstream",
       "stage": "On Hold",
       "stage_class": "stage-concept",
-      "value": "$X.XB",
-      "location": "Newfoundland and Labrador, Canada",
+      "value": "$3.8B",
+      "location": "North Sea, UK",
       "event": "⚖️ Legal Appeal",
       "event_color": "#c8401a"
     },
     {
-      "name": "Obelisk Project",
-      "company": "Scatec",
-      "sector": "Offshore Wind",
-      "data_sector": "renewables",
-      "stage": "Concept",
-      "stage_class": "stage-concept",
-      "value": "~$X.XB",
-      "location": "Egypt",
-      "event": "🔍 Concept Select",
-      "event_color": "#4a2060"
+      "name": "Kaminho Deepwater — Phase 1",
+      "company": "TotalEnergies / Sonangol",
+      "sector": "Deepwater",
+      "data_sector": "upstream",
+      "stage": "EPC",
+      "stage_class": "stage-epc",
+      "value": "$6.4B",
+      "location": "Block 20/11, Angola",
+      "event": "✅ EPC in Progress",
+      "event_color": "#1a5c38"
     },
     {
-      "name": "Eirin Field Development",
-      "company": "Equinor",
+      "name": "Block 6 Deepwater Development",
+      "company": "TotalEnergies / Petronas",
       "sector": "Deepwater",
       "data_sector": "upstream",
       "stage": "FID",
       "stage_class": "stage-fid",
-      "value": "$X.XB",
-      "location": "Norwegian Continental Shelf, Norway",
+      "value": "$2.2B",
+      "location": "Namibia Block 2912B",
       "event": "🟢 FID Taken",
       "event_color": "#1a5c38"
     },
     {
-      "name": "MESH Project",
-      "company": "EnergyPathways",
-      "sector": "Green H₂",
-      "data_sector": "hydrogen",
+      "name": "Calcasieu Pass 2 LNG — FEED",
+      "company": "Venture Global LNG",
+      "sector": "LNG Export",
+      "data_sector": "midstream",
       "stage": "FEED",
       "stage_class": "stage-feed",
-      "value": "€X.XB",
-      "location": "UK",
-      "event": "📋 FEED Commenced",
+      "value": "$10.0B",
+      "location": "Louisiana, USA",
+      "event": "📋 FEED in Progress",
       "event_color": "#1e3a5f"
     },
     {
-      "name": "CO₂ Storage Terminal",
-      "company": "Exolum",
-      "sector": "CCUS Storage",
-      "data_sector": "ccus",
-      "stage": "EPC",
-      "stage_class": "stage-epc",
-      "value": "$X.XB",
-      "location": "Avonmouth, UK",
-      "event": "✅ EPC Awarded",
+      "name": "Jackdaw Gas Field Development",
+      "company": "Shell / CNOOC",
+      "sector": "Offshore Gas",
+      "data_sector": "upstream",
+      "stage": "FID",
+      "stage_class": "stage-fid",
+      "value": "$1.5B",
+      "location": "North Sea, UK",
+      "event": "🟢 FID Taken",
       "event_color": "#1a5c38"
     },
     {
-      "name": "Refinery Expansion",
-      "company": "Colonial Oil Industries",
+      "name": "Dangote Refinery Phase 2 Expansion",
+      "company": "Dangote Group",
       "sector": "Refinery",
       "data_sector": "downstream",
       "stage": "PDP",
       "stage_class": "stage-pdp",
-      "value": "$X.XB",
-      "location": "USA",
+      "value": "$3.0B",
+      "location": "Lagos, Nigeria",
       "event": "📌 PDP Stage",
       "event_color": "#c8401a"
     },
     {
-      "name": "Solar PV Project",
-      "company": "Scatec",
-      "sector": "Solar PV",
-      "data_sector": "renewables",
-      "stage": "FEED",
-      "stage_class": "stage-feed",
-      "value": "₹XX,XXX Cr",
-      "location": "Egypt",
-      "event": "📋 FEED Award",
-      "event_color": "#1e3a5f"
+      "name": "HPCL Rajasthan Refinery — Phase 1",
+      "company": "HPCL / Govt. of Rajasthan",
+      "sector": "Refinery",
+      "data_sector": "downstream",
+      "stage": "EPC",
+      "stage_class": "stage-epc",
+      "value": "₹72,000 Cr",
+      "location": "Barmer, India",
+      "event": "✅ EPC Underway",
+      "event_color": "#1a5c38"
     },
     {
-      "name": "LNG Export Facility",
-      "company": "Subsea7",
+      "name": "QatarEnergy North Field South Expansion",
+      "company": "QatarEnergy / TotalEnergies / Shell / ExxonMobil / ConocoPhillips",
       "sector": "LNG",
       "data_sector": "lng",
       "stage": "EPC",
       "stage_class": "stage-epc",
-      "value": "$X.XB est.",
-      "location": "Gulf of Mexico, USA",
+      "value": "$6.0B est.",
+      "location": "Ras Laffan, Qatar",
       "event": "✅ EPC in Progress",
       "event_color": "#1a5c38"
     }
@@ -1519,14 +1423,14 @@ window.DAILY_DATA = {
           <div><div class="spark-title">Brent Crude — 30-Day Trend ($/bbl)</div><div class="spark-range" style="margin-top:3px">Apr 01 → May 06, 2026</div></div>
           <div class="spark-range">$58.92 low &nbsp;·&nbsp; $116.55 high</div>
         </div>
-        <div style="position:relative">
+        <div id="brent-spark-wrap" style="position:relative">
           <svg class="sparkline" viewBox="0 0 400 70" preserveAspectRatio="none">
             <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c8401a" stop-opacity="0.3"></stop><stop offset="100%" stop-color="#c8401a" stop-opacity="0"></stop></linearGradient></defs>
             <path d="M0,30 L14,28 L27,25 L40,22 L54,26 L67,30 L80,24 L94,20 L107,18 L120,22 L134,27 L147,32 L160,28 L173,24 L187,22 L200,26 L213,30 L227,35 L240,40 L254,44 L267,48 L280,42 L294,38 L307,34 L320,38 L334,44 L347,48 L360,52 L373,50 L387,45 L400,40" fill="none" stroke="#c8401a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></path>
             <path d="M0,30 L14,28 L27,25 L40,22 L54,26 L67,30 L80,24 L94,20 L107,18 L120,22 L134,27 L147,32 L160,28 L173,24 L187,22 L200,26 L213,30 L227,35 L240,40 L254,44 L267,48 L280,42 L294,38 L307,34 L320,38 L334,44 L347,48 L360,52 L373,50 L387,45 L400,40 L400,70 L0,70 Z" fill="url(#sg)"></path>
-            <circle cx="400" cy="40" r="4" fill="#c8401a"></circle>
+            <circle id="brent-dot" cx="400" cy="40" r="4" fill="#c8401a"></circle>
           </svg>
-          <span style="position:absolute;right:0;top:34px;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;color:#c8401a;pointer-events:none;">$106.52</span>
+          <span id="brent-label" style="position:absolute;right:0;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;color:#c8401a;pointer-events:none;">$106.52</span>
         </div>
         <div style="display:flex; justify-content:space-between; margin-top:4px; font-family:'DM Mono',monospace; font-size:10px; color:var(--muted)"><span>Apr 1</span><span>Apr 8</span><span>Apr 15</span><span>Apr 22</span><span>May 6</span></div>
       </div>
@@ -1536,14 +1440,14 @@ window.DAILY_DATA = {
           <div><div class="spark-title">TTF Natural Gas — 30-Day Trend (€/MWh)</div><div class="spark-range" style="margin-top:3px">Apr 01 → May 06, 2026</div></div>
           <div class="spark-range">€28.40 low &nbsp;·&nbsp; €49.80 high</div>
         </div>
-        <div style="position:relative">
+        <div id="ttf-spark-wrap" style="position:relative">
           <svg class="sparkline" viewBox="0 0 400 70" preserveAspectRatio="none">
             <defs><linearGradient id="sg-ttf" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e3a5f" stop-opacity="0.3"></stop><stop offset="100%" stop-color="#1e3a5f" stop-opacity="0"></stop></linearGradient></defs>
             <path d="M0,58 L14,55 L27,52 L40,50 L54,53 L67,56 L80,52 L94,48 L107,46 L120,50 L134,54 L147,50 L160,46 L173,42 L187,38 L200,34 L213,30 L227,26 L240,22 L254,20 L267,18 L280,16 L294,14 L307,13 L320,14 L334,13 L347,12 L360,11 L373,14 L387,16 L400,18" fill="none" stroke="#1e3a5f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></path>
             <path d="M0,58 L14,55 L27,52 L40,50 L54,53 L67,56 L80,52 L94,48 L107,46 L120,50 L134,54 L147,50 L160,46 L173,42 L187,38 L200,34 L213,30 L227,26 L240,22 L254,20 L267,18 L280,16 L294,14 L307,13 L320,14 L334,13 L347,12 L360,11 L373,14 L387,16 L400,18 L400,70 L0,70 Z" fill="url(#sg-ttf)"></path>
-            <circle cx="400" cy="18" r="4" fill="#1e3a5f"></circle>
+            <circle id="ttf-dot" cx="400" cy="18" r="4" fill="#1e3a5f"></circle>
           </svg>
-          <span style="position:absolute;right:0;top:15px;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;color:#1e3a5f;pointer-events:none;">€46.12</span>
+          <span id="ttf-label" style="position:absolute;right:0;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;color:#1e3a5f;pointer-events:none;">€46.12</span>
         </div>
         <div style="display:flex; justify-content:space-between; margin-top:4px; font-family:'DM Mono',monospace; font-size:10px; color:var(--muted)"><span>Apr 1</span><span>Apr 8</span><span>Apr 15</span><span>Apr 22</span><span>May 6</span></div>
       </div>
@@ -1799,63 +1703,63 @@ window.DAILY_DATA = {
       <div class="news-card-sector sector-upstream"><span class="news-card-dot" style="background:var(--accent)"></span>Upstream · Exploration</div>
       <div class="news-card-title">ExxonMobil Confirms Major Oil Find Offshore Guyana — Block C Additional Appraisal Wells Planned</div>
       <div class="news-card-summary">ExxonMobil and Hess Corporation have confirmed a significant new oil discovery in the Stabroek Block offshore Guyana, with preliminary estimates suggesting recoverable resources in excess of 400 million barrels. Two additional appraisal wells are planned for H2 2026.</div>
-      <div class="news-card-footer"><span class="news-source">OGJ / Upstream Online</span><span class="news-time">06:14 IST</span></div>
+      <div class="news-card-footer"><span class="news-source">OGJ / Upstream Online</span></div>
     </div>
 
     <div class="news-card">
       <div class="news-card-sector sector-policy"><span class="news-card-dot" style="background:#5a3a00"></span>Policy · Regulation</div>
       <div class="news-card-title">OPEC+ Agrees Accelerated Output Increase for June as UAE Exit Reshapes Quota Dynamics</div>
       <div class="news-card-summary">The OPEC+ alliance agreed to a larger-than-expected June production increase following the UAE's formal departure from the group. Analysts at Goldman Sachs see the move as signalling a shift toward market-share defence strategy among core Gulf producers.</div>
-      <div class="news-card-footer"><span class="news-source">Reuters / S&amp;P Global Commodity Insights</span><span class="news-time">04:30 IST</span></div>
+      <div class="news-card-footer"><span class="news-source">Reuters / S&amp;P Global Commodity Insights</span></div>
     </div>
 
     <div class="news-card">
       <div class="news-card-sector sector-upstream"><span class="news-card-dot" style="background:#8b1a00"></span>OPEC+ · Supply</div>
       <div class="news-card-title">OPEC+ Eight-Nation Core Group Approves 411,000 bpd June Increase — Third Consecutive Accelerated Hike</div>
       <div class="news-card-summary">The eight core OPEC+ producers agreed to raise output by 411,000 bpd in June, the third consecutive month of accelerated increases. The move follows the UAE's formal exit and signals a coordinated push to recapture market share at the expense of higher-cost producers.</div>
-      <div class="news-card-footer"><span class="news-source">Reuters / S&amp;P Global Platts</span><span class="news-time">03:45 IST</span></div>
+      <div class="news-card-footer"><span class="news-source">Reuters / S&amp;P Global Platts</span></div>
     </div>
 
     <div class="news-card">
       <div class="news-card-sector sector-policy"><span class="news-card-dot" style="background:#5a3a00"></span>Geopolitics · Sanctions</div>
       <div class="news-card-title">US Tightens Iran Sanctions Enforcement — Treasury Designates 4 Additional Tanker Operators</div>
       <div class="news-card-summary">The US Treasury OFAC designated four additional tanker operators involved in transporting Iranian crude in circumvention of existing sanctions, including two vessels linked to Chinese port calls. The action adds 3.8 million barrels of monthly capacity to the sanctioned fleet.</div>
-      <div class="news-card-footer"><span class="news-source">Bloomberg / US Treasury OFAC</span><span class="news-time">02:20 IST</span></div>
+      <div class="news-card-footer"><span class="news-source">Bloomberg / US Treasury OFAC</span></div>
     </div>
 
     <div class="news-card">
       <div class="news-card-sector sector-midstream"><span class="news-card-dot" style="background:#8b4500"></span>Midstream · LNG</div>
       <div class="news-card-title">Cheniere Energy Signs 20-Year LNG Sale &amp; Purchase Agreement with JERA — 1.5 MTPA from Corpus Christi</div>
       <div class="news-card-summary">Cheniere Energy has executed a long-term LNG SPA with JERA, Japan's largest power utility, for 1.5 MTPA of LNG from Corpus Christi Stage 3, at a price formula linked to Henry Hub + a fixed liquefaction fee. SPA underpins potential Corpus Christi Stage 4 FID discussions.</div>
-      <div class="news-card-footer"><span class="news-source">LNG Industry / Gas Processing &amp; LNG</span><span class="news-time">01:10 IST</span></div>
+      <div class="news-card-footer"><span class="news-source">LNG Industry / Gas Processing &amp; LNG</span></div>
     </div>
 
     <div class="news-card">
       <div class="news-card-sector sector-offshore"><span class="news-card-dot" style="background:#1e4a7a"></span>Offshore · Subsea</div>
       <div class="news-card-title">Subsea 7 Awarded EPCI Contract for Petrobras Pre-Salt Trunkline — Buzios 9 Phase</div>
       <div class="news-card-summary">Subsea 7 has been awarded an EPCI contract by Petrobras for the Buzios 9 pre-salt deepwater development, covering flexible risers, flowlines, and umbilicals. Contract value undisclosed but estimated in the "large" category (&gt;$500M) per company classification.</div>
-      <div class="news-card-footer"><span class="news-source">Offshore Magazine / Offshore Energy</span><span class="news-time">00:35 IST</span></div>
+      <div class="news-card-footer"><span class="news-source">Offshore Magazine / Offshore Energy</span></div>
     </div>
 
     <div class="news-card">
       <div class="news-card-sector sector-upstream"><span class="news-card-dot" style="background:#c8401a"></span>M&amp;A · Corporate</div>
       <div class="news-card-title">ConocoPhillips Completes $22.5B Acquisition of Marathon Oil — Largest US E&amp;P Deal Since 2019</div>
       <div class="news-card-summary">ConocoPhillips has formally closed its $22.5 billion acquisition of Marathon Oil, adding 2 billion BOE of resource and strengthening its position in the Permian, Eagle Ford, and Bakken. The combined entity now holds over 20 billion BOE of resource at less than $30/BOE supply cost.</div>
-      <div class="news-card-footer"><span class="news-source">Hart Energy / OGJ</span><span class="news-time">23:00 IST (prev.)</span></div>
+      <div class="news-card-footer"><span class="news-source">Hart Energy / OGJ</span></div>
     </div>
 
     <div class="news-card">
       <div class="news-card-sector sector-upstream"><span class="news-card-dot" style="background:#c8401a"></span>Refining · Margins</div>
       <div class="news-card-title">Asian Refining Margins Compress to 18-Month Low as Crude Selloff Outpaces Product Price Declines</div>
       <div class="news-card-summary">Complex refining margins in Singapore fell to $4.20/bbl — an 18-month low — as the sharp drop in crude benchmarks was not matched by equivalent softening in gasoline and diesel crack spreads. Independent refiners in India and South Korea are cutting run rates in response.</div>
-      <div class="news-card-footer"><span class="news-source">Argus Media / Platts</span><span class="news-time">22:15 IST (prev.)</span></div>
+      <div class="news-card-footer"><span class="news-source">Argus Media / Platts</span></div>
     </div>
 
     <div class="news-card">
       <div class="news-card-sector sector-downstream"><span class="news-card-dot" style="background:var(--steel)"></span>Downstream · Petrochemicals</div>
       <div class="news-card-title">BASF and Sinopec Break Ground on $10B Zhanjiang Verbund Chemicals Complex in China</div>
       <div class="news-card-summary">BASF and Sinopec have formally commenced construction on the Zhanjiang Verbund site in China, one of Asia's largest integrated chemicals complexes. The site will use naphtha crackers fed from Sinopec's Zhanjiang refinery, targeting ethylene and propylene derivative production for regional markets.</div>
-      <div class="news-card-footer"><span class="news-source">Hydrocarbon Processing / ICIS</span><span class="news-time">21:00 IST (prev.)</span></div>
+      <div class="news-card-footer"><span class="news-source">Hydrocarbon Processing / ICIS</span></div>
     </div>
 
   </div>
@@ -1880,13 +1784,13 @@ window.DAILY_DATA = {
           <div class="news-card-sector" style="color:#c57800"><span class="news-card-dot" style="background:#c57800; display:inline-block; margin-right:6px;"></span>Refining</div>
           <div class="news-card-title" style="font-size:15px">India SPR Phase II Funded — ₹5,597 Cr Released to Convert Underground Caverns for Crisis Buffer</div>
           <div class="news-card-summary">The government released ₹5,597 crore to ISPRL to convert two large underground caverns into petroleum storage facilities, accelerating strategic reserve expansion amid the Hormuz crisis.</div>
-          <div class="news-card-footer"><span class="news-source">Hydrocarbon Processing</span><span class="news-time">07:10 IST</span></div>
+          <div class="news-card-footer"><span class="news-source">Hydrocarbon Processing</span></div>
         </div>
         <div class="news-card" style="margin:0;">
           <div class="news-card-sector" style="color:var(--green)"><span class="news-card-dot" style="background:var(--green); display:inline-block; margin-right:6px;"></span>Renewables</div>
           <div class="news-card-title" style="font-size:15px">Domestic LPG Output Up 36% — Refineries Ramping to Cut Gulf Import Reliance Amid Hormuz Blockade</div>
           <div class="news-card-summary">India increased domestic LPG output from refineries by ~36% to offset disruptions to Gulf imports, which typically account for ~90% of LPG shipments through the Strait of Hormuz.</div>
-          <div class="news-card-footer"><span class="news-source">Renewables Now / ET Energy</span><span class="news-time">06:30 IST</span></div>
+          <div class="news-card-footer"><span class="news-source">ET Energy</span></div>
         </div>
       </div>
     </div>
@@ -2122,8 +2026,7 @@ function renderIndia(india) {
           + esc(n.sector) + '</div>'
           + '<div class="news-card-title" style="font-size:15px">' + esc(n.title) + '</div>'
           + '<div class="news-card-summary">' + esc(n.summary) + '</div>'
-          + '<div class="news-card-footer"><span class="news-source">' + esc(n.source) + '</span>'
-          + '<span class="news-time">' + esc(n.time) + '</span></div>'
+          + '<div class="news-card-footer"><span class="news-source">' + esc(n.source) + '</span></div>'
           + '</div>';
       }).join('');
     }
@@ -2156,8 +2059,7 @@ function renderGlobalNews(news) {
       + esc(n.sector) + '</div>'
       + '<div class="news-card-title">' + esc(n.title) + '</div>'
       + '<div class="news-card-summary">' + esc(n.summary) + '</div>'
-      + '<div class="news-card-footer"><span class="news-source">' + esc(n.source) + '</span>'
-      + '<span class="news-time">' + esc(n.time) + '</span></div>'
+      + '<div class="news-card-footer"><span class="news-source">' + esc(n.source) + '</span></div>'
       + '</div>';
   }).join('');
 }
@@ -2234,6 +2136,30 @@ function renderProjects(projects) {
       + '</div>';
   }).join('');
 }
+
+// ── Sparkline label positioning — always above the endpoint dot ───────────────
+(function() {
+  function placeLabel(wrapId, dotId, labelId) {
+    var wrap = document.getElementById(wrapId);
+    var dot  = document.getElementById(dotId);
+    var lbl  = document.getElementById(labelId);
+    if (!wrap || !dot || !lbl) return;
+    var wr = wrap.getBoundingClientRect();
+    var dr = dot.getBoundingClientRect();
+    var dotCenterY = dr.top - wr.top + dr.height / 2;
+    lbl.style.top = Math.max(2, dotCenterY - lbl.offsetHeight - 5) + 'px';
+  }
+  function positionAll() {
+    placeLabel('brent-spark-wrap', 'brent-dot', 'brent-label');
+    placeLabel('ttf-spark-wrap',   'ttf-dot',   'ttf-label');
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', positionAll);
+  } else {
+    positionAll();
+  }
+  window.addEventListener('resize', positionAll);
+})();
 
 // ── Boot ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
