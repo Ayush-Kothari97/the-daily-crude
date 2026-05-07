@@ -1619,7 +1619,6 @@ window.DAILY_DATA = {
       <div class="strategy-mini-title">Rystad UCube in Practice: Reading Supply Cost Curves for Asset Screening</div>
       <div class="strategy-mini-desc">A step-by-step guide to interpreting Rystad Energy's UCube output for upstream M&amp;A screening, cost benchmarking, and reserve life analysis.</div>
       <div class="strategy-mini-meta">
-        <span class="mini-read-time">⏱ ~8 min</span>
         <span style="font-size:10px; padding:3px 8px; background:var(--tag-bg); border-radius:2px; font-weight:600">E&amp;P / Consultant</span>
       </div>
     </div>
@@ -1628,7 +1627,6 @@ window.DAILY_DATA = {
       <div class="strategy-mini-title">Tolling vs. Equity LNG: Structuring Commercial Models for New Liquefaction Capacity</div>
       <div class="strategy-mini-desc">How IOCs and NOCs choose between tolling arrangements and equity stakes in LNG projects — risk allocation, offtake structures, and IRR implications in a volatile gas market.</div>
       <div class="strategy-mini-meta">
-        <span class="mini-read-time">⏱ ~8 min</span>
         <span style="font-size:10px; padding:3px 8px; background:var(--steel-light); border-radius:2px; font-weight:600; color:var(--steel)">LNG / Trading</span>
       </div>
     </div>
@@ -1637,7 +1635,6 @@ window.DAILY_DATA = {
       <div class="strategy-mini-title">FEED to FID: A Stage-Gate Framework for LNG Project Sanctioning</div>
       <div class="strategy-mini-desc">How global project teams use stage-gate governance from Pre-FEED through FEED and into EPC—illustrated with reference to recent brownfield LNG projects in Qatar and the US Gulf Coast.</div>
       <div class="strategy-mini-meta">
-        <span class="mini-read-time">⏱ ~9 min</span>
         <span style="font-size:10px; padding:3px 8px; background:var(--steel-light); border-radius:2px; font-weight:600; color:var(--steel)">PMC / EPC</span>
       </div>
     </div>
@@ -2217,7 +2214,6 @@ function renderStrategy(s) {
           + '<div class="strategy-mini-title">' + esc(c.title) + '</div>'
           + '<div class="strategy-mini-desc">' + esc(c.desc) + '</div>'
           + '<div class="strategy-mini-meta">'
-          + '<span class="mini-read-time">⏱ ' + esc(c.read_time) + '</span>'
           + '<span style="font-size:10px;padding:3px 8px;background:' + c.tag_bg + ';border-radius:2px;font-weight:600;color:' + c.tag_color + '">' + esc(c.tag) + '</span>'
           + '</div></div>';
       }).join('');
