@@ -534,6 +534,63 @@
   .value-cell { font-family: 'DM Mono', monospace; font-size: 13px; }
   .sector-pill { font-size: 11px; color: var(--muted); }
 
+  /* ── PROJECT CARDS ── */
+  .project-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .project-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.15s;
+  }
+  .project-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.09); }
+
+  .project-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .project-card-name { font-weight: 700; font-size: 13.5px; line-height: 1.35; }
+  .project-card-company { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+  .project-card-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 14px;
+    flex: 1;
+  }
+
+  .project-card-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 12px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+    margin-bottom: 12px;
+  }
+
+  .project-card-stat { display: flex; flex-direction: column; gap: 3px; }
+  .project-card-stat-label { font-size: 9px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .project-card-stat-val { font-family: 'DM Mono', monospace; font-size: 12px; }
+  .project-card-value { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; line-height: 1; }
+
+  .project-card-event { font-size: 11.5px; font-weight: 700; }
+
+  @media (max-width: 900px) { .project-card-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .project-card-grid { grid-template-columns: 1fr; } }
+
   /* Filter tabs */
   .filter-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
 
@@ -1224,6 +1281,7 @@ window.DAILY_DATA = {
       "stage_class": "stage-epc",
       "value": "$17.5B",
       "location": "Louisiana, USA",
+      "description": "18 MTPA LNG export facility on the US Gulf Coast. Trains 1 & 2 under active EPC with Bechtel; first LNG targeted 2028.",
       "event": "✅ EPC Awarded",
       "event_color": "#1a5c38"
     },
@@ -1236,6 +1294,7 @@ window.DAILY_DATA = {
       "stage_class": "stage-concept",
       "value": "$3.8B",
       "location": "North Sea, UK",
+      "description": "UK's largest undeveloped oil field (~300 MMboe) paused pending judicial review of development consent by environmental groups.",
       "event": "⚖️ Legal Appeal",
       "event_color": "#c8401a"
     },
@@ -1248,6 +1307,7 @@ window.DAILY_DATA = {
       "stage_class": "stage-epc",
       "value": "$6.4B",
       "location": "Block 20/11, Angola",
+      "description": "FPSO-based deepwater development targeting 70,000 bpd peak production in Block 20/11 offshore Angola; first oil targeted 2027.",
       "event": "✅ EPC in Progress",
       "event_color": "#1a5c38"
     },
@@ -1260,6 +1320,7 @@ window.DAILY_DATA = {
       "stage_class": "stage-fid",
       "value": "$2.2B",
       "location": "Namibia Block 2912B",
+      "description": "Deepwater gas-condensate field development offshore Namibia; FID triggered by strong well results. First gas targeted 2027.",
       "event": "🟢 FID Taken",
       "event_color": "#1a5c38"
     },
@@ -1272,6 +1333,7 @@ window.DAILY_DATA = {
       "stage_class": "stage-feed",
       "value": "$10.0B",
       "location": "Louisiana, USA",
+      "description": "20 MTPA LNG expansion using modular mid-scale liquefaction trains on the US Gulf Coast. FID expected post FEED completion.",
       "event": "📋 FEED in Progress",
       "event_color": "#1e3a5f"
     },
@@ -1284,6 +1346,7 @@ window.DAILY_DATA = {
       "stage_class": "stage-fid",
       "value": "$1.5B",
       "location": "North Sea, UK",
+      "description": "North Sea gas field producing ~25 MMcf/d via tie-back to Shearwater platform. FID taken following revised environmental consent.",
       "event": "🟢 FID Taken",
       "event_color": "#1a5c38"
     },
@@ -1296,6 +1359,7 @@ window.DAILY_DATA = {
       "stage_class": "stage-pdp",
       "value": "$3.0B",
       "location": "Lagos, Nigeria",
+      "description": "Expanding Africa's largest refinery from 650,000 to 800,000 bpd with additional CDU trains and petrochemical integration units.",
       "event": "📌 PDP Stage",
       "event_color": "#c8401a"
     },
@@ -1308,6 +1372,7 @@ window.DAILY_DATA = {
       "stage_class": "stage-epc",
       "value": "₹72,000 Cr",
       "location": "Barmer, India",
+      "description": "9 MMTPA greenfield refinery with integrated 1,210 MW captive power plant in Barmer district; India's largest single-site refinery project.",
       "event": "✅ EPC Underway",
       "event_color": "#1a5c38"
     },
@@ -1320,6 +1385,7 @@ window.DAILY_DATA = {
       "stage_class": "stage-epc",
       "value": "$6.0B est.",
       "location": "Ras Laffan, Qatar",
+      "description": "Adding 16 MTPA of LNG capacity to the world's largest gas field, part of QatarEnergy's broader 48 MTPA expansion plan by 2030.",
       "event": "✅ EPC in Progress",
       "event_color": "#1a5c38"
     }
@@ -1542,14 +1608,14 @@ window.DAILY_DATA = {
       <div class="strategy-section-head js-strategy-watchpoints-title">Key Watchpoints for Consultants</div>
       <p class="js-strategy-watchpoints" style="font-size:13px; color:var(--muted); line-height:1.65">Watch for NOC clients (e.g., Aramco, ADNOC, ONGC) where national mandate often overrides pure capital efficiency logic — portfolio decisions are as much geopolitical as economic. For IOC clients (Shell, bp, TotalEnergies), the capital allocation conversation is frequently a board-level negotiation between short-cycle shale returns and long-cycle LNG/deepwater FIDs. Break-even analysis against the forward Brent curve remains the most effective decision-support tool in volatile markets.</p>
 
-      <button class="strategy-cta">Read Full 1-Pager →</button>
+      <button class="strategy-cta" onclick="window.print()">Read Full 1-Pager →</button>
     </div>
   </div>
 
   <!-- Mini strategy cards -->
   <div style="margin-bottom:16px; font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--muted); font-weight:600">More Frameworks This Week</div>
   <div class="strategy-grid js-strategy-mini-grid">
-    <div class="strategy-mini">
+    <div class="strategy-mini" data-search="Rystad UCube supply cost curves upstream asset screening">
       <div class="strategy-mini-label">🔍 Upstream · Due Diligence</div>
       <div class="strategy-mini-title">Rystad UCube in Practice: Reading Supply Cost Curves for Asset Screening</div>
       <div class="strategy-mini-desc">A step-by-step guide to interpreting Rystad Energy's UCube output for upstream M&amp;A screening, cost benchmarking, and reserve life analysis.</div>
@@ -1558,7 +1624,7 @@ window.DAILY_DATA = {
         <span style="font-size:10px; padding:3px 8px; background:var(--tag-bg); border-radius:2px; font-weight:600">E&amp;P / Consultant</span>
       </div>
     </div>
-    <div class="strategy-mini">
+    <div class="strategy-mini" data-search="Tolling vs Equity LNG commercial models liquefaction capacity">
       <div class="strategy-mini-label">🛢️ Midstream · LNG Strategy</div>
       <div class="strategy-mini-title">Tolling vs. Equity LNG: Structuring Commercial Models for New Liquefaction Capacity</div>
       <div class="strategy-mini-desc">How IOCs and NOCs choose between tolling arrangements and equity stakes in LNG projects — risk allocation, offtake structures, and IRR implications in a volatile gas market.</div>
@@ -1567,7 +1633,7 @@ window.DAILY_DATA = {
         <span style="font-size:10px; padding:3px 8px; background:var(--steel-light); border-radius:2px; font-weight:600; color:var(--steel)">LNG / Trading</span>
       </div>
     </div>
-    <div class="strategy-mini">
+    <div class="strategy-mini" data-search="FEED to FID stage-gate framework LNG project sanctioning">
       <div class="strategy-mini-label">⚙️ Operations · EPC</div>
       <div class="strategy-mini-title">FEED to FID: A Stage-Gate Framework for LNG Project Sanctioning</div>
       <div class="strategy-mini-desc">How global project teams use stage-gate governance from Pre-FEED through FEED and into EPC—illustrated with reference to recent brownfield LNG projects in Qatar and the US Gulf Coast.</div>
@@ -1592,100 +1658,135 @@ window.DAILY_DATA = {
     <button class="filter-tab" onclick="filterProjects('downstream', this)">Downstream</button>
   </div>
 
-  <div class="project-table-wrapper">
-    <div class="project-table-header">
-      <span>Project / Operator</span>
-      <span>Sector</span>
-      <span>Stage</span>
-      <span>Value</span>
-      <span>Location</span>
-      <span>Event</span>
+  <div class="project-card-grid js-project-tbody">
+
+    <div class="project-card" data-sector="lng">
+      <div class="project-card-header">
+        <div><div class="project-card-name">Woodside Louisiana LNG — Phase 1</div><div class="project-card-company">Woodside Energy / Bechtel</div></div>
+        <span class="stage-badge stage-epc">EPC</span>
+      </div>
+      <div class="project-card-desc">18 MTPA LNG export facility on the US Gulf Coast. Trains 1 &amp; 2 under active EPC with Bechtel; first LNG targeted 2028.</div>
+      <div class="project-card-stats">
+        <div class="project-card-stat"><div class="project-card-stat-label">Sector</div><div class="project-card-stat-val">LNG Export</div></div>
+        <div class="project-card-stat"><div class="project-card-stat-label">Location</div><div class="project-card-stat-val">Louisiana, USA</div></div>
+        <div class="project-card-stat" style="grid-column:span 2"><div class="project-card-stat-label">Investment Value</div><div class="project-card-value">$17.5B</div></div>
+      </div>
+      <div class="project-card-event" style="color:#1a5c38">✅ EPC Awarded</div>
     </div>
 
-    <div class="js-project-tbody">
-    <div class="project-row" data-sector="lng">
-      <div><div class="project-name">Woodside Louisiana LNG — Phase 1 Construction</div><div class="project-company">Woodside Energy / Bechtel</div></div>
-      <div class="sector-pill">LNG Export</div>
-      <div><span class="stage-badge stage-epc">EPC</span></div>
-      <div class="value-cell">$17.5B</div>
-      <div>Louisiana, USA</div>
-      <div style="font-size:11px; color:var(--green); font-weight:600">✅ EPC Awarded</div>
+    <div class="project-card" data-sector="upstream">
+      <div class="project-card-header">
+        <div><div class="project-card-name">Rosebank Field — Consent Appeal</div><div class="project-card-company">Equinor / Ithaca Energy</div></div>
+        <span class="stage-badge stage-concept">On Hold</span>
+      </div>
+      <div class="project-card-desc">UK's largest undeveloped oil field (~300 MMboe) paused pending judicial review of development consent by environmental groups.</div>
+      <div class="project-card-stats">
+        <div class="project-card-stat"><div class="project-card-stat-label">Sector</div><div class="project-card-stat-val">Upstream</div></div>
+        <div class="project-card-stat"><div class="project-card-stat-label">Location</div><div class="project-card-stat-val">North Sea, UK</div></div>
+        <div class="project-card-stat" style="grid-column:span 2"><div class="project-card-stat-label">Investment Value</div><div class="project-card-value">$3.8B</div></div>
+      </div>
+      <div class="project-card-event" style="color:#c8401a">⚖️ Legal Appeal</div>
     </div>
 
-    <div class="project-row" data-sector="upstream">
-      <div><div class="project-name">Rosebank Field — Consent Appeal</div><div class="project-company">Equinor / Ithaca Energy</div></div>
-      <div class="sector-pill">Upstream</div>
-      <div><span class="stage-badge stage-concept">On Hold</span></div>
-      <div class="value-cell">$3.8B</div>
-      <div>North Sea, UK</div>
-      <div style="font-size:11px; color:var(--accent); font-weight:600">⚖️ Legal Appeal</div>
+    <div class="project-card" data-sector="upstream">
+      <div class="project-card-header">
+        <div><div class="project-card-name">Kaminho Deepwater — Phase 1</div><div class="project-card-company">TotalEnergies / Sonangol</div></div>
+        <span class="stage-badge stage-epc">EPC</span>
+      </div>
+      <div class="project-card-desc">FPSO-based deepwater development targeting 70,000 bpd peak production in Block 20/11 offshore Angola; first oil targeted 2027.</div>
+      <div class="project-card-stats">
+        <div class="project-card-stat"><div class="project-card-stat-label">Sector</div><div class="project-card-stat-val">Deepwater</div></div>
+        <div class="project-card-stat"><div class="project-card-stat-label">Location</div><div class="project-card-stat-val">Block 20/11, Angola</div></div>
+        <div class="project-card-stat" style="grid-column:span 2"><div class="project-card-stat-label">Investment Value</div><div class="project-card-value">$6.4B</div></div>
+      </div>
+      <div class="project-card-event" style="color:#1a5c38">✅ EPC in Progress</div>
     </div>
 
-    <div class="project-row" data-sector="upstream">
-      <div><div class="project-name">Kaminho Deepwater — Phase 1</div><div class="project-company">TotalEnergies / Sonangol</div></div>
-      <div class="sector-pill">Deepwater</div>
-      <div><span class="stage-badge stage-epc">EPC</span></div>
-      <div class="value-cell">$6.4B</div>
-      <div>Block 20/11, Angola</div>
-      <div style="font-size:11px; color:var(--green); font-weight:600">✅ EPC in Progress</div>
+    <div class="project-card" data-sector="upstream">
+      <div class="project-card-header">
+        <div><div class="project-card-name">Block 6 Deepwater Development</div><div class="project-card-company">TotalEnergies / Petronas</div></div>
+        <span class="stage-badge stage-fid">FID</span>
+      </div>
+      <div class="project-card-desc">Deepwater gas-condensate field development offshore Namibia; FID triggered by strong well results. First gas targeted 2027.</div>
+      <div class="project-card-stats">
+        <div class="project-card-stat"><div class="project-card-stat-label">Sector</div><div class="project-card-stat-val">Deepwater</div></div>
+        <div class="project-card-stat"><div class="project-card-stat-label">Location</div><div class="project-card-stat-val">Namibia Block 2912B</div></div>
+        <div class="project-card-stat" style="grid-column:span 2"><div class="project-card-stat-label">Investment Value</div><div class="project-card-value">$2.2B</div></div>
+      </div>
+      <div class="project-card-event" style="color:#1a5c38">🟢 FID Taken</div>
     </div>
 
-    <div class="project-row" data-sector="upstream">
-      <div><div class="project-name">Block 6 Deepwater Development</div><div class="project-company">TotalEnergies / Petronas</div></div>
-      <div class="sector-pill">Deepwater</div>
-      <div><span class="stage-badge stage-fid">FID</span></div>
-      <div class="value-cell">$2.2B</div>
-      <div>Namibia Block 2912B</div>
-      <div style="font-size:11px; color:var(--green); font-weight:600">🟢 FID Taken</div>
+    <div class="project-card" data-sector="midstream">
+      <div class="project-card-header">
+        <div><div class="project-card-name">Calcasieu Pass 2 LNG — FEED</div><div class="project-card-company">Venture Global LNG</div></div>
+        <span class="stage-badge stage-feed">FEED</span>
+      </div>
+      <div class="project-card-desc">20 MTPA LNG expansion on the US Gulf Coast using modular mid-scale liquefaction trains. FID expected post FEED completion.</div>
+      <div class="project-card-stats">
+        <div class="project-card-stat"><div class="project-card-stat-label">Sector</div><div class="project-card-stat-val">LNG Export</div></div>
+        <div class="project-card-stat"><div class="project-card-stat-label">Location</div><div class="project-card-stat-val">Louisiana, USA</div></div>
+        <div class="project-card-stat" style="grid-column:span 2"><div class="project-card-stat-label">Investment Value</div><div class="project-card-value">$10.0B</div></div>
+      </div>
+      <div class="project-card-event" style="color:#1e3a5f">📋 FEED in Progress</div>
     </div>
 
-    <div class="project-row" data-sector="midstream">
-      <div><div class="project-name">Calcasieu Pass 2 LNG — FEED</div><div class="project-company">Venture Global LNG</div></div>
-      <div class="sector-pill">LNG Export</div>
-      <div><span class="stage-badge stage-feed">FEED</span></div>
-      <div class="value-cell">$10.0B</div>
-      <div>Louisiana, USA</div>
-      <div style="font-size:11px; color:var(--steel); font-weight:600">📋 FEED in Progress</div>
+    <div class="project-card" data-sector="upstream">
+      <div class="project-card-header">
+        <div><div class="project-card-name">Jackdaw Gas Field Development</div><div class="project-card-company">Shell / CNOOC</div></div>
+        <span class="stage-badge stage-fid">FID</span>
+      </div>
+      <div class="project-card-desc">North Sea gas field producing ~25 MMcf/d via tie-back to Shearwater platform. FID taken following revised environmental consent.</div>
+      <div class="project-card-stats">
+        <div class="project-card-stat"><div class="project-card-stat-label">Sector</div><div class="project-card-stat-val">Offshore Gas</div></div>
+        <div class="project-card-stat"><div class="project-card-stat-label">Location</div><div class="project-card-stat-val">North Sea, UK</div></div>
+        <div class="project-card-stat" style="grid-column:span 2"><div class="project-card-stat-label">Investment Value</div><div class="project-card-value">$1.5B</div></div>
+      </div>
+      <div class="project-card-event" style="color:#1a5c38">🟢 FID Taken</div>
     </div>
 
-    <div class="project-row" data-sector="upstream">
-      <div><div class="project-name">Jackdaw Gas Field Development</div><div class="project-company">Shell / CNOOC</div></div>
-      <div class="sector-pill">Offshore Gas</div>
-      <div><span class="stage-badge stage-fid">FID</span></div>
-      <div class="value-cell">$1.5B</div>
-      <div>North Sea, UK</div>
-      <div style="font-size:11px; color:var(--green); font-weight:600">🟢 FID Taken</div>
+    <div class="project-card" data-sector="downstream">
+      <div class="project-card-header">
+        <div><div class="project-card-name">Dangote Refinery Phase 2 Expansion</div><div class="project-card-company">Dangote Group</div></div>
+        <span class="stage-badge stage-pdp">PDP</span>
+      </div>
+      <div class="project-card-desc">Expanding Africa's largest refinery from 650,000 to 800,000 bpd with additional CDU trains and petrochemical integration units.</div>
+      <div class="project-card-stats">
+        <div class="project-card-stat"><div class="project-card-stat-label">Sector</div><div class="project-card-stat-val">Refinery</div></div>
+        <div class="project-card-stat"><div class="project-card-stat-label">Location</div><div class="project-card-stat-val">Lagos, Nigeria</div></div>
+        <div class="project-card-stat" style="grid-column:span 2"><div class="project-card-stat-label">Investment Value</div><div class="project-card-value">$3.0B</div></div>
+      </div>
+      <div class="project-card-event" style="color:#c8401a">📌 PDP Stage</div>
     </div>
 
-    <div class="project-row" data-sector="downstream">
-      <div><div class="project-name">Dangote Refinery Phase 2 Expansion</div><div class="project-company">Dangote Group</div></div>
-      <div class="sector-pill">Refinery</div>
-      <div><span class="stage-badge stage-pdp">PDP</span></div>
-      <div class="value-cell">$3.0B</div>
-      <div>Lagos, Nigeria</div>
-      <div style="font-size:11px; color:var(--accent); font-weight:600">📌 PDP Stage</div>
+    <div class="project-card" data-sector="downstream">
+      <div class="project-card-header">
+        <div><div class="project-card-name">HPCL Rajasthan Refinery — Phase 1</div><div class="project-card-company">HPCL / Govt. of Rajasthan</div></div>
+        <span class="stage-badge stage-epc">EPC</span>
+      </div>
+      <div class="project-card-desc">9 MMTPA greenfield refinery with integrated 1,210 MW captive power plant in Barmer district; India's largest single-site refinery project.</div>
+      <div class="project-card-stats">
+        <div class="project-card-stat"><div class="project-card-stat-label">Sector</div><div class="project-card-stat-val">Refinery</div></div>
+        <div class="project-card-stat"><div class="project-card-stat-label">Location</div><div class="project-card-stat-val">Barmer, India</div></div>
+        <div class="project-card-stat" style="grid-column:span 2"><div class="project-card-stat-label">Investment Value</div><div class="project-card-value">₹72,000 Cr</div></div>
+      </div>
+      <div class="project-card-event" style="color:#1a5c38">✅ EPC Underway</div>
     </div>
 
-    <div class="project-row" data-sector="downstream">
-      <div><div class="project-name">HPCL Rajasthan Refinery — Phase 1</div><div class="project-company">HPCL / Govt. of Rajasthan</div></div>
-      <div class="sector-pill">Refinery</div>
-      <div><span class="stage-badge stage-epc">EPC</span></div>
-      <div class="value-cell">₹72,000 Cr</div>
-      <div>Barmer, India</div>
-      <div style="font-size:11px; color:var(--green); font-weight:600">✅ EPC Underway</div>
+    <div class="project-card" data-sector="lng">
+      <div class="project-card-header">
+        <div><div class="project-card-name">QatarEnergy North Field South Expansion</div><div class="project-card-company">QatarEnergy / TotalEnergies / Shell / ExxonMobil / ConocoPhillips</div></div>
+        <span class="stage-badge stage-epc">EPC</span>
+      </div>
+      <div class="project-card-desc">Adding 16 MTPA of LNG capacity to the world's largest gas field. Part of QatarEnergy's broader 48 MTPA expansion plan by 2030.</div>
+      <div class="project-card-stats">
+        <div class="project-card-stat"><div class="project-card-stat-label">Sector</div><div class="project-card-stat-val">LNG</div></div>
+        <div class="project-card-stat"><div class="project-card-stat-label">Location</div><div class="project-card-stat-val">Ras Laffan, Qatar</div></div>
+        <div class="project-card-stat" style="grid-column:span 2"><div class="project-card-stat-label">Investment Value</div><div class="project-card-value">$6.0B est.</div></div>
+      </div>
+      <div class="project-card-event" style="color:#1a5c38">✅ EPC in Progress</div>
     </div>
 
-    <div class="project-row" data-sector="lng">
-      <div><div class="project-name">QatarEnergy North Field South Expansion</div><div class="project-company">QatarEnergy / TotalEnergies / Shell / ExxonMobil / ConocoPhillips</div></div>
-      <div class="sector-pill">LNG</div>
-      <div><span class="stage-badge stage-epc">EPC</span></div>
-      <div class="value-cell">$6.0B est.</div>
-      <div>Ras Laffan, Qatar</div>
-      <div style="font-size:11px; color:var(--green); font-weight:600">✅ EPC in Progress</div>
-    </div>
-
-    </div><!-- /js-project-tbody -->
-  </div><!-- /project-table-wrapper -->
+  </div><!-- /js-project-tbody -->
 
   <div style="margin-top:14px; font-size:11.5px; color:var(--muted); font-family:'DM Mono',monospace">
     ⓘ Data compiled from GlobalData Energy, Upstream Online, Offshore Magazine, Renewables Now, and Hydrogen Insight. Project values are indicative. FID = Final Investment Decision · PDP = Pre-FEED / Development Planning · FEED = Front-End Engineering Design · EPC = Engineering, Procurement &amp; Construction.
@@ -1835,7 +1936,6 @@ window.DAILY_DATA = {
 <!-- ══════════ FOOTER ══════════ -->
 <footer>
   <div class="footer-logo">The Daily <span>Crude</span></div>
-  <div class="footer-tagline">Daily intelligence for upstream, midstream, and downstream professionals</div>
   <div class="footer-bottom">
     <span>© 2026 The Daily Crude · Vol. 3 · Issue 124 · Wednesday, 06 May 2026 · Market data is indicative. Not investment advice.</span>
     <button class="contact-btn-footer" onclick="openContact()">
@@ -1878,8 +1978,8 @@ function showSection(id) {
 function filterProjects(sector, btn) {
   document.querySelectorAll('.filter-tab').forEach(function(b) { b.classList.remove('active'); });
   if (btn) btn.classList.add('active');
-  document.querySelectorAll('.project-row').forEach(function(row) {
-    row.style.display = (sector === 'all' || row.dataset.sector === sector) ? '' : 'none';
+  document.querySelectorAll('.project-card').forEach(function(card) {
+    card.style.display = (sector === 'all' || card.dataset.sector === sector) ? '' : 'none';
   });
 }
 
@@ -1909,6 +2009,12 @@ function sendContact(){
 }
 document.addEventListener('click', function(e){ if(e.target.id==='contact-modal') closeContact(); });
 document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeContact(); });
+
+// Strategy mini-card search
+document.addEventListener('click', function(e) {
+  var card = e.target.closest('.strategy-mini[data-search]');
+  if (card) window.open('https://www.google.com/search?q=' + encodeURIComponent(card.dataset.search), '_blank');
+});
 
 // ══════════════════════════════════════════════════════
 //  DATA-DRIVEN RENDERER — reads window.DAILY_DATA
@@ -2106,7 +2212,7 @@ function renderStrategy(s) {
     var grid = document.querySelector('.js-strategy-mini-grid');
     if (grid) {
       grid.innerHTML = s.mini_cards.map(function(c) {
-        return '<div class="strategy-mini">'
+        return '<div class="strategy-mini" data-search="' + esc(c.title) + '">'
           + '<div class="strategy-mini-label">' + esc(c.label) + '</div>'
           + '<div class="strategy-mini-title">' + esc(c.title) + '</div>'
           + '<div class="strategy-mini-desc">' + esc(c.desc) + '</div>'
@@ -2125,14 +2231,19 @@ function renderProjects(projects) {
   var tbody = document.querySelector('.js-project-tbody');
   if (!tbody) return;
   tbody.innerHTML = projects.map(function(p) {
-    return '<div class="project-row" data-sector="' + esc(p.data_sector) + '">'
-      + '<div><div class="project-name">' + esc(p.name) + '</div>'
-      + '<div class="project-company">' + esc(p.company) + '</div></div>'
-      + '<div class="sector-pill">' + esc(p.sector) + '</div>'
-      + '<div><span class="stage-badge ' + esc(p.stage_class) + '">' + esc(p.stage) + '</span></div>'
-      + '<div class="value-cell">' + esc(p.value) + '</div>'
-      + '<div>' + esc(p.location) + '</div>'
-      + '<div style="font-size:11px;color:' + esc(p.event_color) + ';font-weight:600">' + esc(p.event) + '</div>'
+    return '<div class="project-card" data-sector="' + esc(p.data_sector) + '">'
+      + '<div class="project-card-header">'
+      + '<div><div class="project-card-name">' + esc(p.name) + '</div>'
+      + '<div class="project-card-company">' + esc(p.company) + '</div></div>'
+      + '<span class="stage-badge ' + esc(p.stage_class) + '">' + esc(p.stage) + '</span>'
+      + '</div>'
+      + '<div class="project-card-desc">' + esc(p.description || '') + '</div>'
+      + '<div class="project-card-stats">'
+      + '<div class="project-card-stat"><div class="project-card-stat-label">Sector</div><div class="project-card-stat-val">' + esc(p.sector) + '</div></div>'
+      + '<div class="project-card-stat"><div class="project-card-stat-label">Location</div><div class="project-card-stat-val">' + esc(p.location) + '</div></div>'
+      + '<div class="project-card-stat" style="grid-column:span 2"><div class="project-card-stat-label">Investment Value</div><div class="project-card-value">' + esc(p.value) + '</div></div>'
+      + '</div>'
+      + '<div class="project-card-event" style="color:' + esc(p.event_color) + '">' + esc(p.event) + '</div>'
       + '</div>';
   }).join('');
 }

@@ -263,6 +263,7 @@ Return this exact JSON structure (fill all values with real data):
       "stage_class": "stage-epc",
       "value": "$X.XB",
       "location": "Location, Country",
+      "description": "One sentence: capacity, technology, and key milestone context.",
       "event": "✅ EPC Awarded",
       "event_color": "#1a5c38"
     }},
