@@ -2139,24 +2139,31 @@ function renderProjects(projects) {
 
 // ── Sparkline label positioning — always above the endpoint dot ───────────────
 (function() {
-  function placeLabel(wrapId, dotId, labelId) {
-    var wrap = document.getElementById(wrapId);
-    var dot  = document.getElementById(dotId);
-    var lbl  = document.getElementById(labelId);
-    if (!wrap || !dot || !lbl) return;
-    var wr = wrap.getBoundingClientRect();
-    var dr = dot.getBoundingClientRect();
-    var dotCenterY = dr.top - wr.top + dr.height / 2;
-    lbl.style.top = Math.max(2, dotCenterY - lbl.offsetHeight - 5) + 'px';
+  function placeLabel(svgEl, cy, viewBoxH, labelEl) {
+    if (!svgEl || !labelEl) return;
+    var r = svgEl.getBoundingClientRect();
+    var svgH = r.height > 0 ? r.height : (svgEl.clientHeight || 60);
+    var dotY = (cy / viewBoxH) * svgH;
+    var lblH = labelEl.offsetHeight || 13;
+    labelEl.style.top = Math.max(2, dotY - lblH - 6) + 'px';
   }
+
   function positionAll() {
-    placeLabel('brent-spark-wrap', 'brent-dot', 'brent-label');
-    placeLabel('ttf-spark-wrap',   'ttf-dot',   'ttf-label');
+    var bSvg = document.querySelector('#brent-spark-wrap svg.sparkline');
+    var tSvg = document.querySelector('#ttf-spark-wrap svg.sparkline');
+    placeLabel(bSvg, 40, 70, document.getElementById('brent-label'));
+    placeLabel(tSvg, 18, 70, document.getElementById('ttf-label'));
   }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', positionAll);
-  } else {
+
+  function init() {
     positionAll();
+    requestAnimationFrame(positionAll);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
   window.addEventListener('resize', positionAll);
 })();
