@@ -1970,6 +1970,7 @@ function showSection(id) {
   var tab = document.querySelector('.nav-tab[onclick*="' + id + '"]');
   if (tab) tab.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  try { localStorage.setItem('tdc_active_tab', id); } catch(e) {}
 }
 function filterProjects(sector, btn) {
   document.querySelectorAll('.filter-tab').forEach(function(b) { b.classList.remove('active'); });
@@ -2276,10 +2277,10 @@ function renderProjects(projects) {
 
 // ── Boot ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
-  // Hide inactive sections
-  document.querySelectorAll('.content-section').forEach(function(s) {
-    if (!s.classList.contains('active')) s.style.display = 'none';
-  });
+  // Restore last active tab, defaulting to markets
+  var saved;
+  try { saved = localStorage.getItem('tdc_active_tab'); } catch(e) {}
+  showSection(saved || 'markets');
 
   // Render from injected data if available
   if (window.DAILY_DATA) {
