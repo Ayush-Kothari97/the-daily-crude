@@ -2137,15 +2137,19 @@ function renderProjects(projects) {
   }).join('');
 }
 
-// ── Sparkline label positioning — always above the endpoint dot ───────────────
+// ── Sparkline label positioning — label bottom edge floats above dot center ───
 (function() {
+  var GAP = 8; // px between label bottom and dot center
+
   function placeLabel(svgEl, cy, viewBoxH, labelEl) {
     if (!svgEl || !labelEl) return;
     var r = svgEl.getBoundingClientRect();
-    var svgH = r.height > 0 ? r.height : (svgEl.clientHeight || 60);
+    var svgH = r.height > 0 ? r.height : 60;
+    // dotY = dot centre from top of wrapper
     var dotY = (cy / viewBoxH) * svgH;
-    var lblH = labelEl.offsetHeight || 13;
-    labelEl.style.top = Math.max(2, dotY - lblH - 6) + 'px';
+    // anchor bottom edge GAP pixels above dot centre; no offsetHeight needed
+    labelEl.style.top = 'auto';
+    labelEl.style.bottom = (svgH - dotY + GAP) + 'px';
   }
 
   function positionAll() {
@@ -2155,15 +2159,10 @@ function renderProjects(projects) {
     placeLabel(tSvg, 18, 70, document.getElementById('ttf-label'));
   }
 
-  function init() {
-    positionAll();
-    requestAnimationFrame(positionAll);
-  }
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', function() { requestAnimationFrame(positionAll); });
   } else {
-    init();
+    requestAnimationFrame(positionAll);
   }
   window.addEventListener('resize', positionAll);
 })();
