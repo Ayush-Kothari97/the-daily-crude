@@ -1960,7 +1960,10 @@ window.DAILY_DATA = {
 // ══════════════════════════════════════════════════════
 //  NAVIGATION & FILTER  (always static)
 // ══════════════════════════════════════════════════════
-function showSection(id) {
+var VALID_TABS = ['markets', 'india', 'news', 'strategy', 'projects'];
+
+function showSection(id, fromHash) {
+  if (VALID_TABS.indexOf(id) === -1) id = 'markets';
   document.querySelectorAll('.content-section').forEach(function(s) {
     s.classList.remove('active'); s.style.display = 'none';
   });
@@ -1969,9 +1972,16 @@ function showSection(id) {
   document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
   var tab = document.querySelector('.nav-tab[onclick*="' + id + '"]');
   if (tab) tab.classList.add('active');
+  if (!fromHash) {
+    history.pushState(null, '', '#' + id);
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  try { localStorage.setItem('tdc_active_tab', id); } catch(e) {}
 }
+
+window.addEventListener('hashchange', function() {
+  var id = location.hash.replace('#', '');
+  showSection(id, true);
+});
 function filterProjects(sector, btn) {
   document.querySelectorAll('.filter-tab').forEach(function(b) { b.classList.remove('active'); });
   if (btn) btn.classList.add('active');
@@ -2277,10 +2287,9 @@ function renderProjects(projects) {
 
 // ── Boot ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
-  // Restore last active tab, defaulting to markets
-  var saved;
-  try { saved = localStorage.getItem('tdc_active_tab'); } catch(e) {}
-  showSection(saved || 'markets');
+  // Restore tab from URL hash, defaulting to markets
+  var id = location.hash.replace('#', '');
+  showSection(id || 'markets', true);
 
   // Render from injected data if available
   if (window.DAILY_DATA) {
