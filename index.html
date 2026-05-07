@@ -975,7 +975,472 @@
 
 <!-- ══════════ DAILY DATA — injected by generate_content.py ══════════ -->
 <script id="daily-data">
-window.DAILY_DATA = null; // populated by GitHub Actions daily at 08:00 IST
+window.DAILY_DATA = {
+  "meta": {
+    "date": "Thursday, 07 May 2026",
+    "issue_date": "07 May 2026",
+    "last_updated": "08:00 IST"
+  },
+  "ticker": [
+    {
+      "label": "BRENT",
+      "price": "$99.65/bbl",
+      "change": "▼ 1.60%",
+      "direction": "down"
+    },
+    {
+      "label": "WTI",
+      "price": "$93.36/bbl",
+      "change": "▼ 1.81%",
+      "direction": "down"
+    },
+    {
+      "label": "DUBAI CRUDE",
+      "price": "$75.27/bbl",
+      "change": "▲ 0.22%",
+      "direction": "up"
+    },
+    {
+      "label": "JKM LNG",
+      "price": "$XX.XX/MMBtu",
+      "change": "▲/▼ X.XX%",
+      "direction": "up|down|flat"
+    },
+    {
+      "label": "TTF GAS",
+      "price": "€XX.XX/MWh",
+      "change": "▲/▼ X.XX%",
+      "direction": "up|down|flat"
+    },
+    {
+      "label": "HH NATGAS",
+      "price": "$2.78/MMBtu",
+      "change": "▼ 0.18%",
+      "direction": "down"
+    },
+    {
+      "label": "EU ETS",
+      "price": "€75.02/tCO₂",
+      "change": "▲ 0.48%",
+      "direction": "up"
+    },
+    {
+      "label": "OPEC BASKET",
+      "price": "$74.44/bbl",
+      "change": "▼ 0.08%",
+      "direction": "down"
+    },
+    {
+      "label": "NAPHTHA CIF ARA",
+      "price": "$XXX/MT",
+      "change": "▲/▼ X.XX%",
+      "direction": "up|down|flat"
+    },
+    {
+      "label": "GASOIL ICE",
+      "price": "$684.88/MT",
+      "change": "▼ 0.09%",
+      "direction": "down"
+    }
+  ],
+  "markets": {
+    "macro_signal": "Oil prices decline amid geopolitical tensions and market volatility.",
+    "prices": [
+      {
+        "commodity": "Brent Crude (ICE)",
+        "value": "$99.65",
+        "change_abs": "-$1.62",
+        "change_pct": "-1.60%",
+        "direction": "down",
+        "meta": "Price decline influenced by market volatility."
+      },
+      {
+        "commodity": "WTI Crude (NYMEX)",
+        "value": "$93.36",
+        "change_abs": "-$1.72",
+        "change_pct": "-1.81%",
+        "direction": "down",
+        "meta": "WTI prices affected by geopolitical tensions."
+      },
+      {
+        "commodity": "JKM LNG Spot",
+        "value": "$XX.XX",
+        "change_abs": "-$X.XX",
+        "change_pct": "-X.XX%",
+        "direction": "down",
+        "meta": "$/MMBtu · Platts assessed · NE Asia delivery"
+      },
+      {
+        "commodity": "TTF Natural Gas",
+        "value": "€XX.XX",
+        "change_abs": "-€X.XX",
+        "change_pct": "-X.XX%",
+        "direction": "down",
+        "meta": "€/MWh · ICE Endex · Front-Month"
+      }
+    ],
+    "carbon": [
+      {
+        "scheme": "EU ETS",
+        "price": "€75.02",
+        "change": "▲ 0.48%",
+        "note": "tCO₂ · ICE ECX"
+      },
+      {
+        "scheme": "UK ETS",
+        "price": "£XX.XX",
+        "change": "▲/▼ X.XX%",
+        "note": "tCO₂ · ICE"
+      },
+      {
+        "scheme": "California CCA",
+        "price": "$XX.XX",
+        "change": "▲/▼ X.XX%",
+        "note": "tCO₂ · ICE"
+      },
+      {
+        "scheme": "ACCU Australia",
+        "price": "A$XX.XX",
+        "change": "▲/▼ X.XX%",
+        "note": "tCO₂ · ASX"
+      }
+    ],
+    "drivers": [
+      {
+        "icon": "🛢️",
+        "headline": "Geopolitical tensions impact oil markets",
+        "body": "Recent conflicts have led to decreased shipping volumes and increased market volatility."
+      },
+      {
+        "icon": "🌏",
+        "headline": "Energy companies adjust strategies",
+        "body": "Firms like Suncor and Keyera are revising financial plans in response to market changes."
+      },
+      {
+        "icon": "🔥",
+        "headline": "Natural gas prices remain volatile",
+        "body": "Henry Hub natural gas prices show slight declines amid fluctuating demand."
+      },
+      {
+        "icon": "🤝",
+        "headline": "New collaborations in energy sector",
+        "body": "Companies like INEOS and Shell are forming partnerships to explore new opportunities."
+      }
+    ]
+  },
+  "india": {
+    "headline": "India's energy sector adapts to global market shifts",
+    "headline_body": "India's energy sector is navigating global market shifts, focusing on securing crude imports and advancing renewable energy projects. The government is implementing policies to enhance energy security and promote sustainable development.",
+    "news": [
+      {
+        "sector": "Refining",
+        "sector_color": "#c57800",
+        "title": "India boosts refining capacity",
+        "summary": "India plans to increase its refining capacity to meet growing domestic demand and export opportunities.",
+        "source": "Energy News India",
+        "time": "10:00 IST"
+      },
+      {
+        "sector": "Renewables",
+        "sector_color": "#1a5c38",
+        "title": "Solar energy projects gain momentum",
+        "summary": "New solar energy projects are being launched across India, contributing to the National Solar Mission targets.",
+        "source": "Renewable Energy Times",
+        "time": "11:00 IST"
+      }
+    ],
+    "stats": [
+      {
+        "label": "India Crude Import Basket",
+        "value": "$XX.XX/bbl",
+        "note": "Russia ~X% · ME ~X% · Others ~X% · PPAC"
+      },
+      {
+        "label": "National Solar Mission — Installed",
+        "value": "XX.X GW",
+        "note": "Target: 280 GW by 2030 · MNRE data"
+      },
+      {
+        "label": "LNG Spot Import (Petronet Dahej)",
+        "value": "$XX.XX/MMBtu",
+        "note": "Blended spot vs LTC pricing"
+      },
+      {
+        "label": "ONGC Production (YTD)",
+        "value": "XX.X MMT",
+        "note": "Crude oil equiv. · vs annual target"
+      },
+      {
+        "label": "Green H₂ Mission Projects — Pipeline",
+        "value": "X GW",
+        "note": "SIGHT scheme electrolyser capacity · MNRE"
+      }
+    ]
+  },
+  "global_news": [
+    {
+      "sector": "Upstream · Exploration",
+      "sector_class": "sector-upstream",
+      "dot_color": "#c8401a",
+      "title": "INEOS and Shell collaborate in Gulf of Mexico",
+      "summary": "INEOS Energy and Shell Offshore Inc. have agreed to jointly invest in exploration and development opportunities in the Gulf of Mexico.",
+      "source": "Energy-Pedia",
+      "time": "06:00 IST"
+    },
+    {
+      "sector": "Policy · Regulation",
+      "sector_class": "sector-policy",
+      "dot_color": "#5a3a00",
+      "title": "NSTA offers Gas Storage Licence to EnergyPathways",
+      "summary": "The North Sea Transition Authority is set to award a Gas Storage Licence to EnergyPathways for its MESH project.",
+      "source": "Energy-Pedia",
+      "time": "07:00 IST"
+    },
+    {
+      "sector": "Renewables · Wind",
+      "sector_class": "sector-renewables",
+      "dot_color": "#1a5c38",
+      "title": "Vestas secures 117 MW orders in Germany",
+      "summary": "Vestas has announced three orders in Germany totaling 117 MW as part of its Q2 order intake.",
+      "source": "Energy-Pedia",
+      "time": "08:00 IST"
+    },
+    {
+      "sector": "Hydrogen · Green H₂",
+      "sector_class": "sector-hydrogen",
+      "dot_color": "#4a2060",
+      "title": "Scatec partners with NBE for Egyptian project",
+      "summary": "Scatec has signed a shareholder agreement with the National Bank of Egypt for an equity partnership in its 1.1 GW solar and 100 MW/200 MWh battery storage project.",
+      "source": "Energy-Pedia",
+      "time": "09:00 IST"
+    },
+    {
+      "sector": "Midstream · LNG",
+      "sector_class": "sector-midstream",
+      "dot_color": "#8b4500",
+      "title": "EnerMech wins subsea contract for Trion development",
+      "summary": "EnerMech has been awarded a significant subsea pre-commissioning contract by Subsea7 for the Trion development.",
+      "source": "Oilfield Technology",
+      "time": "10:00 IST"
+    },
+    {
+      "sector": "Offshore · Subsea",
+      "sector_class": "sector-offshore",
+      "dot_color": "#1e4a7a",
+      "title": "Baker Hughes and Strohm collaborate on ultradeepwater projects",
+      "summary": "Baker Hughes and Strohm have signed an MoU to develop hybrid flexible pipes for ultradeepwater risers and flowline applications.",
+      "source": "World Pipelines",
+      "time": "11:00 IST"
+    },
+    {
+      "sector": "CCUS · Technology",
+      "sector_class": "sector-ccus",
+      "dot_color": "#2a6b6b",
+      "title": "Exolum to develop CO₂ storage terminal in UK",
+      "summary": "Exolum has signed an agreement with Severnside Carbon to advance the development of a CO₂ storage terminal in Avonmouth, UK.",
+      "source": "Tanks and Terminals",
+      "time": "12:00 IST"
+    },
+    {
+      "sector": "Nuclear · SMR",
+      "sector_class": "sector-nuclear",
+      "dot_color": "#6b0000",
+      "title": "Equinor submits Bay Du Nord plans",
+      "summary": "Equinor has submitted development plans for the Bay Du Nord project to the Newfoundland and Labrador Energy Regulator.",
+      "source": "DOB Energy",
+      "time": "13:00 IST"
+    },
+    {
+      "sector": "Downstream · Petrochemicals",
+      "sector_class": "sector-downstream",
+      "dot_color": "#1e3a5f",
+      "title": "Colonial Oil Industries acquires Atkinson Oil",
+      "summary": "Colonial Oil Industries has announced the acquisition of Atkinson Oil Co., a commercial distributor of fuel and lubricants.",
+      "source": "Tanks and Terminals",
+      "time": "14:00 IST"
+    }
+  ],
+  "strategy": {
+    "featured": {
+      "label": "⭐ Framework of the Day",
+      "title": "Hydrogen Economy Development Framework",
+      "tags": [
+        "Hydrogen",
+        "Energy Transition",
+        "Infrastructure"
+      ],
+      "audience": "IOCs · NOCs · Private Equity · Strategy Consultants · EPC PMOs",
+      "read_time": "~10 min read",
+      "sources": "McKinsey, BCG, Wood Mackenzie",
+      "intro": "Developing a robust hydrogen economy requires a strategic framework that addresses production, infrastructure, and market integration.",
+      "framework_title": "The Framework — Building a Hydrogen Economy",
+      "framework_desc": "This framework outlines the essential steps for developing a hydrogen economy, focusing on production, infrastructure, and market integration.",
+      "steps": [
+        {
+          "title": "Assess Hydrogen Production Methods",
+          "body": "Evaluate various hydrogen production technologies, including electrolysis and natural gas reforming with CCS."
+        },
+        {
+          "title": "Develop Infrastructure",
+          "body": "Plan and invest in necessary infrastructure for hydrogen transport, storage, and distribution."
+        },
+        {
+          "title": "Integrate with Energy Markets",
+          "body": "Ensure hydrogen integration with existing energy markets and establish regulatory frameworks."
+        },
+        {
+          "title": "Promote Research and Development",
+          "body": "Encourage innovation in hydrogen technologies to improve efficiency and reduce costs."
+        },
+        {
+          "title": "Engage Stakeholders",
+          "body": "Collaborate with industry, government, and communities to build support and address concerns."
+        }
+      ],
+      "watchpoints_title": "Key Watchpoints for Consultants",
+      "watchpoints": "Consultants should monitor technological advancements, regulatory changes, and market dynamics to provide informed guidance on hydrogen economy development."
+    },
+    "mini_cards": [
+      {
+        "label": "🔍 Upstream · Due Diligence",
+        "title": "Evaluating Exploration Opportunities",
+        "desc": "A comprehensive guide to assessing upstream exploration projects.",
+        "read_time": "~5 min",
+        "tag": "E&P / Consultant",
+        "tag_bg": "var(--tag-bg)",
+        "tag_color": "var(--ink)"
+      },
+      {
+        "label": "🌿 Decarbonisation · Net Zero",
+        "title": "Implementing CCUS Strategies",
+        "desc": "Insights into deploying carbon capture, utilization, and storage technologies.",
+        "read_time": "~7 min",
+        "tag": "CCUS / Transition",
+        "tag_bg": "var(--green-light)",
+        "tag_color": "var(--green)"
+      },
+      {
+        "label": "⚙️ Operations · EPC",
+        "title": "Optimizing EPC Project Management",
+        "desc": "Best practices for managing engineering, procurement, and construction projects.",
+        "read_time": "~6 min",
+        "tag": "PMC / EPC",
+        "tag_bg": "var(--steel-light)",
+        "tag_color": "var(--steel)"
+      }
+    ]
+  },
+  "projects": [
+    {
+      "name": "Trion Development",
+      "company": "Subsea7",
+      "sector": "LNG Export",
+      "data_sector": "lng",
+      "stage": "EPC",
+      "stage_class": "stage-epc",
+      "value": "$X.XB",
+      "location": "Gulf of Mexico, USA",
+      "event": "✅ EPC Awarded",
+      "event_color": "#1a5c38"
+    },
+    {
+      "name": "Bay Du Nord Project",
+      "company": "Equinor",
+      "sector": "Upstream",
+      "data_sector": "upstream",
+      "stage": "On Hold",
+      "stage_class": "stage-concept",
+      "value": "$X.XB",
+      "location": "Newfoundland and Labrador, Canada",
+      "event": "⚖️ Legal Appeal",
+      "event_color": "#c8401a"
+    },
+    {
+      "name": "Obelisk Project",
+      "company": "Scatec",
+      "sector": "Offshore Wind",
+      "data_sector": "renewables",
+      "stage": "Concept",
+      "stage_class": "stage-concept",
+      "value": "~$X.XB",
+      "location": "Egypt",
+      "event": "🔍 Concept Select",
+      "event_color": "#4a2060"
+    },
+    {
+      "name": "Eirin Field Development",
+      "company": "Equinor",
+      "sector": "Deepwater",
+      "data_sector": "upstream",
+      "stage": "FID",
+      "stage_class": "stage-fid",
+      "value": "$X.XB",
+      "location": "Norwegian Continental Shelf, Norway",
+      "event": "🟢 FID Taken",
+      "event_color": "#1a5c38"
+    },
+    {
+      "name": "MESH Project",
+      "company": "EnergyPathways",
+      "sector": "Green H₂",
+      "data_sector": "hydrogen",
+      "stage": "FEED",
+      "stage_class": "stage-feed",
+      "value": "€X.XB",
+      "location": "UK",
+      "event": "📋 FEED Commenced",
+      "event_color": "#1e3a5f"
+    },
+    {
+      "name": "CO₂ Storage Terminal",
+      "company": "Exolum",
+      "sector": "CCUS Storage",
+      "data_sector": "ccus",
+      "stage": "EPC",
+      "stage_class": "stage-epc",
+      "value": "$X.XB",
+      "location": "Avonmouth, UK",
+      "event": "✅ EPC Awarded",
+      "event_color": "#1a5c38"
+    },
+    {
+      "name": "Refinery Expansion",
+      "company": "Colonial Oil Industries",
+      "sector": "Refinery",
+      "data_sector": "downstream",
+      "stage": "PDP",
+      "stage_class": "stage-pdp",
+      "value": "$X.XB",
+      "location": "USA",
+      "event": "📌 PDP Stage",
+      "event_color": "#c8401a"
+    },
+    {
+      "name": "Solar PV Project",
+      "company": "Scatec",
+      "sector": "Solar PV",
+      "data_sector": "renewables",
+      "stage": "FEED",
+      "stage_class": "stage-feed",
+      "value": "₹XX,XXX Cr",
+      "location": "Egypt",
+      "event": "📋 FEED Award",
+      "event_color": "#1e3a5f"
+    },
+    {
+      "name": "LNG Export Facility",
+      "company": "Subsea7",
+      "sector": "LNG",
+      "data_sector": "lng",
+      "stage": "EPC",
+      "stage_class": "stage-epc",
+      "value": "$X.XB est.",
+      "location": "Gulf of Mexico, USA",
+      "event": "✅ EPC in Progress",
+      "event_color": "#1a5c38"
+    }
+  ]
+};
 </script>
 </head>
 <body>
