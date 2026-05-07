@@ -324,25 +324,6 @@
   .driver-text { color: #ccd8e8; }
   .driver-text strong { color: white; }
 
-  /* Carbon credits row */
-  .carbon-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-top: 24px;
-  }
-
-  .carbon-card {
-    background: var(--green-light);
-    border: 1px solid #a8d0ba;
-    border-radius: 4px;
-    padding: 16px 18px;
-  }
-
-  .carbon-scheme { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--green); font-weight: 700; margin-bottom: 4px; }
-  .carbon-price { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--green); }
-  .carbon-change { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--green); opacity: 0.8; }
-  .carbon-note { font-size: 11px; color: #2a7048; margin-top: 5px; }
 
   /* ── STRATEGY 1-PAGER ── */
   .strategy-featured {
@@ -754,7 +735,6 @@
     .project-row > *:nth-child(6), .project-table-header > *:nth-child(6) { display: none; }
     .strategy-featured { grid-template-columns: 1fr; }
     .strategy-grid { grid-template-columns: 1fr 1fr; }
-    .carbon-grid { grid-template-columns: repeat(2, 1fr); }
     .india-grid { grid-template-columns: 1fr; }
     footer .footer-grid { grid-template-columns: 1fr 1fr; }
   }
@@ -1487,7 +1467,6 @@ window.DAILY_DATA = {
     <span class="t-item"><span class="t-lbl">JKM LNG</span><span class="t-up">$16.80/MMBtu</span><span class="t-chg-dn">▼ -3.90%</span></span><span class="t-sep">|</span>
     <span class="t-item"><span class="t-lbl">TTF GAS</span><span class="t-up">€46.12/MWh</span><span class="t-chg-dn">▼ -5.84%</span></span><span class="t-sep">|</span>
     <span class="t-item"><span class="t-lbl">HH NATGAS</span><span class="t-up">$2.82/MMBtu</span><span class="t-chg-dn">▼ -4.10%</span></span><span class="t-sep">|</span>
-    <span class="t-item"><span class="t-lbl">EU ETS</span><span class="t-up">€68.30/tCO₂</span><span class="t-chg-dn">▼ -2.10%</span></span><span class="t-sep">|</span>
     <span class="t-item"><span class="t-lbl">OPEC BASKET</span><span class="t-up">$86.40/bbl</span><span class="t-chg-dn">▼ -9.20%</span></span><span class="t-sep">|</span>
     <span class="t-item"><span class="t-lbl">NAPHTHA CIF ARA</span><span class="t-up">$642/MT</span><span class="t-chg-dn">▼ -8.60%</span></span><span class="t-sep">|</span>
     <span class="t-item"><span class="t-lbl">GASOIL ICE</span><span class="t-up">$748/MT</span><span class="t-chg-dn">▼ -9.40%</span></span><span class="t-sep">|</span>
@@ -1498,7 +1477,6 @@ window.DAILY_DATA = {
     <span class="t-item"><span class="t-lbl">JKM LNG</span><span class="t-up">$16.80/MMBtu</span><span class="t-chg-dn">▼ -3.90%</span></span><span class="t-sep">|</span>
     <span class="t-item"><span class="t-lbl">TTF GAS</span><span class="t-up">€46.12/MWh</span><span class="t-chg-dn">▼ -5.84%</span></span><span class="t-sep">|</span>
     <span class="t-item"><span class="t-lbl">HH NATGAS</span><span class="t-up">$2.82/MMBtu</span><span class="t-chg-dn">▼ -4.10%</span></span><span class="t-sep">|</span>
-    <span class="t-item"><span class="t-lbl">EU ETS</span><span class="t-up">€68.30/tCO₂</span><span class="t-chg-dn">▼ -2.10%</span></span><span class="t-sep">|</span>
     <span class="t-item"><span class="t-lbl">OPEC BASKET</span><span class="t-up">$86.40/bbl</span><span class="t-chg-dn">▼ -9.20%</span></span><span class="t-sep">|</span>
     <span class="t-item"><span class="t-lbl">NAPHTHA CIF ARA</span><span class="t-up">$642/MT</span><span class="t-chg-dn">▼ -8.60%</span></span><span class="t-sep">|</span>
     <span class="t-item"><span class="t-lbl">GASOIL ICE</span><span class="t-up">$748/MT</span><span class="t-chg-dn">▼ -9.40%</span></span><span class="t-sep">|</span>
@@ -1541,13 +1519,15 @@ window.DAILY_DATA = {
           <div><div class="spark-title">Brent Crude — 30-Day Trend ($/bbl)</div><div class="spark-range" style="margin-top:3px">Apr 01 → May 06, 2026</div></div>
           <div class="spark-range">$58.92 low &nbsp;·&nbsp; $116.55 high</div>
         </div>
-        <svg class="sparkline" viewBox="0 0 400 70" preserveAspectRatio="none">
-          <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c8401a" stop-opacity="0.3"></stop><stop offset="100%" stop-color="#c8401a" stop-opacity="0"></stop></linearGradient></defs>
-          <path d="M0,30 L14,28 L27,25 L40,22 L54,26 L67,30 L80,24 L94,20 L107,18 L120,22 L134,27 L147,32 L160,28 L173,24 L187,22 L200,26 L213,30 L227,35 L240,40 L254,44 L267,48 L280,42 L294,38 L307,34 L320,38 L334,44 L347,48 L360,52 L373,50 L387,45 L400,40" fill="none" stroke="#c8401a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></path>
-          <path d="M0,30 L14,28 L27,25 L40,22 L54,26 L67,30 L80,24 L94,20 L107,18 L120,22 L134,27 L147,32 L160,28 L173,24 L187,22 L200,26 L213,30 L227,35 L240,40 L254,44 L267,48 L280,42 L294,38 L307,34 L320,38 L334,44 L347,48 L360,52 L373,50 L387,45 L400,40 L400,70 L0,70 Z" fill="url(#sg)"></path>
-          <circle cx="400" cy="40" r="4" fill="#c8401a"></circle>
-          <text x="390" y="36" font-size="10" font-weight="600" fill="#c8401a" font-family="DM Mono, monospace" text-anchor="end" stroke="white" stroke-width="4" paint-order="stroke">$106.52</text>
-        </svg>
+        <div style="position:relative">
+          <svg class="sparkline" viewBox="0 0 400 70" preserveAspectRatio="none">
+            <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c8401a" stop-opacity="0.3"></stop><stop offset="100%" stop-color="#c8401a" stop-opacity="0"></stop></linearGradient></defs>
+            <path d="M0,30 L14,28 L27,25 L40,22 L54,26 L67,30 L80,24 L94,20 L107,18 L120,22 L134,27 L147,32 L160,28 L173,24 L187,22 L200,26 L213,30 L227,35 L240,40 L254,44 L267,48 L280,42 L294,38 L307,34 L320,38 L334,44 L347,48 L360,52 L373,50 L387,45 L400,40" fill="none" stroke="#c8401a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></path>
+            <path d="M0,30 L14,28 L27,25 L40,22 L54,26 L67,30 L80,24 L94,20 L107,18 L120,22 L134,27 L147,32 L160,28 L173,24 L187,22 L200,26 L213,30 L227,35 L240,40 L254,44 L267,48 L280,42 L294,38 L307,34 L320,38 L334,44 L347,48 L360,52 L373,50 L387,45 L400,40 L400,70 L0,70 Z" fill="url(#sg)"></path>
+            <circle cx="400" cy="40" r="4" fill="#c8401a"></circle>
+          </svg>
+          <span style="position:absolute;right:0;top:34px;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;color:#c8401a;pointer-events:none;">$106.52</span>
+        </div>
         <div style="display:flex; justify-content:space-between; margin-top:4px; font-family:'DM Mono',monospace; font-size:10px; color:var(--muted)"><span>Apr 1</span><span>Apr 8</span><span>Apr 15</span><span>Apr 22</span><span>May 6</span></div>
       </div>
       <div style="border-top:1px solid var(--border); margin:16px 0;"></div>
@@ -1556,13 +1536,15 @@ window.DAILY_DATA = {
           <div><div class="spark-title">TTF Natural Gas — 30-Day Trend (€/MWh)</div><div class="spark-range" style="margin-top:3px">Apr 01 → May 06, 2026</div></div>
           <div class="spark-range">€28.40 low &nbsp;·&nbsp; €49.80 high</div>
         </div>
-        <svg class="sparkline" viewBox="0 0 400 70" preserveAspectRatio="none">
-          <defs><linearGradient id="sg-ttf" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e3a5f" stop-opacity="0.3"></stop><stop offset="100%" stop-color="#1e3a5f" stop-opacity="0"></stop></linearGradient></defs>
-          <path d="M0,58 L14,55 L27,52 L40,50 L54,53 L67,56 L80,52 L94,48 L107,46 L120,50 L134,54 L147,50 L160,46 L173,42 L187,38 L200,34 L213,30 L227,26 L240,22 L254,20 L267,18 L280,16 L294,14 L307,13 L320,14 L334,13 L347,12 L360,11 L373,14 L387,16 L400,18" fill="none" stroke="#1e3a5f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></path>
-          <path d="M0,58 L14,55 L27,52 L40,50 L54,53 L67,56 L80,52 L94,48 L107,46 L120,50 L134,54 L147,50 L160,46 L173,42 L187,38 L200,34 L213,30 L227,26 L240,22 L254,20 L267,18 L280,16 L294,14 L307,13 L320,14 L334,13 L347,12 L360,11 L373,14 L387,16 L400,18 L400,70 L0,70 Z" fill="url(#sg-ttf)"></path>
-          <circle cx="400" cy="18" r="4" fill="#1e3a5f"></circle>
-          <text x="390" y="14" font-size="10" font-weight="600" fill="#1e3a5f" font-family="DM Mono, monospace" text-anchor="end" stroke="white" stroke-width="4" paint-order="stroke">€46.12</text>
-        </svg>
+        <div style="position:relative">
+          <svg class="sparkline" viewBox="0 0 400 70" preserveAspectRatio="none">
+            <defs><linearGradient id="sg-ttf" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e3a5f" stop-opacity="0.3"></stop><stop offset="100%" stop-color="#1e3a5f" stop-opacity="0"></stop></linearGradient></defs>
+            <path d="M0,58 L14,55 L27,52 L40,50 L54,53 L67,56 L80,52 L94,48 L107,46 L120,50 L134,54 L147,50 L160,46 L173,42 L187,38 L200,34 L213,30 L227,26 L240,22 L254,20 L267,18 L280,16 L294,14 L307,13 L320,14 L334,13 L347,12 L360,11 L373,14 L387,16 L400,18" fill="none" stroke="#1e3a5f" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"></path>
+            <path d="M0,58 L14,55 L27,52 L40,50 L54,53 L67,56 L80,52 L94,48 L107,46 L120,50 L134,54 L147,50 L160,46 L173,42 L187,38 L200,34 L213,30 L227,26 L240,22 L254,20 L267,18 L280,16 L294,14 L307,13 L320,14 L334,13 L347,12 L360,11 L373,14 L387,16 L400,18 L400,70 L0,70 Z" fill="url(#sg-ttf)"></path>
+            <circle cx="400" cy="18" r="4" fill="#1e3a5f"></circle>
+          </svg>
+          <span style="position:absolute;right:0;top:15px;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:11px;font-weight:600;color:#1e3a5f;pointer-events:none;">€46.12</span>
+        </div>
         <div style="display:flex; justify-content:space-between; margin-top:4px; font-family:'DM Mono',monospace; font-size:10px; color:var(--muted)"><span>Apr 1</span><span>Apr 8</span><span>Apr 15</span><span>Apr 22</span><span>May 6</span></div>
       </div>
     </div>
@@ -1603,13 +1585,6 @@ window.DAILY_DATA = {
     </div>
   </div>
 
-  <!-- Carbon Credits -->
-  <div class="carbon-grid js-carbon-grid" style="margin-top:24px">
-    <div class="carbon-card"><div class="carbon-scheme">EU ETS</div><div class="carbon-price">€68.30</div><div class="carbon-change">▼ -2.10%</div><div class="carbon-note">tCO₂ · ICE ECX</div></div>
-    <div class="carbon-card"><div class="carbon-scheme">UK ETS</div><div class="carbon-price">£42.10</div><div class="carbon-change">▼ -1.80%</div><div class="carbon-note">tCO₂ · ICE</div></div>
-    <div class="carbon-card"><div class="carbon-scheme">California CCA</div><div class="carbon-price">$30.45</div><div class="carbon-change">▲ +0.50%</div><div class="carbon-note">tCO₂ · ICE</div></div>
-    <div class="carbon-card"><div class="carbon-scheme">ACCU Australia</div><div class="carbon-price">A$35.20</div><div class="carbon-change">▼ -0.90%</div><div class="carbon-note">tCO₂ · ASX</div></div>
-  </div>
 
 </div><!-- /section-markets -->
 
@@ -1632,7 +1607,7 @@ window.DAILY_DATA = {
         <div class="strategy-meta-row js-strategy-tags">
           <span class="strategy-tag">Capital Allocation</span>
           <span class="strategy-tag">M&amp;A</span>
-          <span class="strategy-tag">Decarbonisation</span>
+          <span class="strategy-tag">Capital Allocation</span>
         </div>
         <div class="strategy-meta-row">
           <span class="strategy-tag">Operator</span>
@@ -1655,13 +1630,13 @@ window.DAILY_DATA = {
       <ul class="framework-steps js-strategy-steps">
         <li><div><strong>Define the Transition Ambition Level (TAL):</strong> Categorise the company's decarbonisation commitment (Compliance, Managed Transition, or Full Pivot) to set the boundary conditions for capital budgeting. Each TAL implies a different discount rate and risk tolerance for Horizon 2 assets.</div></li>
         <li><div><strong>Map the Hydrocarbon Cash-Engine (Horizon 1):</strong> Identify assets generating &gt;80% of current FCF. Apply a "breakeven vs. forward curve" stress test using EIA STEO and IEA STEPS/APS scenarios. Flag assets with &lt;10-year reserve life or breakeven &gt;$65/bbl Brent as "watch list."</div></li>
-        <li><div><strong>Build the Transition Option Stack (Horizon 2):</strong> Use BCG's "staged option" methodology — small initial bets (5–10% capex) in offshore wind, green H₂ hubs, CCUS, or e-fuels. Options are exercised when IRR &gt; WACC + country risk premium.</div></li>
+        <li><div><strong>Build the Growth Option Stack (Horizon 2):</strong> Use BCG's "staged option" methodology — incremental bets (5–10% capex) in LNG liquefaction capacity, deepwater exploration, or downstream integration. Options are exercised when IRR &gt; WACC + country risk premium.</div></li>
         <li><div><strong>Run the Portfolio Under Three Oil Scenarios:</strong> Price at $55, $75, $95/bbl Brent and rebalance Horizon 1 / 2 capex split accordingly. McKinsey's Global Energy Perspective suggests the $70–80 range is most probable through 2030.</div></li>
         <li><div><strong>Governance — Dual P&amp;L Structure:</strong> Separate hydrocarbon and transition business units with distinct KPIs (ROACE vs. IRR-at-FID) to prevent cross-subsidisation and ensure board-level visibility of transition value creation.</div></li>
       </ul>
 
       <div class="strategy-section-head js-strategy-watchpoints-title">Key Watchpoints for Consultants</div>
-      <p class="js-strategy-watchpoints" style="font-size:13px; color:var(--muted); line-height:1.65">Watch for NOC clients (e.g., Aramco, ADNOC, ONGC) where national mandate often overrides pure capital efficiency logic. For IOC clients (Shell, bp, TotalEnergies), the TAL conversation is frequently a board-level political negotiation before it is an economic one. Carbon price assumptions in CCUS business cases deserve particular scrutiny — most current models still use €50–65/t EU ETS, which looks optimistic given current levels at €64.80 but fragile in a policy revision scenario.</p>
+      <p class="js-strategy-watchpoints" style="font-size:13px; color:var(--muted); line-height:1.65">Watch for NOC clients (e.g., Aramco, ADNOC, ONGC) where national mandate often overrides pure capital efficiency logic — portfolio decisions are as much geopolitical as economic. For IOC clients (Shell, bp, TotalEnergies), the capital allocation conversation is frequently a board-level negotiation between short-cycle shale returns and long-cycle LNG/deepwater FIDs. Break-even analysis against the forward Brent curve remains the most effective decision-support tool in volatile markets.</p>
 
       <button class="strategy-cta">Read Full 1-Pager →</button>
     </div>
@@ -1680,12 +1655,12 @@ window.DAILY_DATA = {
       </div>
     </div>
     <div class="strategy-mini">
-      <div class="strategy-mini-label">🌿 Decarbonisation · Net Zero</div>
-      <div class="strategy-mini-title">The Abatement Cost Curve: How McKinsey Prioritises Decarbonisation Pathways</div>
-      <div class="strategy-mini-desc">Demystifying the MACC (Marginal Abatement Cost Curve) for energy sector clients — how to build one, read one, and use it to sequence capex in a $75/tCO₂ world.</div>
+      <div class="strategy-mini-label">🛢️ Midstream · LNG Strategy</div>
+      <div class="strategy-mini-title">Tolling vs. Equity LNG: Structuring Commercial Models for New Liquefaction Capacity</div>
+      <div class="strategy-mini-desc">How IOCs and NOCs choose between tolling arrangements and equity stakes in LNG projects — risk allocation, offtake structures, and IRR implications in a volatile gas market.</div>
       <div class="strategy-mini-meta">
-        <span class="mini-read-time">⏱ ~10 min</span>
-        <span style="font-size:10px; padding:3px 8px; background:var(--green-light); border-radius:2px; font-weight:600; color:var(--green)">CCUS / Transition</span>
+        <span class="mini-read-time">⏱ ~8 min</span>
+        <span style="font-size:10px; padding:3px 8px; background:var(--steel-light); border-radius:2px; font-weight:600; color:var(--steel)">LNG / Trading</span>
       </div>
     </div>
     <div class="strategy-mini">
@@ -1709,9 +1684,7 @@ window.DAILY_DATA = {
     <button class="filter-tab active" onclick="filterProjects('all', this)">All Sectors</button>
     <button class="filter-tab" onclick="filterProjects('upstream', this)">Upstream O&amp;G</button>
     <button class="filter-tab" onclick="filterProjects('lng', this)">LNG / Gas</button>
-    <button class="filter-tab" onclick="filterProjects('renewables', this)">Renewables</button>
-    <button class="filter-tab" onclick="filterProjects('hydrogen', this)">Hydrogen</button>
-    <button class="filter-tab" onclick="filterProjects('ccus', this)">CCUS</button>
+    <button class="filter-tab" onclick="filterProjects('midstream', this)">Midstream</button>
     <button class="filter-tab" onclick="filterProjects('downstream', this)">Downstream</button>
   </div>
 
@@ -1744,13 +1717,13 @@ window.DAILY_DATA = {
       <div style="font-size:11px; color:var(--accent); font-weight:600">⚖️ Legal Appeal</div>
     </div>
 
-    <div class="project-row" data-sector="renewables">
-      <div><div class="project-name">Dogger Bank D Offshore Wind</div><div class="project-company">SSE Renewables / Equinor</div></div>
-      <div class="sector-pill">Offshore Wind</div>
-      <div><span class="stage-badge stage-concept">Concept</span></div>
-      <div class="value-cell">~$4.0B</div>
-      <div>North Sea, UK</div>
-      <div style="font-size:11px; color:var(--purple); font-weight:600">🔍 Concept Select</div>
+    <div class="project-row" data-sector="upstream">
+      <div><div class="project-name">Kaminho Deepwater — Phase 1</div><div class="project-company">TotalEnergies / Sonangol</div></div>
+      <div class="sector-pill">Deepwater</div>
+      <div><span class="stage-badge stage-epc">EPC</span></div>
+      <div class="value-cell">$6.4B</div>
+      <div>Block 20/11, Angola</div>
+      <div style="font-size:11px; color:var(--green); font-weight:600">✅ EPC in Progress</div>
     </div>
 
     <div class="project-row" data-sector="upstream">
@@ -1762,22 +1735,22 @@ window.DAILY_DATA = {
       <div style="font-size:11px; color:var(--green); font-weight:600">🟢 FID Taken</div>
     </div>
 
-    <div class="project-row" data-sector="hydrogen">
-      <div><div class="project-name">HyPort — Green H₂ Hub</div><div class="project-company">bp / RWE / Port of Rotterdam</div></div>
-      <div class="sector-pill">Green H₂</div>
+    <div class="project-row" data-sector="midstream">
+      <div><div class="project-name">Calcasieu Pass 2 LNG — FEED</div><div class="project-company">Venture Global LNG</div></div>
+      <div class="sector-pill">LNG Export</div>
       <div><span class="stage-badge stage-feed">FEED</span></div>
-      <div class="value-cell">€1.6B</div>
-      <div>Rotterdam, Netherlands</div>
-      <div style="font-size:11px; color:var(--steel); font-weight:600">📋 FEED Commenced</div>
+      <div class="value-cell">$10.0B</div>
+      <div>Louisiana, USA</div>
+      <div style="font-size:11px; color:var(--steel); font-weight:600">📋 FEED in Progress</div>
     </div>
 
-    <div class="project-row" data-sector="ccus">
-      <div><div class="project-name">Northern Lights Phase 2</div><div class="project-company">Equinor / Shell / TotalEnergies</div></div>
-      <div class="sector-pill">CCUS Storage</div>
-      <div><span class="stage-badge stage-epc">EPC</span></div>
-      <div class="value-cell">$2.5B</div>
-      <div>Norwegian North Sea</div>
-      <div style="font-size:11px; color:var(--green); font-weight:600">✅ EPC Awarded</div>
+    <div class="project-row" data-sector="upstream">
+      <div><div class="project-name">Jackdaw Gas Field Development</div><div class="project-company">Shell / CNOOC</div></div>
+      <div class="sector-pill">Offshore Gas</div>
+      <div><span class="stage-badge stage-fid">FID</span></div>
+      <div class="value-cell">$1.5B</div>
+      <div>North Sea, UK</div>
+      <div style="font-size:11px; color:var(--green); font-weight:600">🟢 FID Taken</div>
     </div>
 
     <div class="project-row" data-sector="downstream">
@@ -1789,13 +1762,13 @@ window.DAILY_DATA = {
       <div style="font-size:11px; color:var(--accent); font-weight:600">📌 PDP Stage</div>
     </div>
 
-    <div class="project-row" data-sector="renewables">
-      <div><div class="project-name">Adani Green — 2 GW Solar FEED</div><div class="project-company">Adani Green Energy</div></div>
-      <div class="sector-pill">Solar PV</div>
-      <div><span class="stage-badge stage-feed">FEED</span></div>
-      <div class="value-cell">₹16,000 Cr</div>
-      <div>Rajasthan, India</div>
-      <div style="font-size:11px; color:var(--steel); font-weight:600">📋 FEED Award</div>
+    <div class="project-row" data-sector="downstream">
+      <div><div class="project-name">HPCL Rajasthan Refinery — Phase 1</div><div class="project-company">HPCL / Govt. of Rajasthan</div></div>
+      <div class="sector-pill">Refinery</div>
+      <div><span class="stage-badge stage-epc">EPC</span></div>
+      <div class="value-cell">₹72,000 Cr</div>
+      <div>Barmer, India</div>
+      <div style="font-size:11px; color:var(--green); font-weight:600">✅ EPC Underway</div>
     </div>
 
     <div class="project-row" data-sector="lng">
@@ -1831,23 +1804,23 @@ window.DAILY_DATA = {
 
     <div class="news-card">
       <div class="news-card-sector sector-policy"><span class="news-card-dot" style="background:#5a3a00"></span>Policy · Regulation</div>
-      <div class="news-card-title">EU Council Passes Revised Industrial Decarbonisation Strategy — Targets 40% Clean Tech Manufactured Locally by 2030</div>
-      <div class="news-card-summary">The European Council formally endorsed the Net-Zero Industry Act's updated provisions, mandating that 40% of annual clean energy technology deployment across solar, wind, heat pumps, and electrolysers be manufactured within the EU by 2030.</div>
-      <div class="news-card-footer"><span class="news-source">EC DG Energy / Carbon Brief</span><span class="news-time">04:30 IST</span></div>
+      <div class="news-card-title">OPEC+ Agrees Accelerated Output Increase for June as UAE Exit Reshapes Quota Dynamics</div>
+      <div class="news-card-summary">The OPEC+ alliance agreed to a larger-than-expected June production increase following the UAE's formal departure from the group. Analysts at Goldman Sachs see the move as signalling a shift toward market-share defence strategy among core Gulf producers.</div>
+      <div class="news-card-footer"><span class="news-source">Reuters / S&amp;P Global Commodity Insights</span><span class="news-time">04:30 IST</span></div>
     </div>
 
     <div class="news-card">
-      <div class="news-card-sector sector-renewables"><span class="news-card-dot" style="background:var(--green)"></span>Renewables · Wind</div>
-      <div class="news-card-title">Vestas Wins 1.2 GW Offshore Wind Turbine Supply Order for Taiwan's Greater Changhua 4</div>
-      <div class="news-card-summary">Vestas has secured a supply agreement for 120 V236-15 MW turbines for the Greater Changhua 4 offshore wind project, marking the largest single turbine supply contract by total capacity in Asia-Pacific. Delivery scheduled for 2028–29.</div>
-      <div class="news-card-footer"><span class="news-source">reNews / WindPower Monthly</span><span class="news-time">03:45 IST</span></div>
+      <div class="news-card-sector sector-upstream"><span class="news-card-dot" style="background:#8b1a00"></span>OPEC+ · Supply</div>
+      <div class="news-card-title">OPEC+ Eight-Nation Core Group Approves 411,000 bpd June Increase — Third Consecutive Accelerated Hike</div>
+      <div class="news-card-summary">The eight core OPEC+ producers agreed to raise output by 411,000 bpd in June, the third consecutive month of accelerated increases. The move follows the UAE's formal exit and signals a coordinated push to recapture market share at the expense of higher-cost producers.</div>
+      <div class="news-card-footer"><span class="news-source">Reuters / S&amp;P Global Platts</span><span class="news-time">03:45 IST</span></div>
     </div>
 
     <div class="news-card">
-      <div class="news-card-sector sector-hydrogen"><span class="news-card-dot" style="background:var(--purple)"></span>Hydrogen · Green H₂</div>
-      <div class="news-card-title">Saudi Aramco and Air Products Revise NEOM Green Hydrogen Timeline — Output Targets Deferred to 2029</div>
-      <div class="news-card-summary">Air Products and Saudi Aramco's NEOM Green Hydrogen project has revised its commercial production timeline from the original 2026 target to 2029, citing supply chain constraints in electrolyser delivery and grid infrastructure readiness at the Neom Bay terminal.</div>
-      <div class="news-card-footer"><span class="news-source">H2 Bulletin / Hydrogen Insight</span><span class="news-time">02:20 IST</span></div>
+      <div class="news-card-sector sector-policy"><span class="news-card-dot" style="background:#5a3a00"></span>Geopolitics · Sanctions</div>
+      <div class="news-card-title">US Tightens Iran Sanctions Enforcement — Treasury Designates 4 Additional Tanker Operators</div>
+      <div class="news-card-summary">The US Treasury OFAC designated four additional tanker operators involved in transporting Iranian crude in circumvention of existing sanctions, including two vessels linked to Chinese port calls. The action adds 3.8 million barrels of monthly capacity to the sanctioned fleet.</div>
+      <div class="news-card-footer"><span class="news-source">Bloomberg / US Treasury OFAC</span><span class="news-time">02:20 IST</span></div>
     </div>
 
     <div class="news-card">
@@ -1865,24 +1838,24 @@ window.DAILY_DATA = {
     </div>
 
     <div class="news-card">
-      <div class="news-card-sector sector-ccus"><span class="news-card-dot" style="background:#2a6b6b"></span>CCUS · Technology</div>
-      <div class="news-card-title">Global CCS Institute: 64 Commercial CCUS Projects Now Operational or in Construction — 2026 Status Report</div>
-      <div class="news-card-summary">The Global CCS Institute released its mid-year 2026 status update, recording 64 commercial-scale CCUS facilities in operation or under construction globally, with a combined capture capacity of 132 MtCO₂/year — up 28% year-on-year driven by US IRA incentives and EU Innovation Fund grants.</div>
-      <div class="news-card-footer"><span class="news-source">Carbon Capture Journal / GCCSI</span><span class="news-time">23:00 IST (prev.)</span></div>
+      <div class="news-card-sector sector-upstream"><span class="news-card-dot" style="background:#c8401a"></span>M&amp;A · Corporate</div>
+      <div class="news-card-title">ConocoPhillips Completes $22.5B Acquisition of Marathon Oil — Largest US E&amp;P Deal Since 2019</div>
+      <div class="news-card-summary">ConocoPhillips has formally closed its $22.5 billion acquisition of Marathon Oil, adding 2 billion BOE of resource and strengthening its position in the Permian, Eagle Ford, and Bakken. The combined entity now holds over 20 billion BOE of resource at less than $30/BOE supply cost.</div>
+      <div class="news-card-footer"><span class="news-source">Hart Energy / OGJ</span><span class="news-time">23:00 IST (prev.)</span></div>
     </div>
 
     <div class="news-card">
-      <div class="news-card-sector sector-nuclear"><span class="news-card-dot" style="background:#6b0000"></span>Nuclear · SMR</div>
-      <div class="news-card-title">NuScale Power Resecures Funding for Romania SMR Plant — USTDA Grant and EU Cohesion Funds Confirmed</div>
-      <div class="news-card-summary">NuScale Power has confirmed a renewed funding package for its 6-module, 462 MWe VOYGR™ SMR plant in Doicești, Romania, combining a $14M USTDA grant and €400M in EU Cohesion Fund commitments, following the earlier UAMPS project cancellation.</div>
-      <div class="news-card-footer"><span class="news-source">World Nuclear News / NEI Magazine</span><span class="news-time">22:15 IST (prev.)</span></div>
+      <div class="news-card-sector sector-upstream"><span class="news-card-dot" style="background:#c8401a"></span>Refining · Margins</div>
+      <div class="news-card-title">Asian Refining Margins Compress to 18-Month Low as Crude Selloff Outpaces Product Price Declines</div>
+      <div class="news-card-summary">Complex refining margins in Singapore fell to $4.20/bbl — an 18-month low — as the sharp drop in crude benchmarks was not matched by equivalent softening in gasoline and diesel crack spreads. Independent refiners in India and South Korea are cutting run rates in response.</div>
+      <div class="news-card-footer"><span class="news-source">Argus Media / Platts</span><span class="news-time">22:15 IST (prev.)</span></div>
     </div>
 
     <div class="news-card">
       <div class="news-card-sector sector-downstream"><span class="news-card-dot" style="background:var(--steel)"></span>Downstream · Petrochemicals</div>
-      <div class="news-card-title">BASF and Sinopec Launch Joint Low-Carbon Chemicals Complex in Zhanjiang — $10B Project Breaks Ground</div>
-      <div class="news-card-summary">BASF and Sinopec have formally commenced construction on their Zhanjiang Verbund site in China, which will eventually house one of Asia's largest integrated chemicals complexes. The site will leverage renewably-powered steam cracking and integrate on-site CCUS from first phase.</div>
-      <div class="news-card-footer"><span class="news-source">Hydrocarbon Processing / Energy Connects</span><span class="news-time">21:00 IST (prev.)</span></div>
+      <div class="news-card-title">BASF and Sinopec Break Ground on $10B Zhanjiang Verbund Chemicals Complex in China</div>
+      <div class="news-card-summary">BASF and Sinopec have formally commenced construction on the Zhanjiang Verbund site in China, one of Asia's largest integrated chemicals complexes. The site will use naphtha crackers fed from Sinopec's Zhanjiang refinery, targeting ethylene and propylene derivative production for regional markets.</div>
+      <div class="news-card-footer"><span class="news-source">Hydrocarbon Processing / ICIS</span><span class="news-time">21:00 IST (prev.)</span></div>
     </div>
 
   </div>
@@ -1940,9 +1913,9 @@ window.DAILY_DATA = {
         <div class="india-stat-note">Crude oil equiv. · -3.2% vs FY26 target of 23 MMT</div>
       </div>
       <div class="india-stat-card">
-        <div class="india-stat-label">Green H₂ Mission Projects — Pipeline</div>
-        <div class="india-stat-value">8 GW</div>
-        <div class="india-stat-note">SIGHT scheme electrolyser capacity under eval. · MNRE</div>
+        <div class="india-stat-label">India LNG Imports (YTD)</div>
+        <div class="india-stat-value">18.2 BCM</div>
+        <div class="india-stat-note">vs 16.8 BCM prior year · PPAC · Petronet + GSPC</div>
       </div>
     </div>
   </div>
@@ -2126,20 +2099,6 @@ function renderMarkets(m) {
     }
   }
 
-  // Carbon cards
-  if (m.carbon && m.carbon.length) {
-    var carbonEl = document.querySelector('.js-carbon-grid');
-    if (carbonEl) {
-      carbonEl.innerHTML = m.carbon.map(function(c) {
-        return '<div class="carbon-card">'
-          + '<div class="carbon-scheme">' + esc(c.scheme) + '</div>'
-          + '<div class="carbon-price">' + esc(c.price) + '</div>'
-          + '<div class="carbon-change">' + esc(c.change) + '</div>'
-          + '<div class="carbon-note">' + esc(c.note) + '</div>'
-          + '</div>';
-      }).join('');
-    }
-  }
 }
 
 // ── India Monitor ───────────────────────────────────────────────────────────

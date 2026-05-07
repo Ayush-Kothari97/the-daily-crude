@@ -49,7 +49,6 @@ Return this exact JSON structure (fill all values with real data):
     {{"label": "JKM LNG", "price": "$XX.XX/MMBtu", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}},
     {{"label": "TTF GAS", "price": "€XX.XX/MWh", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}},
     {{"label": "HH NATGAS", "price": "$X.XX/MMBtu", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}},
-    {{"label": "EU ETS", "price": "€XX.XX/tCO₂", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}},
     {{"label": "OPEC BASKET", "price": "$XX.XX/bbl", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}},
     {{"label": "NAPHTHA CIF ARA", "price": "$XXX/MT", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}},
     {{"label": "GASOIL ICE", "price": "$XXX/MT", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}}
@@ -91,12 +90,6 @@ Return this exact JSON structure (fill all values with real data):
         "meta": "€/MWh · ICE Endex · Front-Month"
       }}
     ],
-    "carbon": [
-      {{"scheme": "EU ETS", "price": "€XX.XX", "change": "▲/▼ X.XX%", "note": "tCO₂ · ICE ECX"}},
-      {{"scheme": "UK ETS", "price": "£XX.XX", "change": "▲/▼ X.XX%", "note": "tCO₂ · ICE"}},
-      {{"scheme": "California CCA", "price": "$XX.XX", "change": "▲/▼ X.XX%", "note": "tCO₂ · ICE"}},
-      {{"scheme": "ACCU Australia", "price": "A$XX.XX", "change": "▲/▼ X.XX%", "note": "tCO₂ · ASX"}}
-    ],
     "drivers": [
       {{"icon": "🛢️", "headline": "Short bold headline", "body": "2-3 sentence detail on this market driver."}},
       {{"icon": "🌏", "headline": "Short bold headline", "body": "2-3 sentence detail."}},
@@ -118,8 +111,8 @@ Return this exact JSON structure (fill all values with real data):
         "time": "XX:XX IST"
       }},
       {{
-        "sector": "Renewables",
-        "sector_color": "#1a5c38",
+        "sector": "Upstream",
+        "sector_color": "#c8401a",
         "title": "News card title",
         "summary": "2-3 sentence summary.",
         "source": "Source Name",
@@ -128,10 +121,10 @@ Return this exact JSON structure (fill all values with real data):
     ],
     "stats": [
       {{"label": "India Crude Import Basket", "value": "$XX.XX/bbl", "note": "Russia ~X% · ME ~X% · Others ~X% · PPAC"}},
-      {{"label": "National Solar Mission — Installed", "value": "XX.X GW", "note": "Target: 280 GW by 2030 · MNRE data"}},
       {{"label": "LNG Spot Import (Petronet Dahej)", "value": "$XX.XX/MMBtu", "note": "Blended spot vs LTC pricing"}},
-      {{"label": "ONGC Production (YTD)", "value": "XX.X MMT", "note": "Crude oil equiv. · vs annual target"}},
-      {{"label": "Green H₂ Mission Projects — Pipeline", "value": "X GW", "note": "SIGHT scheme electrolyser capacity · MNRE"}}
+      {{"label": "ONGC Crude Production (YTD)", "value": "XX.X MMT", "note": "Crude oil equiv. · vs annual target"}},
+      {{"label": "India Refinery Throughput", "value": "XX.X MMT", "note": "MoPNG · YTD vs capacity utilisation"}},
+      {{"label": "India LNG Imports (YTD)", "value": "XX BCM", "note": "vs prior year · PPAC"}}
     ]
   }},
 
@@ -149,24 +142,6 @@ Return this exact JSON structure (fill all values with real data):
       "sector": "Policy · Regulation",
       "sector_class": "sector-policy",
       "dot_color": "#5a3a00",
-      "title": "News headline",
-      "summary": "2-3 sentence summary.",
-      "source": "Source",
-      "time": "XX:XX IST"
-    }},
-    {{
-      "sector": "Renewables · Wind",
-      "sector_class": "sector-renewables",
-      "dot_color": "#1a5c38",
-      "title": "News headline",
-      "summary": "2-3 sentence summary.",
-      "source": "Source",
-      "time": "XX:XX IST"
-    }},
-    {{
-      "sector": "Hydrogen · Green H₂",
-      "sector_class": "sector-hydrogen",
-      "dot_color": "#4a2060",
       "title": "News headline",
       "summary": "2-3 sentence summary.",
       "source": "Source",
@@ -191,27 +166,45 @@ Return this exact JSON structure (fill all values with real data):
       "time": "XX:XX IST"
     }},
     {{
-      "sector": "CCUS · Technology",
-      "sector_class": "sector-ccus",
-      "dot_color": "#2a6b6b",
-      "title": "News headline",
-      "summary": "2-3 sentence summary.",
-      "source": "Source",
-      "time": "XX:XX IST"
-    }},
-    {{
-      "sector": "Nuclear · SMR",
-      "sector_class": "sector-nuclear",
-      "dot_color": "#6b0000",
-      "title": "News headline",
-      "summary": "2-3 sentence summary.",
-      "source": "Source",
-      "time": "XX:XX IST"
-    }},
-    {{
       "sector": "Downstream · Petrochemicals",
       "sector_class": "sector-downstream",
       "dot_color": "#1e3a5f",
+      "title": "News headline",
+      "summary": "2-3 sentence summary.",
+      "source": "Source",
+      "time": "XX:XX IST"
+    }},
+    {{
+      "sector": "OPEC+ · Supply",
+      "sector_class": "sector-upstream",
+      "dot_color": "#8b1a00",
+      "title": "News headline",
+      "summary": "2-3 sentence summary.",
+      "source": "Source",
+      "time": "XX:XX IST"
+    }},
+    {{
+      "sector": "Refining · Margins",
+      "sector_class": "sector-downstream",
+      "dot_color": "#1e3a5f",
+      "title": "News headline",
+      "summary": "2-3 sentence summary.",
+      "source": "Source",
+      "time": "XX:XX IST"
+    }},
+    {{
+      "sector": "Geopolitics · Sanctions",
+      "sector_class": "sector-policy",
+      "dot_color": "#5a3a00",
+      "title": "News headline",
+      "summary": "2-3 sentence summary.",
+      "source": "Source",
+      "time": "XX:XX IST"
+    }},
+    {{
+      "sector": "M&A · Corporate",
+      "sector_class": "sector-upstream",
+      "dot_color": "#c8401a",
       "title": "News headline",
       "summary": "2-3 sentence summary.",
       "source": "Source",
@@ -251,13 +244,13 @@ Return this exact JSON structure (fill all values with real data):
         "tag_color": "var(--ink)"
       }},
       {{
-        "label": "🌿 Decarbonisation · Net Zero",
+        "label": "🛢️ Midstream · LNG Strategy",
         "title": "Mini card title",
         "desc": "2-sentence description.",
         "read_time": "~X min",
-        "tag": "CCUS / Transition",
-        "tag_bg": "var(--green-light)",
-        "tag_color": "var(--green)"
+        "tag": "LNG / Trading",
+        "tag_bg": "var(--steel-light)",
+        "tag_color": "var(--steel)"
       }},
       {{
         "label": "⚙️ Operations · EPC",
@@ -265,8 +258,8 @@ Return this exact JSON structure (fill all values with real data):
         "desc": "2-sentence description.",
         "read_time": "~X min",
         "tag": "PMC / EPC",
-        "tag_bg": "var(--steel-light)",
-        "tag_color": "var(--steel)"
+        "tag_bg": "var(--tag-bg)",
+        "tag_color": "var(--ink)"
       }}
     ]
   }},
@@ -293,20 +286,8 @@ Return this exact JSON structure (fill all values with real data):
       "stage_class": "stage-concept",
       "value": "$X.XB",
       "location": "Location, Country",
-      "event": "⚖️ Legal Appeal",
+      "event": "⚖️ Regulatory Hold",
       "event_color": "#c8401a"
-    }},
-    {{
-      "name": "Project name",
-      "company": "Operator",
-      "sector": "Offshore Wind",
-      "data_sector": "renewables",
-      "stage": "Concept",
-      "stage_class": "stage-concept",
-      "value": "~$X.XB",
-      "location": "Location, Country",
-      "event": "🔍 Concept Select",
-      "event_color": "#4a2060"
     }},
     {{
       "name": "Project name",
@@ -323,26 +304,14 @@ Return this exact JSON structure (fill all values with real data):
     {{
       "name": "Project name",
       "company": "Operator",
-      "sector": "Green H₂",
-      "data_sector": "hydrogen",
+      "sector": "LNG Terminal",
+      "data_sector": "lng",
       "stage": "FEED",
       "stage_class": "stage-feed",
-      "value": "€X.XB",
+      "value": "$X.XB",
       "location": "Location, Country",
       "event": "📋 FEED Commenced",
       "event_color": "#1e3a5f"
-    }},
-    {{
-      "name": "Project name",
-      "company": "Operator",
-      "sector": "CCUS Storage",
-      "data_sector": "ccus",
-      "stage": "EPC",
-      "stage_class": "stage-epc",
-      "value": "$X.XB",
-      "location": "Location, Country",
-      "event": "✅ EPC Awarded",
-      "event_color": "#1a5c38"
     }},
     {{
       "name": "Project name",
@@ -359,19 +328,43 @@ Return this exact JSON structure (fill all values with real data):
     {{
       "name": "Project name",
       "company": "Operator",
-      "sector": "Solar PV",
-      "data_sector": "renewables",
+      "sector": "Offshore",
+      "data_sector": "upstream",
+      "stage": "EPC",
+      "stage_class": "stage-epc",
+      "value": "$X.XB",
+      "location": "Location, Country",
+      "event": "✅ EPC Awarded",
+      "event_color": "#1a5c38"
+    }},
+    {{
+      "name": "Project name",
+      "company": "Operator",
+      "sector": "Gas Processing",
+      "data_sector": "midstream",
       "stage": "FEED",
       "stage_class": "stage-feed",
-      "value": "₹XX,XXX Cr",
-      "location": "Location, India",
+      "value": "$X.XB",
+      "location": "Location, Country",
       "event": "📋 FEED Award",
       "event_color": "#1e3a5f"
     }},
     {{
       "name": "Project name",
+      "company": "Operator",
+      "sector": "Petrochemicals",
+      "data_sector": "downstream",
+      "stage": "EPC",
+      "stage_class": "stage-epc",
+      "value": "$X.XB",
+      "location": "Location, Country",
+      "event": "✅ EPC in Progress",
+      "event_color": "#1a5c38"
+    }},
+    {{
+      "name": "Project name",
       "company": "Operator / Partners",
-      "sector": "LNG",
+      "sector": "LNG Regasification",
       "data_sector": "lng",
       "stage": "EPC",
       "stage_class": "stage-epc",
@@ -387,12 +380,13 @@ Return this exact JSON structure (fill all values with real data):
 USER_PROMPT = f"""Today is {TODAY}.
 
 Use web search to gather all current data. Search for:
-1. Real-time energy commodity prices: Brent crude, WTI crude, Dubai crude, JKM LNG spot, TTF natural gas, Henry Hub, EU ETS carbon price, OPEC basket, Naphtha CIF ARA, Gasoil ICE
-2. Top energy news stories from the last 24 hours across: upstream oil & gas, LNG, renewables, hydrogen, CCUS, offshore, policy/regulation, nuclear/SMR, petrochemicals
-3. India-specific energy news: crude imports, refining, solar/renewables, government energy policy, ONGC/IOC/BPCL updates
-4. Major global energy project updates: FIDs, EPC awards, FEED commencements, project delays or cancellations
-5. An energy strategy framework relevant to today's market conditions
+1. Real-time O&G commodity prices: Brent crude, WTI crude, Dubai crude, JKM LNG spot, TTF natural gas, Henry Hub, OPEC basket price, Naphtha CIF ARA, Gasoil ICE
+2. Top oil & gas news from the last 24 hours across: upstream E&P, LNG markets, offshore, midstream pipelines, downstream refining, petrochemicals, OPEC+ policy, geopolitics/sanctions affecting oil flows, O&G M&A
+3. India-specific O&G news: crude imports, refinery throughput, LNG imports, ONGC/IOC/BPCL/Reliance updates, government petroleum policy
+4. Major O&G project updates: FIDs, EPC awards, FEED commencements, first oil milestones, LNG project sanctions, refinery expansions
+5. An O&G strategy framework relevant to today's upstream, midstream, or downstream market conditions
 
+Focus strictly on oil & gas. Do not include renewables, wind, solar, hydrogen, CCUS, nuclear, or carbon markets.
 Search broadly and return the complete JSON as specified. Be precise with numbers and attribute all data to real sources."""
 
 # ── API Call ───────────────────────────────────────────────────────────────────
