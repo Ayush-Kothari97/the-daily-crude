@@ -19,3 +19,4 @@ Thumbs.db
 *.pem
 .env*
 secrets.json
+.claude/settings.local.json
