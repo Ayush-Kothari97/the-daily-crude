@@ -13,7 +13,7 @@ import sys
 from datetime import datetime, timezone, timedelta
 from openai import OpenAI
 
-# ── Config ────────────────────────────────────────────────────────────────────
+# ── Config ────────────────────────────────────────────────────────────────────────────────
 HTML_FILE = "index.html"
 IST = timezone(timedelta(hours=5, minutes=30))
 TODAY = datetime.now(IST).strftime("%A, %d %B %Y")
@@ -27,13 +27,14 @@ Today is {TODAY}.
 Your job is to collect real, current market data and news via web search, then return a single valid JSON object that will be injected into the newsletter's HTML.
 
 CRITICAL RULES:
-1. Use the web_search tool extensively to fetch real prices, real news, and real project updates.
+1. You MUST call the web_search tool multiple times to fetch real prices, real news, and real project updates. Do not skip web search.
 2. Return ONLY a valid JSON object. No markdown, no backticks, no preamble, no explanation.
-3. All prices must be real and sourced from today or the most recent available data.
+3. All prices must be real numbers sourced from today or the most recent available data. Do NOT use placeholder values like XX.XX or X.XX — these will cause the pipeline to fail.
 4. All news must be from the last 24-48 hours where possible, otherwise the most recent available.
 5. Dates in the output should reflect today: {TODAY_SHORT}.
+6. NEVER copy the template structure with placeholder text. Every single field must contain real, researched data.
 
-Return this exact JSON structure (fill all values with real data):
+Return this exact JSON structure (fill ALL values with real data from web search — NO placeholders):
 
 {{
   "meta": {{
@@ -383,8 +384,13 @@ Use web search to gather all current data. Search for:
 Focus strictly on oil & gas. Do not include renewables, wind, solar, hydrogen, CCUS, nuclear, or carbon markets.
 Search broadly and return the complete JSON as specified. Be precise with numbers and attribute all data to real sources."""
 
-# ── API Call ───────────────────────────────────────────────────────────────────
+# ── API Call ────────────────────────────────────────────────────────────────────────────────
 MAX_RETRIES = 3
+PLACEHOLDER_MARKERS = ["XX.XX", "X.XX", "XX BCM", "XX.X MMT", "Project name", "News headline", "Framework title"]
+
+def _contains_placeholders(data: dict) -> bool:
+    raw = json.dumps(data)
+    return any(marker in raw for marker in PLACEHOLDER_MARKERS)
 
 def fetch_content() -> dict:
     _key = os.environ.get("OPENAI_API_KEY", "")
@@ -393,13 +399,24 @@ def fetch_content() -> dict:
     client = OpenAI(api_key=_key, timeout=240.0)
     del _key
 
+    last_error = ""
     for attempt in range(1, MAX_RETRIES + 1):
         print(f"Calling OpenAI API with web search (attempt {attempt}/{MAX_RETRIES})...")
+
+        user_input = USER_PROMPT
+        if attempt > 1:
+            user_input = (
+                f"CORRECTION: Your previous response contained placeholder values (e.g. XX.XX, 'Project name', 'News headline'). "
+                f"This is NOT acceptable. You MUST use web_search to fetch real current data and replace every placeholder with real values.\n\n"
+                + USER_PROMPT
+            )
+
         response = client.responses.create(
             model="gpt-4o",
             tools=[{"type": "web_search_preview"}],
+            tool_choice="required",
             instructions=SYSTEM_PROMPT,
-            input=USER_PROMPT,
+            input=user_input,
             max_output_tokens=16000,
         )
 
@@ -410,30 +427,38 @@ def fetch_content() -> dict:
                     if block.type == "output_text":
                         raw = block.text
 
-        raw = re.sub(r"```json|```", "", raw).strip()
+        raw = re.sub(r"```json\s*|```", "", raw).strip()
 
         try:
             data = json.loads(raw)
-            print("Content fetched and parsed successfully.")
-            return data
         except json.JSONDecodeError as e:
-            print(f"JSON parse error (attempt {attempt}): {e}")
-            print(f"Response length: {len(raw)} chars — Raw tail: ...{raw[-200:]}")
-            if attempt == MAX_RETRIES:
-                sys.exit(f"Failed after {MAX_RETRIES} attempts — last error: {e}")
-            print("Retrying...")
+            last_error = f"JSON parse error: {e} — tail: ...{raw[-300:]}"
+            print(f"Attempt {attempt} failed: {last_error}")
+            if attempt < MAX_RETRIES:
+                print("Retrying...")
+            continue
 
-    sys.exit("Unreachable")
+        if _contains_placeholders(data):
+            last_error = "Response still contains placeholder values — model did not use web search results"
+            print(f"Attempt {attempt} failed: {last_error}")
+            if attempt < MAX_RETRIES:
+                print("Retrying with correction prompt...")
+            continue
+
+        print("Content fetched and validated successfully.")
+        return data
+
+    sys.exit(f"ERROR: All {MAX_RETRIES} attempts failed. Last error: {last_error}")
 
 
-# ── HTML Injection ─────────────────────────────────────────────────────────────
+# ── HTML Injection ────────────────────────────────────────────────────────────────────────────────
 def inject_into_html(data: dict):
     with open(HTML_FILE, "r", encoding="utf-8") as f:
         html = f.read()
 
     json_str = json.dumps(data, ensure_ascii=False, indent=2)
 
-    data_block = f"<script id=\"daily-data\">\nwindow.DAILY_DATA = {json_str};\n</script>"
+    data_block = f'<script id="daily-data">\nwindow.DAILY_DATA = {json_str};\n</script>'
 
     if 'id="daily-data"' in html:
         html = re.sub(
@@ -451,7 +476,7 @@ def inject_into_html(data: dict):
     print(f"HTML updated: {HTML_FILE}")
 
 
-# ── Entry Point ────────────────────────────────────────────────────────────────
+# ── Entry Point ────────────────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     data = fetch_content()
     inject_into_html(data)
