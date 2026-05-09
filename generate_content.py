@@ -24,17 +24,29 @@ SYSTEM_PROMPT = f"""You are the data engine for The Daily Crude — a profession
 
 Today is {TODAY}.
 
-Your job is to collect real, current market data and news via web search, then return a single valid JSON object that will be injected into the newsletter's HTML.
+TASK: Use web_search to fetch real current data, then return a single valid JSON object.
 
-CRITICAL RULES:
-1. You MUST call the web_search tool multiple times to fetch real prices, real news, and real project updates. Do not skip web search.
-2. Return ONLY a valid JSON object. No markdown, no backticks, no preamble, no explanation.
-3. All prices must be real numbers sourced from today or the most recent available data. Do NOT use placeholder values like XX.XX or X.XX — these will cause the pipeline to fail.
-4. All news must be from the last 24-48 hours where possible, otherwise the most recent available.
-5. Dates in the output should reflect today: {TODAY_SHORT}.
-6. NEVER copy the template structure with placeholder text. Every single field must contain real, researched data.
+STRICT RULES:
+- Call web_search MULTIPLE TIMES before writing your answer.
+- Return ONLY raw JSON — no markdown fences, no explanation, no preamble.
+- Every numeric field must contain a REAL number from your searches (e.g. "62.45", not "XX.XX").
+- Every text field must contain REAL content (real headlines, real project names, real company names).
+- The word "placeholder", the pattern "XX", and generic strings like "News headline" or "Project name" are FORBIDDEN in your output.
 
-Return this exact JSON structure (fill ALL values with real data from web search — NO placeholders):
+SEARCH PLAN (execute all of these before returning JSON):
+1. Search "Brent crude oil price today {TODAY_SHORT}" → get $/bbl
+2. Search "WTI crude oil price today {TODAY_SHORT}" → get $/bbl
+3. Search "Dubai crude oil price today {TODAY_SHORT}" → get $/bbl
+4. Search "JKM LNG spot price today {TODAY_SHORT}" → get $/MMBtu
+5. Search "TTF natural gas price today {TODAY_SHORT}" → get €/MWh
+6. Search "Henry Hub natural gas price today {TODAY_SHORT}" → get $/MMBtu
+7. Search "OPEC basket price today {TODAY_SHORT}" → get $/bbl
+8. Search "oil gas news today {TODAY_SHORT}" → top global O&G stories
+9. Search "India oil gas energy news {TODAY_SHORT}" → India-specific stories
+10. Search "oil gas project FID EPC award {TODAY_SHORT}" → major project milestones
+11. Search "McKinsey BCG oil gas strategy framework 2025 2026" → for strategy section
+
+JSON SCHEMA (replace every angle-bracket field with real searched data):
 
 {{
   "meta": {{
@@ -44,377 +56,187 @@ Return this exact JSON structure (fill ALL values with real data from web search
   }},
 
   "ticker": [
-    {{"label": "BRENT", "price": "$XX.XX/bbl", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}},
-    {{"label": "WTI", "price": "$XX.XX/bbl", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}},
-    {{"label": "DUBAI CRUDE", "price": "$XX.XX/bbl", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}},
-    {{"label": "JKM LNG", "price": "$XX.XX/MMBtu", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}},
-    {{"label": "TTF GAS", "price": "€XX.XX/MWh", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}},
-    {{"label": "HH NATGAS", "price": "$X.XX/MMBtu", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}},
-    {{"label": "OPEC BASKET", "price": "$XX.XX/bbl", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}},
-    {{"label": "NAPHTHA CIF ARA", "price": "$XXX/MT", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}},
-    {{"label": "GASOIL ICE", "price": "$XXX/MT", "change": "▲/▼ X.XX%", "direction": "up|down|flat"}}
+    {{"label": "BRENT", "price": "<$/bbl from search>", "change": "<▲ or ▼ and %>", "direction": "<up|down|flat>"}},
+    {{"label": "WTI", "price": "<$/bbl from search>", "change": "<▲ or ▼ and %>", "direction": "<up|down|flat>"}},
+    {{"label": "DUBAI CRUDE", "price": "<$/bbl from search>", "change": "<▲ or ▼ and %>", "direction": "<up|down|flat>"}},
+    {{"label": "JKM LNG", "price": "<$/MMBtu from search>", "change": "<▲ or ▼ and %>", "direction": "<up|down|flat>"}},
+    {{"label": "TTF GAS", "price": "<€/MWh from search>", "change": "<▲ or ▼ and %>", "direction": "<up|down|flat>"}},
+    {{"label": "HH NATGAS", "price": "<$/MMBtu from search>", "change": "<▲ or ▼ and %>", "direction": "<up|down|flat>"}},
+    {{"label": "OPEC BASKET", "price": "<$/bbl from search>", "change": "<▲ or ▼ and %>", "direction": "<up|down|flat>"}},
+    {{"label": "NAPHTHA CIF ARA", "price": "<$/MT estimated>", "change": "<▲ or ▼ and %>", "direction": "<up|down|flat>"}},
+    {{"label": "GASOIL ICE", "price": "<$/MT estimated>", "change": "<▲ or ▼ and %>", "direction": "<up|down|flat>"}}
   ],
 
   "markets": {{
-    "macro_signal": "One paragraph headline summary of today's key macro driver in energy markets.",
+    "macro_signal": "<One paragraph: today's key macro driver — e.g. OPEC+ decision, US inventory data, geopolitical event>",
     "prices": [
       {{
         "commodity": "Brent Crude (ICE)",
-        "value": "$XX.XX",
-        "change_abs": "-$X.XX",
-        "change_pct": "-X.XX%",
-        "direction": "down",
-        "meta": "Brief contextual note"
+        "value": "<$/bbl>",
+        "change_abs": "<±$/bbl>",
+        "change_pct": "<±%>",
+        "direction": "<up|down|flat>",
+        "meta": "<one-line context e.g. front-month settlement, ICE>"
       }},
       {{
         "commodity": "WTI Crude (NYMEX)",
-        "value": "$XX.XX",
-        "change_abs": "-$X.XX",
-        "change_pct": "-X.XX%",
-        "direction": "down",
-        "meta": "Brief contextual note"
+        "value": "<$/bbl>",
+        "change_abs": "<±$/bbl>",
+        "change_pct": "<±%>",
+        "direction": "<up|down|flat>",
+        "meta": "<one-line context>"
       }},
       {{
         "commodity": "JKM LNG Spot",
-        "value": "$XX.XX",
-        "change_abs": "-$X.XX",
-        "change_pct": "-X.XX%",
-        "direction": "down",
+        "value": "<$/MMBtu>",
+        "change_abs": "<±$/MMBtu>",
+        "change_pct": "<±%>",
+        "direction": "<up|down|flat>",
         "meta": "$/MMBtu · Platts assessed · NE Asia delivery"
       }},
       {{
         "commodity": "TTF Natural Gas",
-        "value": "€XX.XX",
-        "change_abs": "-€X.XX",
-        "change_pct": "-X.XX%",
-        "direction": "down",
+        "value": "<€/MWh>",
+        "change_abs": "<±€/MWh>",
+        "change_pct": "<±%>",
+        "direction": "<up|down|flat>",
         "meta": "€/MWh · ICE Endex · Front-Month"
       }}
     ],
     "drivers": [
-      {{"icon": "🛢️", "headline": "Short bold headline", "body": "2-3 sentence detail on this market driver."}},
-      {{"icon": "🌏", "headline": "Short bold headline", "body": "2-3 sentence detail."}},
-      {{"icon": "🔥", "headline": "Short bold headline", "body": "2-3 sentence detail."}},
-      {{"icon": "🤝", "headline": "Short bold headline", "body": "2-3 sentence detail."}}
+      {{"icon": "🛢️", "headline": "<real market driver headline>", "body": "<2-3 sentences of detail>"}},
+      {{"icon": "🌏", "headline": "<real market driver headline>", "body": "<2-3 sentences>"}},
+      {{"icon": "🔥", "headline": "<real market driver headline>", "body": "<2-3 sentences>"}},
+      {{"icon": "🤝", "headline": "<real market driver headline>", "body": "<2-3 sentences>"}}
     ]
   }},
 
   "india": {{
-    "headline": "Full headline title of today's top India energy story",
-    "headline_body": "2-3 paragraph summary of the headline story.",
+    "headline": "<real India O&G headline from today>",
+    "headline_body": "<2-3 paragraphs on the headline story>",
     "news": [
       {{
         "sector": "Refining",
         "sector_color": "#c57800",
-        "title": "News card title",
-        "summary": "2-3 sentence summary.",
-        "source": "Source Name"
+        "title": "<real news title>",
+        "summary": "<2-3 sentence summary>",
+        "source": "<publication name>"
       }},
       {{
         "sector": "Upstream",
         "sector_color": "#c8401a",
-        "title": "News card title",
-        "summary": "2-3 sentence summary.",
-        "source": "Source Name"
+        "title": "<real news title>",
+        "summary": "<2-3 sentence summary>",
+        "source": "<publication name>"
       }}
     ],
     "stats": [
-      {{"label": "India Crude Import Basket", "value": "$XX.XX/bbl", "note": "Russia ~X% · ME ~X% · Others ~X% · PPAC"}},
-      {{"label": "LNG Spot Import (Petronet Dahej)", "value": "$XX.XX/MMBtu", "note": "Blended spot vs LTC pricing"}},
-      {{"label": "ONGC Crude Production (YTD)", "value": "XX.X MMT", "note": "Crude oil equiv. · vs annual target"}},
-      {{"label": "India Refinery Throughput", "value": "XX.X MMT", "note": "MoPNG · YTD vs capacity utilisation"}},
-      {{"label": "India LNG Imports (YTD)", "value": "XX BCM", "note": "vs prior year · PPAC"}}
+      {{"label": "India Crude Import Basket", "value": "<$/bbl>", "note": "Russia ~X% · ME ~X% · Others ~X% · PPAC"}},
+      {{"label": "LNG Spot Import (Petronet Dahej)", "value": "<$/MMBtu>", "note": "Blended spot vs LTC pricing"}},
+      {{"label": "ONGC Crude Production (YTD)", "value": "<X.X MMT>", "note": "Crude oil equiv. · vs annual target"}},
+      {{"label": "India Refinery Throughput", "value": "<X.X MMT>", "note": "MoPNG · YTD vs capacity utilisation"}},
+      {{"label": "India LNG Imports (YTD)", "value": "<X BCM>", "note": "vs prior year · PPAC"}}
     ]
   }},
 
   "global_news": [
-    {{
-      "sector": "Upstream · Exploration",
-      "sector_class": "sector-upstream",
-      "dot_color": "#c8401a",
-      "title": "News headline",
-      "summary": "2-3 sentence summary.",
-      "source": "Source"
-    }},
-    {{
-      "sector": "Policy · Regulation",
-      "sector_class": "sector-policy",
-      "dot_color": "#5a3a00",
-      "title": "News headline",
-      "summary": "2-3 sentence summary.",
-      "source": "Source"
-    }},
-    {{
-      "sector": "Midstream · LNG",
-      "sector_class": "sector-midstream",
-      "dot_color": "#8b4500",
-      "title": "News headline",
-      "summary": "2-3 sentence summary.",
-      "source": "Source"
-    }},
-    {{
-      "sector": "Offshore · Subsea",
-      "sector_class": "sector-offshore",
-      "dot_color": "#1e4a7a",
-      "title": "News headline",
-      "summary": "2-3 sentence summary.",
-      "source": "Source"
-    }},
-    {{
-      "sector": "Downstream · Petrochemicals",
-      "sector_class": "sector-downstream",
-      "dot_color": "#1e3a5f",
-      "title": "News headline",
-      "summary": "2-3 sentence summary.",
-      "source": "Source"
-    }},
-    {{
-      "sector": "OPEC+ · Supply",
-      "sector_class": "sector-upstream",
-      "dot_color": "#8b1a00",
-      "title": "News headline",
-      "summary": "2-3 sentence summary.",
-      "source": "Source"
-    }},
-    {{
-      "sector": "Refining · Margins",
-      "sector_class": "sector-downstream",
-      "dot_color": "#1e3a5f",
-      "title": "News headline",
-      "summary": "2-3 sentence summary.",
-      "source": "Source"
-    }},
-    {{
-      "sector": "Geopolitics · Sanctions",
-      "sector_class": "sector-policy",
-      "dot_color": "#5a3a00",
-      "title": "News headline",
-      "summary": "2-3 sentence summary.",
-      "source": "Source"
-    }},
-    {{
-      "sector": "M&A · Corporate",
-      "sector_class": "sector-upstream",
-      "dot_color": "#c8401a",
-      "title": "News headline",
-      "summary": "2-3 sentence summary.",
-      "source": "Source"
-    }}
+    {{"sector": "Upstream · Exploration", "sector_class": "sector-upstream", "dot_color": "#c8401a", "title": "<real headline>", "summary": "<2-3 sentences>", "source": "<source>"}},
+    {{"sector": "Policy · Regulation", "sector_class": "sector-policy", "dot_color": "#5a3a00", "title": "<real headline>", "summary": "<2-3 sentences>", "source": "<source>"}},
+    {{"sector": "Midstream · LNG", "sector_class": "sector-midstream", "dot_color": "#8b4500", "title": "<real headline>", "summary": "<2-3 sentences>", "source": "<source>"}},
+    {{"sector": "Offshore · Subsea", "sector_class": "sector-offshore", "dot_color": "#1e4a7a", "title": "<real headline>", "summary": "<2-3 sentences>", "source": "<source>"}},
+    {{"sector": "Downstream · Petrochemicals", "sector_class": "sector-downstream", "dot_color": "#1e3a5f", "title": "<real headline>", "summary": "<2-3 sentences>", "source": "<source>"}},
+    {{"sector": "OPEC+ · Supply", "sector_class": "sector-upstream", "dot_color": "#8b1a00", "title": "<real headline>", "summary": "<2-3 sentences>", "source": "<source>"}},
+    {{"sector": "Refining · Margins", "sector_class": "sector-downstream", "dot_color": "#1e3a5f", "title": "<real headline>", "summary": "<2-3 sentences>", "source": "<source>"}},
+    {{"sector": "Geopolitics · Sanctions", "sector_class": "sector-policy", "dot_color": "#5a3a00", "title": "<real headline>", "summary": "<2-3 sentences>", "source": "<source>"}},
+    {{"sector": "M&A · Corporate", "sector_class": "sector-upstream", "dot_color": "#c8401a", "title": "<real headline>", "summary": "<2-3 sentences>", "source": "<source>"}}
   ],
 
   "strategy": {{
     "featured": {{
       "label": "⭐ Framework of the Day",
-      "title": "Framework title",
-      "tags": ["Tag1", "Tag2", "Tag3"],
+      "title": "<real framework title from McKinsey/BCG/WoodMac>",
+      "tags": ["<tag1>", "<tag2>", "<tag3>"],
       "audience": "IOCs · NOCs · Private Equity · Strategy Consultants · EPC PMOs",
-      "read_time": "~X min read",
-      "sources": "McKinsey, BCG, Wood Mackenzie",
-      "url": "https://actual-article-url.com/full-article",
-      "intro": "Opening italic paragraph.",
-      "framework_title": "The Framework — subtitle",
-      "framework_desc": "One paragraph describing the framework.",
+      "read_time": "<N min read>",
+      "sources": "<publication names>",
+      "url": "<real article URL found via web search>",
+      "intro": "<opening paragraph>",
+      "framework_title": "<framework subtitle>",
+      "framework_desc": "<one paragraph describing the framework>",
       "steps": [
-        {{"title": "Step title", "body": "Step explanation."}},
-        {{"title": "Step title", "body": "Step explanation."}},
-        {{"title": "Step title", "body": "Step explanation."}},
-        {{"title": "Step title", "body": "Step explanation."}},
-        {{"title": "Step title", "body": "Step explanation."}}
+        {{"title": "<step 1 title>", "body": "<explanation>"}},
+        {{"title": "<step 2 title>", "body": "<explanation>"}},
+        {{"title": "<step 3 title>", "body": "<explanation>"}},
+        {{"title": "<step 4 title>", "body": "<explanation>"}},
+        {{"title": "<step 5 title>", "body": "<explanation>"}}
       ],
       "watchpoints_title": "Key Watchpoints for Consultants",
-      "watchpoints": "Paragraph of watchpoints text."
+      "watchpoints": "<paragraph of watchpoints>"
     }},
     "mini_cards": [
-      {{
-        "label": "🔍 Upstream · Due Diligence",
-        "title": "Mini card title",
-        "desc": "2-sentence description.",
-        "read_time": "~X min",
-        "tag": "E&P / Consultant",
-        "tag_bg": "var(--tag-bg)",
-        "tag_color": "var(--ink)",
-        "url": "https://actual-article-url.com/upstream-article"
-      }},
-      {{
-        "label": "🛢️ Midstream · LNG Strategy",
-        "title": "Mini card title",
-        "desc": "2-sentence description.",
-        "read_time": "~X min",
-        "tag": "LNG / Trading",
-        "tag_bg": "var(--steel-light)",
-        "tag_color": "var(--steel)",
-        "url": "https://actual-article-url.com/lng-article"
-      }},
-      {{
-        "label": "⚙️ Operations · EPC",
-        "title": "Mini card title",
-        "desc": "2-sentence description.",
-        "read_time": "~X min",
-        "tag": "PMC / EPC",
-        "tag_bg": "var(--tag-bg)",
-        "tag_color": "var(--ink)",
-        "url": "https://actual-article-url.com/epc-article"
-      }}
+      {{"label": "🔍 Upstream · Due Diligence", "title": "<real title>", "desc": "<2 sentences>", "read_time": "<N min>", "tag": "E&P / Consultant", "tag_bg": "var(--tag-bg)", "tag_color": "var(--ink)", "url": "<real URL>"}},
+      {{"label": "🛢️ Midstream · LNG Strategy", "title": "<real title>", "desc": "<2 sentences>", "read_time": "<N min>", "tag": "LNG / Trading", "tag_bg": "var(--steel-light)", "tag_color": "var(--steel)", "url": "<real URL>"}},
+      {{"label": "⚙️ Operations · EPC", "title": "<real title>", "desc": "<2 sentences>", "read_time": "<N min>", "tag": "PMC / EPC", "tag_bg": "var(--tag-bg)", "tag_color": "var(--ink)", "url": "<real URL>"}}
     ]
   }},
 
   "projects": [
-    {{
-      "name": "Project name",
-      "company": "Operator / Contractor",
-      "sector": "LNG Export",
-      "data_sector": "lng",
-      "stage": "EPC",
-      "stage_class": "stage-epc",
-      "value": "$X.XB",
-      "location": "Location, Country",
-      "description": "One sentence: capacity, technology, and key milestone context.",
-      "event": "✅ EPC Awarded",
-      "event_color": "#1a5c38"
-    }},
-    {{
-      "name": "Project name",
-      "company": "Operator",
-      "sector": "Upstream",
-      "data_sector": "upstream",
-      "stage": "On Hold",
-      "stage_class": "stage-concept",
-      "value": "$X.XB",
-      "location": "Location, Country",
-      "event": "⚖️ Regulatory Hold",
-      "event_color": "#c8401a"
-    }},
-    {{
-      "name": "Project name",
-      "company": "Operator",
-      "sector": "Deepwater",
-      "data_sector": "upstream",
-      "stage": "FID",
-      "stage_class": "stage-fid",
-      "value": "$X.XB",
-      "location": "Location, Country",
-      "event": "🟢 FID Taken",
-      "event_color": "#1a5c38"
-    }},
-    {{
-      "name": "Project name",
-      "company": "Operator",
-      "sector": "LNG Terminal",
-      "data_sector": "lng",
-      "stage": "FEED",
-      "stage_class": "stage-feed",
-      "value": "$X.XB",
-      "location": "Location, Country",
-      "event": "📋 FEED Commenced",
-      "event_color": "#1e3a5f"
-    }},
-    {{
-      "name": "Project name",
-      "company": "Operator",
-      "sector": "Refinery",
-      "data_sector": "downstream",
-      "stage": "PDP",
-      "stage_class": "stage-pdp",
-      "value": "$X.XB",
-      "location": "Location, Country",
-      "event": "📌 PDP Stage",
-      "event_color": "#c8401a"
-    }},
-    {{
-      "name": "Project name",
-      "company": "Operator",
-      "sector": "Offshore",
-      "data_sector": "upstream",
-      "stage": "EPC",
-      "stage_class": "stage-epc",
-      "value": "$X.XB",
-      "location": "Location, Country",
-      "event": "✅ EPC Awarded",
-      "event_color": "#1a5c38"
-    }},
-    {{
-      "name": "Project name",
-      "company": "Operator",
-      "sector": "Gas Processing",
-      "data_sector": "midstream",
-      "stage": "FEED",
-      "stage_class": "stage-feed",
-      "value": "$X.XB",
-      "location": "Location, Country",
-      "event": "📋 FEED Award",
-      "event_color": "#1e3a5f"
-    }},
-    {{
-      "name": "Project name",
-      "company": "Operator",
-      "sector": "Petrochemicals",
-      "data_sector": "downstream",
-      "stage": "EPC",
-      "stage_class": "stage-epc",
-      "value": "$X.XB",
-      "location": "Location, Country",
-      "event": "✅ EPC in Progress",
-      "event_color": "#1a5c38"
-    }},
-    {{
-      "name": "Project name",
-      "company": "Operator / Partners",
-      "sector": "LNG Regasification",
-      "data_sector": "lng",
-      "stage": "EPC",
-      "stage_class": "stage-epc",
-      "value": "$X.XB est.",
-      "location": "Location, Country",
-      "event": "✅ EPC in Progress",
-      "event_color": "#1a5c38"
-    }}
+    {{"name": "<real project name>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<EPC|FID|FEED|PDP|On Hold>", "stage_class": "<stage-epc|stage-fid|stage-feed|stage-pdp|stage-concept>", "value": "<$XB>", "location": "<City, Country>", "description": "<one sentence milestone>", "event": "<emoji + event label>", "event_color": "#1a5c38"}},
+    {{"name": "<real project name>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji + event label>", "event_color": "#c8401a"}},
+    {{"name": "<real project name>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji + event label>", "event_color": "#1a5c38"}},
+    {{"name": "<real project name>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji + event label>", "event_color": "#1e3a5f"}},
+    {{"name": "<real project name>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji + event label>", "event_color": "#c8401a"}},
+    {{"name": "<real project name>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji + event label>", "event_color": "#1a5c38"}},
+    {{"name": "<real project name>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji + event label>", "event_color": "#1e3a5f"}},
+    {{"name": "<real project name>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji + event label>", "event_color": "#1a5c38"}},
+    {{"name": "<real project name>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji + event label>", "event_color": "#1a5c38"}}
   ]
 }}
 """
 
-USER_PROMPT = f"""Today is {TODAY}.
+USER_PROMPT = f"""Today is {TODAY}. Execute the search plan from your instructions, then return the filled JSON.
 
-Use web search to gather all current data. Search for:
-1. Real-time O&G commodity prices: Brent crude, WTI crude, Dubai crude, JKM LNG spot, TTF natural gas, Henry Hub, OPEC basket price, Naphtha CIF ARA, Gasoil ICE
-2. Top oil & gas news from the last 24 hours across: upstream E&P, LNG markets, offshore, midstream pipelines, downstream refining, petrochemicals, OPEC+ policy, geopolitics/sanctions affecting oil flows, O&G M&A
-3. India-specific O&G news: crude imports, refinery throughput, LNG imports, ONGC/IOC/BPCL/Reliance updates, government petroleum policy
-4. Major O&G project updates: FIDs, EPC awards, FEED commencements, first oil milestones, LNG project sanctions, refinery expansions
-5. An O&G strategy framework relevant to today's upstream, midstream, or downstream market conditions — include a real published article URL for the featured framework and for each of the 3 mini cards (use web_search to find actual URLs from McKinsey, BCG, Wood Mackenzie, Rystad, S&P, Offshore Technology, or similar authoritative O&G sources)
+Do NOT return angle-bracket placeholders like <real headline> or <$/bbl>. Replace every one with actual data from your searches.
 
-Focus strictly on oil & gas. Do not include renewables, wind, solar, hydrogen, CCUS, nuclear, or carbon markets.
-Search broadly and return the complete JSON as specified. Be precise with numbers and attribute all data to real sources."""
+Search now for: Brent price, WTI price, Dubai crude, JKM LNG, TTF gas, Henry Hub, OPEC basket, top O&G news, India energy news, major O&G project updates."""
 
-# ── API Call ────────────────────────────────────────────────────────────────────────────────
-MAX_RETRIES = 3
-PLACEHOLDER_MARKERS = ["XX.XX", "X.XX", "XX BCM", "XX.X MMT", "Project name", "News headline", "Framework title"]
+# ── Validation ────────────────────────────────────────────────────────────────────────────
+PLACEHOLDER_MARKERS = [
+    "XX.XX", "X.XX%", "XX BCM", "XX.X MMT",
+    "Project name", "News headline", "Framework title",
+    "<real headline>", "<$/bbl>", "<real project",
+    "real headline", "real news", "real title",
+]
 
 def _contains_placeholders(data: dict) -> bool:
     raw = json.dumps(data)
-    return any(marker in raw for marker in PLACEHOLDER_MARKERS)
+    return any(marker.lower() in raw.lower() for marker in PLACEHOLDER_MARKERS)
+
+# ── API Call ────────────────────────────────────────────────────────────────────────────
+MAX_RETRIES = 3
 
 def fetch_content() -> dict:
     _key = os.environ.get("OPENAI_API_KEY", "")
     if not _key:
         sys.exit("ERROR: OPENAI_API_KEY not set in environment.")
-    client = OpenAI(api_key=_key, timeout=240.0)
+    client = OpenAI(api_key=_key, timeout=300.0)
     del _key
 
     last_error = ""
     for attempt in range(1, MAX_RETRIES + 1):
-        print(f"Calling OpenAI API with web search (attempt {attempt}/{MAX_RETRIES})...")
+        print(f"Attempt {attempt}/{MAX_RETRIES}: calling OpenAI with web search...")
 
         user_input = USER_PROMPT
         if attempt > 1:
             user_input = (
-                f"CORRECTION: Your previous response contained placeholder values (e.g. XX.XX, 'Project name', 'News headline'). "
-                f"This is NOT acceptable. You MUST use web_search to fetch real current data and replace every placeholder with real values.\n\n"
+                "PREVIOUS ATTEMPT FAILED — your response still had unfilled placeholders or template text. "
+                "You MUST search the web for real data NOW and fill every field with actual values.\n\n"
                 + USER_PROMPT
             )
 
         response = client.responses.create(
             model="gpt-4o",
             tools=[{"type": "web_search_preview"}],
-            tool_choice="required",
             instructions=SYSTEM_PROMPT,
             input=user_input,
             max_output_tokens=16000,
@@ -428,27 +250,31 @@ def fetch_content() -> dict:
                         raw = block.text
 
         raw = re.sub(r"```json\s*|```", "", raw).strip()
+        print(f"Response length: {len(raw)} chars")
+
+        if not raw:
+            last_error = "Empty response from API"
+            print(f"Attempt {attempt} failed: {last_error}")
+            continue
 
         try:
             data = json.loads(raw)
         except json.JSONDecodeError as e:
-            last_error = f"JSON parse error: {e} — tail: ...{raw[-300:]}"
+            last_error = f"JSON parse error: {e} — tail: ...{raw[-400:]}"
             print(f"Attempt {attempt} failed: {last_error}")
-            if attempt < MAX_RETRIES:
-                print("Retrying...")
             continue
 
         if _contains_placeholders(data):
-            last_error = "Response still contains placeholder values — model did not use web search results"
+            raw_lower = json.dumps(data).lower()
+            triggered = [m for m in PLACEHOLDER_MARKERS if m.lower() in raw_lower]
+            last_error = f"Placeholder values detected: {triggered}"
             print(f"Attempt {attempt} failed: {last_error}")
-            if attempt < MAX_RETRIES:
-                print("Retrying with correction prompt...")
             continue
 
         print("Content fetched and validated successfully.")
         return data
 
-    sys.exit(f"ERROR: All {MAX_RETRIES} attempts failed. Last error: {last_error}")
+    sys.exit(f"ERROR: All {MAX_RETRIES} attempts failed. Last: {last_error}")
 
 
 # ── HTML Injection ────────────────────────────────────────────────────────────────────────────────
@@ -457,7 +283,6 @@ def inject_into_html(data: dict):
         html = f.read()
 
     json_str = json.dumps(data, ensure_ascii=False, indent=2)
-
     data_block = f'<script id="daily-data">\nwindow.DAILY_DATA = {json_str};\n</script>'
 
     if 'id="daily-data"' in html:
