@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
 Daily content generator for The Daily Crude.
-- Prices: fetched directly via yfinance (reliable, no AI hallucination)
-- News/analysis: fetched via OpenAI Responses API with web_search
+Fetches prices and news from curated O&G sources via OpenAI web_search.
+Sources: oilprice.com, ogj.com, opec.org, offshore-mag.com, upstreamonline.com,
+         lngindustry.com, hartenergy.com, rigzone.com, argusmedia.com, etc.
 """
 
 import json
@@ -10,8 +11,6 @@ import os
 import re
 import sys
 from datetime import datetime, timezone, timedelta
-
-import yfinance as yf
 from openai import OpenAI
 
 # ── Config ────────────────────────────────────────────────────────────────────────────────
@@ -21,275 +20,158 @@ TODAY = datetime.now(IST).strftime("%A, %d %B %Y")
 TODAY_SHORT = datetime.now(IST).strftime("%d %b %Y")
 ISSUE_DATE = datetime.now(IST).strftime("%d %B %Y")
 
-# ── Price fetching via yfinance ───────────────────────────────────────────────────────────────────
-TICKERS = {
-    "BRENT":  "BZ=F",
-    "WTI":    "CL=F",
-    "HH_GAS": "NG=F",
-}
+# ── Trusted source list (from Energy Industry Reference Database) ─────────────────
+PRICE_SOURCES = "oilprice.com, ogj.com, opec.org, eia.gov, argusmedia.com, spglobal.com/commodityinsights"
+NEWS_SOURCES = "ogj.com, worldoil.com, offshore-mag.com, upstreamonline.com, lngindustry.com, hartenergy.com, rigzone.com, offshore-energy.biz, energyvoice.com, hydrocarbonprocessing.com, pgjonline.com"
+INDIA_SOURCES = "ogj.com, energyvoice.com, upstreamonline.com, hartenergy.com, offshore-energy.biz"
+STRATEGY_SOURCES = "woodmac.com, mckinsey.com, bcg.com, rystadenergy.com, hartenergy.com, spglobal.com"
 
-def _fmt_price(val, prefix="$", suffix="", decimals=2):
-    if val is None:
-        return "N/A"
-    return f"{prefix}{val:,.{decimals}f}{suffix}"
-
-def _fmt_change(change_abs, change_pct):
-    if change_abs is None or change_pct is None:
-        return "N/A", "flat"
-    arrow = "▲" if change_abs >= 0 else "▼"
-    direction = "up" if change_abs > 0 else ("down" if change_abs < 0 else "flat")
-    sign = "+" if change_abs >= 0 else ""
-    return f"{arrow} {sign}{change_pct:.2f}%", direction
-
-def fetch_prices():
-    prices = {}
-    for name, ticker_sym in TICKERS.items():
-        try:
-            t = yf.Ticker(ticker_sym)
-            info = t.fast_info
-            price = getattr(info, "last_price", None)
-            prev  = getattr(info, "previous_close", None)
-            if price and prev:
-                change_abs = price - prev
-                change_pct = (change_abs / prev) * 100
-            else:
-                change_abs = change_pct = None
-            prices[name] = {"price": price, "change_abs": change_abs, "change_pct": change_pct}
-            print(f"  {name}: {price} (prev {prev})")
-        except Exception as e:
-            print(f"  {name}: fetch failed — {e}")
-            prices[name] = {"price": None, "change_abs": None, "change_pct": None}
-    return prices
-
-def build_ticker_and_markets(prices, ai_prices: dict) -> tuple:
-    def get(key):
-        return prices.get(key, {})
-
-    brent = get("BRENT")
-    wti   = get("WTI")
-    hh    = get("HH_GAS")
-
-    brent_chg, brent_dir = _fmt_change(brent.get("change_abs"), brent.get("change_pct"))
-    wti_chg,   wti_dir   = _fmt_change(wti.get("change_abs"),   wti.get("change_pct"))
-    hh_chg,    hh_dir    = _fmt_change(hh.get("change_abs"),    hh.get("change_pct"))
-
-    brent_price = _fmt_price(brent.get("price"), "$", "/bbl")
-    wti_price   = _fmt_price(wti.get("price"),   "$", "/bbl")
-    hh_price    = _fmt_price(hh.get("price"),    "$", "/MMBtu")
-
-    dubai_price  = ai_prices.get("dubai_price",  "N/A")
-    dubai_chg    = ai_prices.get("dubai_change",  "N/A")
-    dubai_dir    = ai_prices.get("dubai_dir",     "flat")
-    jkm_price    = ai_prices.get("jkm_price",    "N/A")
-    jkm_chg      = ai_prices.get("jkm_change",   "N/A")
-    jkm_dir      = ai_prices.get("jkm_dir",      "flat")
-    ttf_price    = ai_prices.get("ttf_price",    "N/A")
-    ttf_chg      = ai_prices.get("ttf_change",   "N/A")
-    ttf_dir      = ai_prices.get("ttf_dir",      "flat")
-    opec_price   = ai_prices.get("opec_price",   "N/A")
-    opec_chg     = ai_prices.get("opec_change",  "N/A")
-    opec_dir     = ai_prices.get("opec_dir",     "flat")
-    naph_price   = ai_prices.get("naph_price",   "N/A")
-    naph_chg     = ai_prices.get("naph_change",  "N/A")
-    naph_dir     = ai_prices.get("naph_dir",     "flat")
-    gasoil_price = ai_prices.get("gasoil_price", "N/A")
-    gasoil_chg   = ai_prices.get("gasoil_change","N/A")
-    gasoil_dir   = ai_prices.get("gasoil_dir",   "flat")
-
-    brent_abs = brent.get("change_abs")
-    wti_abs   = wti.get("change_abs")
-    brent_pct = brent.get("change_pct")
-    wti_pct   = wti.get("change_pct")
-
-    ticker = [
-        {"label": "BRENT",          "price": brent_price,  "change": brent_chg,  "direction": brent_dir},
-        {"label": "WTI",            "price": wti_price,    "change": wti_chg,    "direction": wti_dir},
-        {"label": "DUBAI CRUDE",    "price": dubai_price,  "change": dubai_chg,  "direction": dubai_dir},
-        {"label": "JKM LNG",        "price": jkm_price,    "change": jkm_chg,    "direction": jkm_dir},
-        {"label": "TTF GAS",        "price": ttf_price,    "change": ttf_chg,    "direction": ttf_dir},
-        {"label": "HH NATGAS",      "price": hh_price,     "change": hh_chg,     "direction": hh_dir},
-        {"label": "OPEC BASKET",    "price": opec_price,   "change": opec_chg,   "direction": opec_dir},
-        {"label": "NAPHTHA CIF ARA","price": naph_price,   "change": naph_chg,   "direction": naph_dir},
-        {"label": "GASOIL ICE",     "price": gasoil_price, "change": gasoil_chg, "direction": gasoil_dir},
-    ]
-
-    def signed(v, prefix="$"):
-        if v is None: return "N/A"
-        return f"{prefix}{'+' if v>=0 else ''}{v:.2f}"
-
-    markets_prices = [
-        {
-            "commodity": "Brent Crude (ICE)",
-            "value":      _fmt_price(brent.get("price"), "$"),
-            "change_abs": signed(brent_abs),
-            "change_pct": f"{'+' if (brent_pct or 0)>=0 else ''}{brent_pct:.2f}%" if brent_pct is not None else "N/A",
-            "direction":  brent_dir,
-            "meta":       "$/bbl · ICE · Front-Month",
-        },
-        {
-            "commodity": "WTI Crude (NYMEX)",
-            "value":      _fmt_price(wti.get("price"), "$"),
-            "change_abs": signed(wti_abs),
-            "change_pct": f"{'+' if (wti_pct or 0)>=0 else ''}{wti_pct:.2f}%" if wti_pct is not None else "N/A",
-            "direction":  wti_dir,
-            "meta":       "$/bbl · NYMEX · Front-Month",
-        },
-        {
-            "commodity": "JKM LNG Spot",
-            "value":      jkm_price,
-            "change_abs": ai_prices.get("jkm_abs", "N/A"),
-            "change_pct": jkm_chg,
-            "direction":  jkm_dir,
-            "meta":       "$/MMBtu · Platts assessed · NE Asia delivery",
-        },
-        {
-            "commodity": "TTF Natural Gas",
-            "value":      ttf_price,
-            "change_abs": ai_prices.get("ttf_abs", "N/A"),
-            "change_pct": ttf_chg,
-            "direction":  ttf_dir,
-            "meta":       "€/MWh · ICE Endex · Front-Month",
-        },
-    ]
-
-    return ticker, markets_prices
-
-
-# ── OpenAI content fetch ────────────────────────────────────────────────────────────────────────────
-SYSTEM_PROMPT = f"""You are the data engine for The Daily Crude — a professional daily energy intelligence brief.
+SYSTEM_PROMPT = f"""You are the data engine for The Daily Crude — a professional daily energy intelligence brief for upstream, midstream, and downstream O&G professionals.
 
 Today is {TODAY}.
 
-Your job is to use web_search to find:
-1. Prices for: Dubai crude, JKM LNG spot, TTF natural gas, OPEC basket, Naphtha CIF ARA, Gasoil ICE
-2. Today's top O&G news (global and India-specific)
-3. Major O&G project updates (FIDs, EPC awards, FEED starts)
-4. A strategy framework from McKinsey/BCG/Wood Mackenzie
+You have access to web_search. Use it to fetch real, current data from these TRUSTED SOURCES ONLY:
 
-Return ONLY a raw JSON object — no markdown, no backticks, no explanation.
-All fields must contain REAL values from your searches. Generic text like "News headline" or "Project name" is forbidden.
+PRICE SOURCES (search these for commodity prices): {PRICE_SOURCES}
+NEWS SOURCES (search these for O&G news): {NEWS_SOURCES}
+INDIA SOURCES (search these for India energy news): {INDIA_SOURCES}
+STRATEGY SOURCES (search these for frameworks): {STRATEGY_SOURCES}
+
+RULES:
+1. Call web_search multiple times — once for prices, once for global news, once for India news, once for projects, once for strategy.
+2. Return ONLY a raw JSON object. No markdown fences, no explanation.
+3. All numeric fields must contain REAL numbers. No XX, no placeholders.
+4. All text fields must contain REAL headlines, real project names, real company names sourced from the above sites.
 """
 
 USER_PROMPT = f"""Today is {TODAY}.
 
-Search for these prices now and return them in the JSON:
-- Dubai crude oil price {TODAY_SHORT}
-- JKM LNG spot price {TODAY_SHORT}
-- TTF natural gas price {TODAY_SHORT}
-- OPEC basket price {TODAY_SHORT}
-- Naphtha CIF ARA price {TODAY_SHORT}
-- Gasoil ICE price {TODAY_SHORT}
+Execute these searches in order, then return the complete JSON:
 
-Also search for top oil & gas news, India energy news, major O&G project updates, and an O&G strategy framework.
+SEARCH 1 — Prices: Search oilprice.com and ogj.com for today's Brent crude, WTI crude, Dubai crude, Henry Hub, TTF gas, JKM LNG, OPEC basket, Naphtha CIF ARA, Gasoil ICE prices.
 
-Return this exact JSON (fill ALL fields with real data):
+SEARCH 2 — Global O&G news: Search ogj.com, offshore-mag.com, upstreamonline.com, rigzone.com, offshore-energy.biz for today's top upstream, midstream, LNG, offshore, refining, OPEC+, geopolitics, and M&A news.
+
+SEARCH 3 — India energy news: Search ogj.com, upstreamonline.com, hartenergy.com for today's India crude imports, refinery, LNG, ONGC/IOC/BPCL/Reliance news.
+
+SEARCH 4 — Projects: Search offshore-mag.com, upstreamonline.com, offshore-energy.biz, lngindustry.com for recent FID, EPC award, FEED commencement, first oil milestones.
+
+SEARCH 5 — Strategy: Search woodmac.com, mckinsey.com, bcg.com for a current O&G strategy framework relevant to today's market.
+
+Return this exact JSON with ALL fields filled from real search results:
 {{
-  "prices": {{
-    "dubai_price":   "<e.g. $72.30/bbl>",
-    "dubai_change":  "<e.g. ▲ +0.85%>",
-    "dubai_dir":     "<up|down|flat>",
-    "jkm_price":     "<e.g. $12.40/MMBtu>",
-    "jkm_change":    "<e.g. ▼ -1.20%>",
-    "jkm_dir":       "<up|down|flat>",
-    "jkm_abs":       "<e.g. -$0.15/MMBtu>",
-    "ttf_price":     "<e.g. €34.50/MWh>",
-    "ttf_change":    "<e.g. ▲ +2.10%>",
-    "ttf_dir":       "<up|down|flat>",
-    "ttf_abs":       "<e.g. +€0.71/MWh>",
-    "opec_price":    "<e.g. $71.80/bbl>",
-    "opec_change":   "<e.g. ▲ +1.10%>",
-    "opec_dir":      "<up|down|flat>",
-    "naph_price":    "<e.g. $610/MT>",
-    "naph_change":   "<e.g. ▼ -0.50%>",
-    "naph_dir":      "<up|down|flat>",
-    "gasoil_price":  "<e.g. $720/MT>",
-    "gasoil_change": "<e.g. ▲ +0.30%>",
-    "gasoil_dir":    "<up|down|flat>"
+  "meta": {{
+    "date": "{TODAY}",
+    "issue_date": "{ISSUE_DATE}",
+    "last_updated": "08:00 IST"
   }},
-  "macro_signal": "<one paragraph on today's key macro driver>",
-  "drivers": [
-    {{"icon": "🛢️", "headline": "<real headline>", "body": "<2-3 sentences>"}},
-    {{"icon": "🌏", "headline": "<real headline>", "body": "<2-3 sentences>"}},
-    {{"icon": "🔥", "headline": "<real headline>", "body": "<2-3 sentences>"}},
-    {{"icon": "🤝", "headline": "<real headline>", "body": "<2-3 sentences>"}}
+  "ticker": [
+    {{"label": "BRENT",          "price": "actual $/bbl from oilprice.com or ogj.com", "change": "▲/▼ actual%", "direction": "up or down or flat"}},
+    {{"label": "WTI",            "price": "actual $/bbl", "change": "▲/▼ actual%", "direction": "up or down or flat"}},
+    {{"label": "DUBAI CRUDE",    "price": "actual $/bbl", "change": "▲/▼ actual%", "direction": "up or down or flat"}},
+    {{"label": "JKM LNG",        "price": "actual $/MMBtu", "change": "▲/▼ actual%", "direction": "up or down or flat"}},
+    {{"label": "TTF GAS",        "price": "actual €/MWh", "change": "▲/▼ actual%", "direction": "up or down or flat"}},
+    {{"label": "HH NATGAS",      "price": "actual $/MMBtu", "change": "▲/▼ actual%", "direction": "up or down or flat"}},
+    {{"label": "OPEC BASKET",    "price": "actual $/bbl from opec.org", "change": "▲/▼ actual%", "direction": "up or down or flat"}},
+    {{"label": "NAPHTHA CIF ARA","price": "actual $/MT", "change": "▲/▼ actual%", "direction": "up or down or flat"}},
+    {{"label": "GASOIL ICE",     "price": "actual $/MT", "change": "▲/▼ actual%", "direction": "up or down or flat"}}
   ],
+  "markets": {{
+    "macro_signal": "One real paragraph on today's key macro driver from your searches",
+    "prices": [
+      {{"commodity": "Brent Crude (ICE)", "value": "actual $/bbl", "change_abs": "actual ±$", "change_pct": "actual ±%", "direction": "up or down or flat", "meta": "$/bbl · ICE · Front-Month"}},
+      {{"commodity": "WTI Crude (NYMEX)", "value": "actual $/bbl", "change_abs": "actual ±$", "change_pct": "actual ±%", "direction": "up or down or flat", "meta": "$/bbl · NYMEX · Front-Month"}},
+      {{"commodity": "JKM LNG Spot", "value": "actual $/MMBtu", "change_abs": "actual ±$", "change_pct": "actual ±%", "direction": "up or down or flat", "meta": "$/MMBtu · Platts assessed · NE Asia delivery"}},
+      {{"commodity": "TTF Natural Gas", "value": "actual €/MWh", "change_abs": "actual ±€", "change_pct": "actual ±%", "direction": "up or down or flat", "meta": "€/MWh · ICE Endex · Front-Month"}}
+    ],
+    "drivers": [
+      {{"icon": "🛢️", "headline": "real headline from ogj.com or oilprice.com", "body": "2-3 sentences with real detail"}},
+      {{"icon": "🌏", "headline": "real headline", "body": "2-3 sentences"}},
+      {{"icon": "🔥", "headline": "real headline", "body": "2-3 sentences"}},
+      {{"icon": "🤝", "headline": "real headline", "body": "2-3 sentences"}}
+    ]
+  }},
   "india": {{
-    "headline": "<real India O&G headline>",
-    "headline_body": "<2-3 paragraphs>",
+    "headline": "Real India O&G headline from your searches",
+    "headline_body": "2-3 real paragraphs on the story",
     "news": [
-      {{"sector": "Refining", "sector_color": "#c57800", "title": "<real title>", "summary": "<2-3 sentences>", "source": "<source>"}},
-      {{"sector": "Upstream", "sector_color": "#c8401a", "title": "<real title>", "summary": "<2-3 sentences>", "source": "<source>"}}
+      {{"sector": "Refining", "sector_color": "#c57800", "title": "Real title from search", "summary": "2-3 sentence real summary", "source": "OGJ or Upstream Online or similar"}},
+      {{"sector": "Upstream", "sector_color": "#c8401a", "title": "Real title from search", "summary": "2-3 sentence real summary", "source": "real source name"}}
     ],
     "stats": [
-      {{"label": "India Crude Import Basket", "value": "<$/bbl>", "note": "Russia ~X% · ME ~X% · Others ~X% · PPAC"}},
-      {{"label": "LNG Spot Import (Petronet Dahej)", "value": "<$/MMBtu>", "note": "Blended spot vs LTC pricing"}},
-      {{"label": "ONGC Crude Production (YTD)", "value": "<X.X MMT>", "note": "Crude oil equiv. · vs annual target"}},
-      {{"label": "India Refinery Throughput", "value": "<X.X MMT>", "note": "MoPNG · YTD vs capacity utilisation"}},
-      {{"label": "India LNG Imports (YTD)", "value": "<X BCM>", "note": "vs prior year · PPAC"}}
+      {{"label": "India Crude Import Basket", "value": "actual $/bbl", "note": "Russia ~X% · ME ~X% · Others ~X% · PPAC"}},
+      {{"label": "LNG Spot Import (Petronet Dahej)", "value": "actual $/MMBtu", "note": "Blended spot vs LTC pricing"}},
+      {{"label": "ONGC Crude Production (YTD)", "value": "actual X.X MMT", "note": "Crude oil equiv. · vs annual target"}},
+      {{"label": "India Refinery Throughput", "value": "actual X.X MMT", "note": "MoPNG · YTD vs capacity utilisation"}},
+      {{"label": "India LNG Imports (YTD)", "value": "actual X BCM", "note": "vs prior year · PPAC"}}
     ]
   }},
   "global_news": [
-    {{"sector": "Upstream · Exploration", "sector_class": "sector-upstream", "dot_color": "#c8401a", "title": "<real>", "summary": "<2-3 sentences>", "source": "<source>"}},
-    {{"sector": "Policy · Regulation", "sector_class": "sector-policy", "dot_color": "#5a3a00", "title": "<real>", "summary": "<2-3 sentences>", "source": "<source>"}},
-    {{"sector": "Midstream · LNG", "sector_class": "sector-midstream", "dot_color": "#8b4500", "title": "<real>", "summary": "<2-3 sentences>", "source": "<source>"}},
-    {{"sector": "Offshore · Subsea", "sector_class": "sector-offshore", "dot_color": "#1e4a7a", "title": "<real>", "summary": "<2-3 sentences>", "source": "<source>"}},
-    {{"sector": "Downstream · Petrochemicals", "sector_class": "sector-downstream", "dot_color": "#1e3a5f", "title": "<real>", "summary": "<2-3 sentences>", "source": "<source>"}},
-    {{"sector": "OPEC+ · Supply", "sector_class": "sector-upstream", "dot_color": "#8b1a00", "title": "<real>", "summary": "<2-3 sentences>", "source": "<source>"}},
-    {{"sector": "Refining · Margins", "sector_class": "sector-downstream", "dot_color": "#1e3a5f", "title": "<real>", "summary": "<2-3 sentences>", "source": "<source>"}},
-    {{"sector": "Geopolitics · Sanctions", "sector_class": "sector-policy", "dot_color": "#5a3a00", "title": "<real>", "summary": "<2-3 sentences>", "source": "<source>"}},
-    {{"sector": "M&A · Corporate", "sector_class": "sector-upstream", "dot_color": "#c8401a", "title": "<real>", "summary": "<2-3 sentences>", "source": "<source>"}}
+    {{"sector": "Upstream · Exploration", "sector_class": "sector-upstream", "dot_color": "#c8401a", "title": "Real headline from ogj.com or upstreamonline.com", "summary": "2-3 real sentences", "source": "OGJ"}},
+    {{"sector": "Policy · Regulation", "sector_class": "sector-policy", "dot_color": "#5a3a00", "title": "Real headline", "summary": "2-3 real sentences", "source": "real source"}},
+    {{"sector": "Midstream · LNG", "sector_class": "sector-midstream", "dot_color": "#8b4500", "title": "Real headline from lngindustry.com or offshore-energy.biz", "summary": "2-3 real sentences", "source": "LNG Industry"}},
+    {{"sector": "Offshore · Subsea", "sector_class": "sector-offshore", "dot_color": "#1e4a7a", "title": "Real headline from offshore-mag.com", "summary": "2-3 real sentences", "source": "Offshore Magazine"}},
+    {{"sector": "Downstream · Petrochemicals", "sector_class": "sector-downstream", "dot_color": "#1e3a5f", "title": "Real headline from hydrocarbonprocessing.com", "summary": "2-3 real sentences", "source": "Hydrocarbon Processing"}},
+    {{"sector": "OPEC+ · Supply", "sector_class": "sector-upstream", "dot_color": "#8b1a00", "title": "Real headline", "summary": "2-3 real sentences", "source": "OGJ or World Oil"}},
+    {{"sector": "Refining · Margins", "sector_class": "sector-downstream", "dot_color": "#1e3a5f", "title": "Real headline", "summary": "2-3 real sentences", "source": "real source"}},
+    {{"sector": "Geopolitics · Sanctions", "sector_class": "sector-policy", "dot_color": "#5a3a00", "title": "Real headline", "summary": "2-3 real sentences", "source": "real source"}},
+    {{"sector": "M&A · Corporate", "sector_class": "sector-upstream", "dot_color": "#c8401a", "title": "Real headline from hartenergy.com", "summary": "2-3 real sentences", "source": "Hart Energy"}}
   ],
   "strategy": {{
     "featured": {{
       "label": "⭐ Framework of the Day",
-      "title": "<real framework title>",
-      "tags": ["<tag1>", "<tag2>", "<tag3>"],
+      "title": "Real framework title from woodmac.com, mckinsey.com, or bcg.com",
+      "tags": ["real tag1", "real tag2", "real tag3"],
       "audience": "IOCs · NOCs · Private Equity · Strategy Consultants · EPC PMOs",
-      "read_time": "<N min read>",
-      "sources": "<publication>",
-      "url": "<real URL>",
-      "intro": "<opening paragraph>",
-      "framework_title": "<subtitle>",
-      "framework_desc": "<one paragraph>",
+      "read_time": "actual N min read",
+      "sources": "Wood Mackenzie or McKinsey or BCG",
+      "url": "real URL found via web search",
+      "intro": "Real opening paragraph about the framework",
+      "framework_title": "Real framework subtitle",
+      "framework_desc": "Real one paragraph describing the framework",
       "steps": [
-        {{"title": "<step 1>", "body": "<explanation>"}},
-        {{"title": "<step 2>", "body": "<explanation>"}},
-        {{"title": "<step 3>", "body": "<explanation>"}},
-        {{"title": "<step 4>", "body": "<explanation>"}},
-        {{"title": "<step 5>", "body": "<explanation>"}}
+        {{"title": "Real step 1", "body": "Real explanation"}},
+        {{"title": "Real step 2", "body": "Real explanation"}},
+        {{"title": "Real step 3", "body": "Real explanation"}},
+        {{"title": "Real step 4", "body": "Real explanation"}},
+        {{"title": "Real step 5", "body": "Real explanation"}}
       ],
       "watchpoints_title": "Key Watchpoints for Consultants",
-      "watchpoints": "<paragraph>"
+      "watchpoints": "Real paragraph of watchpoints"
     }},
     "mini_cards": [
-      {{"label": "🔍 Upstream · Due Diligence", "title": "<real>", "desc": "<2 sentences>", "read_time": "<N min>", "tag": "E&P / Consultant", "tag_bg": "var(--tag-bg)", "tag_color": "var(--ink)", "url": "<real URL>"}},
-      {{"label": "🛢️ Midstream · LNG Strategy", "title": "<real>", "desc": "<2 sentences>", "read_time": "<N min>", "tag": "LNG / Trading", "tag_bg": "var(--steel-light)", "tag_color": "var(--steel)", "url": "<real URL>"}},
-      {{"label": "⚙️ Operations · EPC", "title": "<real>", "desc": "<2 sentences>", "read_time": "<N min>", "tag": "PMC / EPC", "tag_bg": "var(--tag-bg)", "tag_color": "var(--ink)", "url": "<real URL>"}}
+      {{"label": "🔍 Upstream · Due Diligence", "title": "Real article title", "desc": "2 real sentences", "read_time": "actual N min", "tag": "E&P / Consultant", "tag_bg": "var(--tag-bg)", "tag_color": "var(--ink)", "url": "real URL"}},
+      {{"label": "🛢️ Midstream · LNG Strategy", "title": "Real article title", "desc": "2 real sentences", "read_time": "actual N min", "tag": "LNG / Trading", "tag_bg": "var(--steel-light)", "tag_color": "var(--steel)", "url": "real URL"}},
+      {{"label": "⚙️ Operations · EPC", "title": "Real article title", "desc": "2 real sentences", "read_time": "actual N min", "tag": "PMC / EPC", "tag_bg": "var(--tag-bg)", "tag_color": "var(--ink)", "url": "real URL"}}
     ]
   }},
   "projects": [
-    {{"name": "<real project>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<EPC|FID|FEED|PDP>", "stage_class": "<stage-epc|stage-fid|stage-feed|stage-pdp>", "value": "<$XB>", "location": "<City, Country>", "description": "<one sentence>", "event": "<emoji label>", "event_color": "#1a5c38"}},
-    {{"name": "<real project>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji label>", "event_color": "#c8401a"}},
-    {{"name": "<real project>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji label>", "event_color": "#1a5c38"}},
-    {{"name": "<real project>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji label>", "event_color": "#1e3a5f"}},
-    {{"name": "<real project>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji label>", "event_color": "#c8401a"}},
-    {{"name": "<real project>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji label>", "event_color": "#1a5c38"}},
-    {{"name": "<real project>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji label>", "event_color": "#1e3a5f"}},
-    {{"name": "<real project>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji label>", "event_color": "#1a5c38"}},
-    {{"name": "<real project>", "company": "<operator>", "sector": "<sector>", "data_sector": "<lng|upstream|midstream|downstream>", "stage": "<stage>", "stage_class": "<class>", "value": "<$XB>", "location": "<City, Country>", "event": "<emoji label>", "event_color": "#1a5c38"}}
+    {{"name": "Real project name from offshore-mag.com or upstreamonline.com", "company": "Real operator", "sector": "real sector", "data_sector": "lng or upstream or midstream or downstream", "stage": "EPC or FID or FEED or PDP", "stage_class": "stage-epc or stage-fid or stage-feed or stage-pdp", "value": "actual $XB", "location": "Real City, Real Country", "description": "One real sentence on milestone", "event": "✅ EPC Awarded", "event_color": "#1a5c38"}},
+    {{"name": "Real project name", "company": "Real operator", "sector": "real sector", "data_sector": "lng or upstream or midstream or downstream", "stage": "real stage", "stage_class": "real class", "value": "actual $XB", "location": "Real City, Real Country", "event": "real emoji + label", "event_color": "#c8401a"}},
+    {{"name": "Real project name", "company": "Real operator", "sector": "real sector", "data_sector": "lng or upstream or midstream or downstream", "stage": "real stage", "stage_class": "real class", "value": "actual $XB", "location": "Real City, Real Country", "event": "real emoji + label", "event_color": "#1a5c38"}},
+    {{"name": "Real project name", "company": "Real operator", "sector": "real sector", "data_sector": "lng or upstream or midstream or downstream", "stage": "real stage", "stage_class": "real class", "value": "actual $XB", "location": "Real City, Real Country", "event": "real emoji + label", "event_color": "#1e3a5f"}},
+    {{"name": "Real project name", "company": "Real operator", "sector": "real sector", "data_sector": "lng or upstream or midstream or downstream", "stage": "real stage", "stage_class": "real class", "value": "actual $XB", "location": "Real City, Real Country", "event": "real emoji + label", "event_color": "#c8401a"}},
+    {{"name": "Real project name", "company": "Real operator", "sector": "real sector", "data_sector": "lng or upstream or midstream or downstream", "stage": "real stage", "stage_class": "real class", "value": "actual $XB", "location": "Real City, Real Country", "event": "real emoji + label", "event_color": "#1a5c38"}},
+    {{"name": "Real project name", "company": "Real operator", "sector": "real sector", "data_sector": "lng or upstream or midstream or downstream", "stage": "real stage", "stage_class": "real class", "value": "actual $XB", "location": "Real City, Real Country", "event": "real emoji + label", "event_color": "#1e3a5f"}},
+    {{"name": "Real project name", "company": "Real operator", "sector": "real sector", "data_sector": "lng or upstream or midstream or downstream", "stage": "real stage", "stage_class": "real class", "value": "actual $XB", "location": "Real City, Real Country", "event": "real emoji + label", "event_color": "#1a5c38"}},
+    {{"name": "Real project name", "company": "Real operator", "sector": "real sector", "data_sector": "lng or upstream or midstream or downstream", "stage": "real stage", "stage_class": "real class", "value": "actual $XB", "location": "Real City, Real Country", "event": "real emoji + label", "event_color": "#1a5c38"}}
   ]
 }}"""
 
-PLACEHOLDER_MARKERS = [
-    "XX.XX", "X.XX%", "News headline", "Project name", "Framework title",
-    "<real headline>", "<real>", "<real project>", "<$/bbl>", "<€/MWh>",
+# ── Validation ────────────────────────────────────────────────────────────────────────────
+BAD_PATTERNS = [
+    "xx.xx", "x.xx%", "actual $/bbl", "actual €", "actual ±", "actual x",
+    "real headline", "real project", "real operator", "real title", "real city",
+    "real sector", "real stage", "real class", "real url", "real source",
+    "news headline", "project name", "framework title",
 ]
 
 def _has_placeholders(data: dict) -> list:
     raw = json.dumps(data).lower()
-    return [m for m in PLACEHOLDER_MARKERS if m.lower() in raw]
+    return [p for p in BAD_PATTERNS if p in raw]
 
-def fetch_ai_content() -> dict:
+# ── API Call ────────────────────────────────────────────────────────────────────────────
+def fetch_content() -> dict:
     _key = os.environ.get("OPENAI_API_KEY", "")
     if not _key:
         sys.exit("ERROR: OPENAI_API_KEY not set.")
@@ -297,9 +179,10 @@ def fetch_ai_content() -> dict:
     del _key
 
     for attempt in range(1, 4):
-        print(f"OpenAI attempt {attempt}/3...")
+        print(f"Attempt {attempt}/3: searching trusted O&G sources...")
         prefix = "" if attempt == 1 else (
-            "PREVIOUS ATTEMPT HAD UNFILLED PLACEHOLDERS. Search the web and fill every field with real data.\n\n"
+            f"ATTEMPT {attempt}: Your previous response still had unfilled fields. "
+            f"Search oilprice.com for prices, ogj.com and offshore-mag.com for news. Fill EVERY field with real data.\n\n"
         )
         response = client.responses.create(
             model="gpt-4o",
@@ -314,25 +197,28 @@ def fetch_ai_content() -> dict:
                 for block in item.content:
                     if block.type == "output_text":
                         raw = block.text
+
         raw = re.sub(r"```json\s*|```", "", raw).strip()
         print(f"  Response: {len(raw)} chars")
+
         if not raw:
             print("  Empty response, retrying...")
             continue
         try:
             data = json.loads(raw)
         except json.JSONDecodeError as e:
-            print(f"  JSON error: {e}, retrying...")
+            print(f"  JSON error: {e}")
             continue
+
         bad = _has_placeholders(data)
         if bad:
-            print(f"  Placeholders still present: {bad}, retrying...")
+            print(f"  Still has placeholders: {bad[:5]}")
             continue
-        print("  AI content validated.")
+
+        print("  Validated.")
         return data
 
-    print("WARNING: AI content failed all retries — using fallback empty content.")
-    return {}
+    sys.exit("ERROR: All 3 attempts failed — check OPENAI_API_KEY and workflow logs.")
 
 
 # ── HTML Injection ────────────────────────────────────────────────────────────────────────────────
@@ -347,38 +233,11 @@ def inject_into_html(data: dict):
         html = html.replace("</head>", f"{data_block}\n</head>")
     with open(HTML_FILE, "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"HTML updated.")
+    print("HTML updated.")
 
 
-# ── Main ────────────────────────────────────────────────────────────────────────────────
+# ── Entry Point ────────────────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    print("=== Fetching prices via yfinance ===")
-    prices = fetch_prices()
-
-    print("\n=== Fetching news/analysis via OpenAI ===")
-    ai = fetch_ai_content()
-
-    ai_prices = ai.get("prices", {})
-    ticker, markets_prices = build_ticker_and_markets(prices, ai_prices)
-
-    daily_data = {
-        "meta": {
-            "date": TODAY,
-            "issue_date": ISSUE_DATE,
-            "last_updated": "08:00 IST",
-        },
-        "ticker": ticker,
-        "markets": {
-            "macro_signal": ai.get("macro_signal", ""),
-            "prices": markets_prices,
-            "drivers": ai.get("drivers", []),
-        },
-        "india": ai.get("india", {}),
-        "global_news": ai.get("global_news", []),
-        "strategy": ai.get("strategy", {}),
-        "projects": ai.get("projects", []),
-    }
-
-    print("\n=== Injecting into HTML ===")
-    inject_into_html(daily_data)
+    data = fetch_content()
+    inject_into_html(data)
     print("Done.")
