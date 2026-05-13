@@ -2,6 +2,8 @@
 
 Daily O&G energy intelligence brief — auto-generated at 08:00 IST.
 
+**Live site:** https://ayush-kothari97.github.io/the-daily-crude
+
 ## Files
 
 ### index.html
@@ -14,7 +16,7 @@ OpenAI GPT-5.5 content generator with `web_search_preview` tool.
 
 **Usage:**
 ```bash
-OPENAI_API_KEY=sk-... python generate_content.py
+OPENAI_API_KEY=<your-key> python generate_content.py
 ```
 
 **Build schedule:** GitHub Actions at 08:00 IST daily (`cron: '30 2 * * *'` UTC)
