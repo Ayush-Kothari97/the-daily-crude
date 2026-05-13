@@ -1,99 +1,54 @@
 # The Daily Crude
 
-A professional daily energy intelligence brief — automatically updated every day at 08:00 IST.
+Daily O&G energy intelligence brief — auto-generated at 08:00 IST.
 
-## Live Site
-**[ayush-kothari97.github.io/the-daily-crude](https://ayush-kothari97.github.io/the-daily-crude)**
+## Files
 
-## How it works
+### index.html
+Self-contained single-file frontend. All CSS, JS, and sample `window.DAILY_DATA` inline.
+- On build: `generate_content.py` replaces the `<script id="daily-data">` block with live data
+- No external dependencies except Google Fonts (CDN)
 
-```
-08:00 IST (02:30 UTC) — GitHub Actions cron
-        │
-        ▼
-generate_content.py
-        │  reads OPENAI_API_KEY from GitHub Secrets
-        │  calls OpenAI Responses API (gpt-4o + web_search_preview)
-        │  fetches live prices, news, project updates
-        ▼
-index.html updated
-        │  window.DAILY_DATA injected as inline <script>
-        ▼
-commit + push to main
-        │
-        ▼
-GitHub Pages serves updated index.html
-```
+### generate_content.py
+OpenAI GPT-5.5 content generator with `web_search_preview` tool.
 
-## Repository structure
-
-```
-the-daily-crude/
-├── index.html                        ← Single-file frontend (self-contained)
-├── generate_content.py               ← Content generator (OpenAI Responses API)
-├── requirements.txt                  ← Pinned Python dependencies
-├── .github/
-│   └── workflows/
-│       └── daily_update.yml          ← GitHub Actions cron job (08:00 IST)
-├── .gitignore
-└── README.md
-```
-
-## Branches
-
-| Branch | Purpose |
-|---|---|
-| `main` | Production — GitHub Pages serves from here |
-| `develop` | Staging — all active development and testing |
-
-Merge `develop` → `main` only when changes are verified.
-
-## Local development
-
+**Usage:**
 ```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Set your API key
-export OPENAI_API_KEY=sk-...
-
-# Run the generator
-python generate_content.py
-
-# Open index.html in a browser to verify output
+OPENAI_API_KEY=sk-... python generate_content.py
 ```
 
-## GitHub Actions setup
+**Build schedule:** GitHub Actions at 08:00 IST daily (`cron: '30 2 * * *'` UTC)
 
-One secret required in **Settings → Secrets and variables → Actions**:
+## Data refresh schedule
 
-| Secret | Value |
-|---|---|
-| `OPENAI_API_KEY` | Your OpenAI API key |
+| Day | Trend data | Daily content |
+|-----|-----------|---------------|
+| Monday | Full 90-day series fetched (d7/d1m/d3m derived + d6m/d1y) | ✓ |
+| Tue–Fri | Existing trend_data preserved unchanged | ✓ |
+| Saturday | Existing trend_data preserved | Weekend intelligence brief |
+| Sunday | Existing trend_data preserved | Monday preview brief |
 
-## Manual trigger
+## Failure handling
+- 3 retries with backoff (10s / 30s / 60s) for both daily and trend fetches
+- All retries exhausted → branded maintenance page injected → `sys.exit(1)`
 
-To regenerate content at any time:
-1. Go to **Actions** tab
-2. Select **Daily Crude — Content Update**
-3. Click **Run workflow**
-
-## Coverage
-
-| Section | Data |
-|---|---|
-| Ticker bar | Brent, WTI, Dubai, JKM LNG, TTF, Henry Hub, EU ETS, OPEC Basket, Naphtha, Gasoil |
-| Market pulse | Macro signal, price cards, carbon credits, market drivers |
-| India monitor | Headline story, news cards, key stats |
-| Global news | 9 sectors: Upstream, Policy, Renewables, Hydrogen, Midstream, Offshore, CCUS, Nuclear, Downstream |
-| Strategy | Framework of the Day + 3 mini cards |
-| Project tracker | 9 active global energy projects |
-
-## Security
-
-- `OPENAI_API_KEY` is stored **only** in GitHub Secrets
-- Never written to any file, never logged, never committed
-- Injected into the Actions runner at runtime only
-
-## Built by
-Ayush Kothari · Mumbai, India
+## Key data structure
+```json
+{
+  "meta": { "last_updated": "...", "issue_date": "..." },
+  "ticker": [...],
+  "markets": {
+    "prices": [...],
+    "trend_data": { "crude": {...}, "gas": {...} },
+    "sentiment": {...},
+    "eia_stats": [...],
+    "drivers": [...]
+  },
+  "intel": { "mode": "daily|inventory|weekend", ... },
+  "article_cards": [...],
+  "india": {...},
+  "global_news": [...],
+  "strategy": {...},
+  "projects": [...]
+}
+```

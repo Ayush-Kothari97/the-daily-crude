@@ -56,7 +56,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
 
 /* ── MASTHEAD ── */
 .masthead{background:var(--masthead-bg);border-bottom:6.67px solid var(--accent);width:100%;display:block;position:relative;z-index:1000;overflow:hidden;}
-#masthead-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.40;}
+
 .masthead-top{border-bottom:0.8px solid #333;padding:18px 40px 0 40px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;min-height:139px;width:100%;box-sizing:border-box;}
 .logo-block{padding-top:22px;padding-bottom:16px;flex:1;min-width:0;}
 .logo-text{font-family:'Playfair Display',serif;font-weight:700;font-size:60px;line-height:51px;color:#f5f0e8;letter-spacing:-1px;display:block;text-decoration:underline;text-decoration-color:#f5f0e8;}
@@ -132,18 +132,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
   /* newspaper section-flag highlight */
   display:block;
   padding:4px 0 4px 12px;
-  border-left:3px solid var(--accent);
-  background:linear-gradient(to right,rgba(200,64,26,0.06),transparent 60%);
+  border-left:3px solid #b8860b;
+  background:linear-gradient(to right,rgba(184,134,11,0.18) 0%,rgba(184,134,11,0.08) 40%,transparent 85%);
 }
 /* 2D flat emoji icon in section titles */
 .sec-ico{
-  font-family:'Segoe UI Symbol','Apple Color Emoji','Noto Emoji',sans-serif;
-  font-variant-emoji:text;
-  font-size:0.82em;
+  font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;
+  font-variant-emoji:emoji;
+  font-size:0.85em;
   vertical-align:middle;
-  margin-right:6px;
-  color:var(--accent);
-  filter:grayscale(1) contrast(0.7);
+  margin-right:8px;
   display:inline-block;
 }
 
@@ -231,7 +229,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);f
 .tc-chg-fl{color:#8a9aaa;}
 
 /* Sparkline */
-.tc-spark-wrap{margin:12px 0 0;position:relative;overflow:visible;}
+.tc-spark-wrap{margin:12px 0 0;position:relative;overflow:hidden;}
 /* v32: full-width fill, fixed height, no letterboxing */
 svg.tc-spark{width:100%;height:300px;display:block;cursor:crosshair;border-radius:0 0 8px 8px;}
 
@@ -426,11 +424,11 @@ svg.tc-spark{width:100%;height:300px;display:block;cursor:crosshair;border-radiu
 
 /* ── INDIA ── */
 .india-banner{background:linear-gradient(135deg,#ff9933 0%,#ff9933 33%,white 33%,white 66%,#138808 66%);height:4px;margin-bottom:24px;}
-.india-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:24px;}
+.india-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:24px;}.india-grid>.news-card{grid-column:1/-1;}
 .india-headline-card{background:var(--cream);border:2px solid #e8a020;border-radius:var(--radius);padding:28px;}
 .india-label{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#c57800;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 .india-headline{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;line-height:1.35;margin-bottom:14px;}
-.india-body{font-size:13.5px;color:var(--ink-3);line-height:1.7;}
+.india-body{font-size:13.5px;color:var(--ink-3);line-height:1.7;}.india-body br{display:block;margin-top:10px;}
 .india-stats{display:flex;flex-direction:column;gap:12px;}
 .india-stat-card{background:var(--cream);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;border-left:3px solid #c57800;}
 .india-stat-label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px;}
@@ -678,7 +676,6 @@ window.DAILY_DATA = {
 
 <!-- ═══════════ MASTHEAD ═══════════ -->
 <header class="masthead">
-  <canvas id="masthead-canvas"></canvas>
   <div class="masthead-top">
     <div class="logo-block">
       <span class="logo-text">The Daily <span class="crude">Crude</span></span>
@@ -725,7 +722,7 @@ window.DAILY_DATA = {
   <!-- MARKET PULSE -->
   <section class="section-block active" id="section-markets">
     <div class="content-section">
-      <h1 class="section-title"><span class="sec-ico">📊︎</span>Market Pulse <span id="market-as-of" style="font-family:'DM Mono',monospace;font-size:13px;font-weight:400;color:var(--muted);letter-spacing:0.5px;vertical-align:middle;">(as of 08:00 IST)</span></h1>
+      <h1 class="section-title"><span class="sec-ico">📊</span>Market Pulse <span id="market-as-of" style="font-family:'DM Mono',monospace;font-size:13px;font-weight:400;color:var(--muted);letter-spacing:0.5px;vertical-align:middle;">(as of 08:00 IST)</span></h1>
       <p class="section-subtitle" id="macro-signal">Loading…</p>
       <div class="trend-cards-row">
         <div class="trend-card crude" id="trend-crude"></div>
@@ -746,7 +743,6 @@ window.DAILY_DATA = {
     <div class="content-section">
       <h1 class="section-title"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 21" width="28" height="21" style="display:inline-block;vertical-align:middle;margin-right:8px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,0.12);flex-shrink:0;"><rect width="28" height="7" fill="#FF9933"/><rect y="7" width="28" height="7" fill="#ffffff"/><rect y="14" width="28" height="7" fill="#138808"/><circle cx="14" cy="10.5" r="2.8" fill="none" stroke="#000080" stroke-width="0.5"/><g stroke="#000080" stroke-width="0.4" transform="translate(14,10.5)"><line x1="0" y1="-2.8" x2="0" y2="2.8"/><line x1="-2.8" y1="0" x2="2.8" y2="0"/><line x1="-1.98" y1="-1.98" x2="1.98" y2="1.98"/><line x1="1.98" y1="-1.98" x2="-1.98" y2="1.98"/><line x1="-1.54" y1="-2.35" x2="1.54" y2="2.35"/><line x1="2.35" y1="-1.54" x2="-2.35" y2="1.54"/><line x1="-2.35" y1="-1.54" x2="2.35" y2="1.54"/><line x1="1.54" y1="-2.35" x2="-1.54" y2="2.35"/><circle cx="0" cy="-2.8" r="0.3" fill="#000080"/><circle cx="1.98" cy="-1.98" r="0.3" fill="#000080"/><circle cx="2.8" cy="0" r="0.3" fill="#000080"/><circle cx="1.98" cy="1.98" r="0.3" fill="#000080"/><circle cx="0" cy="2.8" r="0.3" fill="#000080"/><circle cx="-1.98" cy="1.98" r="0.3" fill="#000080"/><circle cx="-2.8" cy="0" r="0.3" fill="#000080"/><circle cx="-1.98" cy="-1.98" r="0.3" fill="#000080"/><circle cx="-1.54" cy="-2.35" r="0.25" fill="#000080"/><circle cx="1.54" cy="-2.35" r="0.25" fill="#000080"/><circle cx="2.35" cy="-1.54" r="0.25" fill="#000080"/><circle cx="2.35" cy="1.54" r="0.25" fill="#000080"/><circle cx="1.54" cy="2.35" r="0.25" fill="#000080"/><circle cx="-1.54" cy="2.35" r="0.25" fill="#000080"/><circle cx="-2.35" cy="1.54" r="0.25" fill="#000080"/><circle cx="-2.35" cy="-1.54" r="0.25" fill="#000080"/><circle r="0.55" fill="#000080"/></g></svg>India Monitor</h1>
       <p class="section-subtitle">India's upstream, refining &amp; LNG pulse — updated daily</p>
-      <hr class="section-divider">
       <div class="india-banner"></div>
       <div class="india-grid" id="india-grid"></div>
     </div>
@@ -755,7 +751,7 @@ window.DAILY_DATA = {
   <!-- GLOBAL NEWS -->
   <section class="section-block" id="section-global">
     <div class="content-section">
-      <h1 class="section-title"><span class="sec-ico">🌐︎</span>Global News</h1>
+      <h1 class="section-title"><span class="sec-ico">🗺️</span>Global News</h1>
       <p class="section-subtitle">Curated from 12 trusted upstream, midstream &amp; policy sources</p>
       <hr class="section-divider">
       <div class="news-card-grid" id="news-card-grid"></div>
@@ -765,7 +761,7 @@ window.DAILY_DATA = {
   <!-- STRATEGY -->
   <section class="section-block" id="section-strategy">
     <div class="content-section">
-      <h1 class="section-title"><span class="sec-ico">🧠︎</span>Strategy 1-Pager</h1>
+      <h1 class="section-title"><span class="sec-ico">🧠</span>Strategy 1-Pager</h1>
       <p class="section-subtitle">One framework, one workflow, one insight — every morning</p>
       <hr class="section-divider">
       <div id="strategy-featured-wrapper"></div>
@@ -776,7 +772,7 @@ window.DAILY_DATA = {
   <!-- PROJECT TRACKER -->
   <section class="section-block" id="section-projects">
     <div class="content-section">
-      <h1 class="section-title"><span class="sec-ico">🏗︎</span>Project Tracker</h1>
+      <h1 class="section-title"><span class="sec-ico">🏗️</span>Project Tracker</h1>
       <p class="section-subtitle">Active global energy projects — FID, EPC awards, FEED, first oil milestones</p>
       <hr class="section-divider">
       <div class="filter-tabs">
@@ -1060,7 +1056,6 @@ function buildTrendSpark(series, cardType, unit, elId, horizLabel) {
     data-unit-prefix="${unitPrefix}"
     data-line-col="${lineCol}"
     data-w="${W}" data-h="${H}" data-pad="${pad}"
-    data-needs-label="1"
     data-today="${new Date().toISOString().slice(0,10)}"
     onmousemove="tcSparkHover(event,'${id}','${ttId}')"
     onmouseleave="tcSparkLeave('${id}','${ttId}')">
@@ -1106,72 +1101,6 @@ function buildTrendSpark(series, cardType, unit, elId, horizLabel) {
 </div>`;
 }
 
-/* v14: Draw end-of-line value labels on all sparklines that need them.
-   Called after renderTrendCard() so SVGs are in the DOM.
-   Uses no inline <script> tags — safe inside template literals. */
-function drawSparkLabels() {
-  var svgs = document.querySelectorAll('svg[data-needs-label="1"]');
-  svgs.forEach(function(svg) {
-    // Remove any existing label group to avoid duplicates on re-render
-    var old = svg.querySelector('.spark-end-label');
-    if (old) old.parentNode.removeChild(old);
-
-    var series  = JSON.parse(svg.dataset.series);
-    var prefix  = svg.dataset.unitPrefix || '$';
-    var lineCol = svg.dataset.lineCol || '#4ecdc4';
-    var W   = parseFloat(svg.dataset.w);
-    var H   = parseFloat(svg.dataset.h);
-    var pad = parseFloat(svg.dataset.pad);
-    var n   = series.length;
-    var mn  = Math.min.apply(null, series);
-    var mx  = Math.max.apply(null, series);
-    var rng = mx - mn || 0.01;
-    var val = series[n - 1];
-
-    var lPad = 66, bPad = 32;
-    var pL = lPad, pR = W - 14, pT = 14, pB = H - bPad;
-    var lx = pL + (pR - pL);
-    var ly = pB - ((val - mn) / rng) * (pB - pT);
-
-    var txt    = prefix + val.toFixed(2);
-    // v38: charW scaled for font-size=13 in a 1200-wide viewBox
-    var charW  = 8.0;
-    var labelW = txt.length * charW + 16;
-    // Always place label to the left of the terminal dot
-    // Centre label on dot horizontally; clamp so neither edge leaves viewBox
-    var rx   = Math.min(Math.max(lx - labelW / 2, pL + 4), W - labelW - 8);
-    // Place label above dot; flip below if near top edge
-    var ry   = (ly - 36 < 6) ? ly + 14 : ly - 36;
-
-    var ns = 'http://www.w3.org/2000/svg';
-    var grp  = document.createElementNS(ns, 'g');
-    grp.setAttribute('class', 'spark-end-label');
-
-    var rect = document.createElementNS(ns, 'rect');
-    rect.setAttribute('x',      rx);
-    rect.setAttribute('y',      ry);
-    rect.setAttribute('width',  labelW);
-    rect.setAttribute('height', 20);
-    rect.setAttribute('rx',     '4');
-    rect.setAttribute('fill',   lineCol);
-    rect.setAttribute('opacity','0.93');
-
-    var text = document.createElementNS(ns, 'text');
-    text.setAttribute('x',           rx + labelW / 2);
-    text.setAttribute('y',           ry + 14);
-    text.setAttribute('text-anchor', 'middle');
-    text.setAttribute('font-family', 'DM Mono, monospace');
-    text.setAttribute('font-size',   '13');
-    text.setAttribute('font-weight', '700');
-    text.setAttribute('fill',        '#0d1a0d');
-    text.setAttribute('pointer-events', 'none');
-    text.textContent = txt;
-
-    grp.appendChild(rect);
-    grp.appendChild(text);
-    svg.appendChild(grp);
-  });
-}
 
 /* v13: Tooltip interaction handlers */
 function tcSparkHover(e, svgId, ttId) {
@@ -1359,7 +1288,6 @@ function refreshTrendCard(elId, type) {
   const td = window._trendData;
   if (!td) return;
   renderTrendCard(elId, type, td[type], window._tickerItems);
-  requestAnimationFrame(drawSparkLabels);
 }
 
 /* Called by 7D/1M/3M/6M/1Y toggle buttons */
@@ -1370,7 +1298,6 @@ function setTrendHorizon(elId, type, horizon) {
   const td = window._trendData;
   if (!td) return;
   renderTrendCard(elId, type, td[type], window._tickerItems);
-  requestAnimationFrame(drawSparkLabels);
 }
 
 function renderMarkets(data) {
@@ -1385,8 +1312,6 @@ function renderMarkets(data) {
   if (m.trend_data) {
     renderTrendCard('trend-crude', 'crude', m.trend_data.crude, data.ticker);
     renderTrendCard('trend-gas',   'gas',   m.trend_data.gas,   data.ticker);
-    // Draw end-of-line labels after both cards are in DOM
-    requestAnimationFrame(drawSparkLabels);
   }
 
   const driversEl = document.getElementById('market-drivers');
@@ -1451,7 +1376,7 @@ function renderIndia(data) {
       <div class="india-stat-note">${safeVal(s.note,'')}</div>
     </div>`).join('');
   const news = (I.news||[]).map(n=>`
-    <div class="news-card" style="margin-top:16px;">
+    <div class="news-card">
       <div class="news-card-sector" style="color:${n.sector_color||'#c57800'}">
         <span class="news-card-dot" style="background:${n.sector_color||'#c57800'}"></span>${n.sector||''}
       </div>
@@ -1461,12 +1386,15 @@ function renderIndia(data) {
     </div>`).join('');
   grid.innerHTML = `
     <div class="india-headline-card">
-      <div class="india-label">🇮🇳 &nbsp;India Spotlight</div>
+      <div class="india-label">India Spotlight</div>
       <div class="india-headline">${safeVal(I.headline,'India Energy Update')}</div>
-      <div class="india-body">${safeVal(I.headline_body,'').replace(/\n/g,'<br><br>')}</div>
-      ${news}
+      <div class="india-body">${safeVal(I.headline_body,'').replace(/\n\n/g,'<br>').replace(/\n/g,' ')}</div>
     </div>
-    <div class="india-stats">${stats}</div>`;
+    <div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;color:#c57800;margin-bottom:12px;">Important Facts &amp; Figures</div>
+      <div class="india-stats">${stats}</div>
+    </div>
+    ${news}`;
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1602,76 +1530,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderProjects(data);
 });
 
-/* ════════════════════════════════════════════════════════════
-   MASTHEAD PARTICLE CANVAS
-════════════════════════════════════════════════════════════ */
-(function initMastheadCanvas() {
-  const canvas = document.getElementById('masthead-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-
-  function resize() {
-    canvas.width  = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  }
-  resize();
-  window.addEventListener('resize', () => { resize(); });
-
-  const COLORS = ['#e8c96a','#e8c96a','#c8401a','#4ecdc4','#b8860b'];
-  const N = 55;
-  let W = canvas.width, H = canvas.height;
-
-  const particles = Array.from({length: N}, () => ({
-    x:  Math.random() * W,
-    y:  Math.random() * H,
-    vx: (Math.random() - 0.5) * 0.28,
-    vy: (Math.random() - 0.5) * 0.28,
-    r:  Math.random() * 1.6 + 0.6,
-    col: COLORS[Math.floor(Math.random() * COLORS.length)]
-  }));
-
-  let raf;
-  function draw() {
-    W = canvas.width; H = canvas.height;
-    ctx.clearRect(0, 0, W, H);
-
-    for (let i = 0; i < N; i++) {
-      for (let j = i + 1; j < N; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const d  = Math.sqrt(dx*dx + dy*dy);
-        if (d < 130) {
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(78,205,196,${0.10 * (1 - d/130)})`;
-          ctx.lineWidth   = 0.6;
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
-        }
-      }
-    }
-
-    particles.forEach(p => {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      const hex = p.col;
-      ctx.fillStyle = hex === '#c8401a'
-        ? 'rgba(200,64,26,0.40)' : hex === '#e8c96a'
-        ? 'rgba(232,201,106,0.38)' : hex === '#b8860b'
-        ? 'rgba(184,134,11,0.35)' : 'rgba(78,205,196,0.35)';
-      ctx.fill();
-
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0)  p.x = W;
-      if (p.x > W)  p.x = 0;
-      if (p.y < 0)  p.y = H;
-      if (p.y > H)  p.y = 0;
-    });
-
-    raf = requestAnimationFrame(draw);
-  }
-  draw();
-})();
+/* Refinery SVG animation — pure CSS/SVG, no JS needed */
 </script>
 </body>
 </html>
