@@ -608,18 +608,18 @@ def inject_maintenance_page(reason: str) -> None:
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{{margin:0;padding:0;box-sizing:border-box;}}
-body{{font-family:'DM Sans',sans-serif;background:#f5f0e8;color:#0d0d0d;min-height:100vh;display:flex;flex-direction:column;}}
+body{{font-family:\'DM Sans\',sans-serif;background:#f5f0e8;color:#0d0d0d;min-height:100vh;display:flex;flex-direction:column;}}
 .masthead{{background:#0d0d0d;border-bottom:6.67px solid #c8401a;padding:18px 40px 0;}}
-.logo-text{{font-family:'Playfair Display',serif;font-size:60px;font-weight:700;color:#f5f0e8;text-decoration:underline;letter-spacing:-1px;line-height:51px;display:block;padding-bottom:18px;}}
+.logo-text{{font-family:\'Playfair Display\',serif;font-size:60px;font-weight:700;color:#f5f0e8;text-decoration:underline;letter-spacing:-1px;line-height:51px;display:block;padding-bottom:18px;}}
 .logo-text span{{color:#c8401a;}}
 .maintenance-body{{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 40px;text-align:center;gap:24px;}}
 .maintenance-icon{{font-size:64px;}}
-.maintenance-title{{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:#0d0d0d;}}
+.maintenance-title{{font-family:\'Playfair Display\',serif;font-size:36px;font-weight:700;color:#0d0d0d;}}
 .maintenance-subtitle{{font-size:16px;color:#6b6055;max-width:520px;line-height:1.7;}}
-.maintenance-time{{font-family:'DM Mono',monospace;font-size:12px;color:#aaa;letter-spacing:1px;}}
+.maintenance-time{{font-family:\'DM Mono\',monospace;font-size:12px;color:#aaa;letter-spacing:1px;}}
 .maintenance-divider{{width:60px;height:2px;background:#c8401a;}}
-footer{{background:#0d0d0d;border-top:6.67px solid #c8401a;color:#666;padding:22px 40px;font-family:'DM Mono',monospace;font-size:11px;display:flex;justify-content:space-between;align-items:center;}}
-footer .fl{{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#f5f0e8;text-decoration:underline;}}
+footer{{background:#0d0d0d;border-top:6.67px solid #c8401a;color:#666;padding:22px 40px;font-family:\'DM Mono\',monospace;font-size:11px;display:flex;justify-content:space-between;align-items:center;}}
+footer .fl{{font-family:\'Playfair Display\',serif;font-size:28px;font-weight:700;color:#f5f0e8;text-decoration:underline;}}
 footer .fl span{{color:#c8401a;}}
 </style>
 </head>
@@ -632,7 +632,7 @@ footer .fl span{{color:#c8401a;}}
   <div class="maintenance-divider"></div>
   <div class="maintenance-title">Under Maintenance</div>
   <div class="maintenance-subtitle">
-    Today's edition of The Daily Crude is currently being prepared.<br>
+    Today\'s edition of The Daily Crude is currently being prepared.<br>
     Our systems are working to restore the brief. Please check back shortly.
   </div>
   <div class="maintenance-time">Last attempted: {now_str}</div>
@@ -652,7 +652,7 @@ footer .fl span{{color:#c8401a;}}
 if __name__ == "__main__":
     _key = os.environ.get("OPENAI_API_KEY", "")
     if not _key:
-        inject_maintenance_page("OPENAI_API_KEY not set")
+        inject_maintenance_page("Content generation service not available")
         sys.exit(1)
 
     client = OpenAI(api_key=_key, timeout=300.0)

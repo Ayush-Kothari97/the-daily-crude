@@ -14,11 +14,6 @@ Self-contained single-file frontend. All CSS, JS, and sample `window.DAILY_DATA`
 ### generate_content.py
 OpenAI GPT-5.5 content generator with `web_search_preview` tool.
 
-**Usage:**
-```bash
-OPENAI_API_KEY=<your-key> python generate_content.py
-```
-
 **Build schedule:** GitHub Actions at 08:00 IST daily (`cron: '30 2 * * *'` UTC)
 
 ## Data refresh schedule
