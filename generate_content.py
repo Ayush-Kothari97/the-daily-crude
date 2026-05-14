@@ -243,11 +243,24 @@ Return this exact JSON with ALL fields filled from real search results:
       {{"commodity": "JKM LNG Spot",       "value": "actual $/MMBtu","change_abs": "actual ±$", "change_pct": "actual ±%", "direction": "up/down/flat", "meta": "$/MMBtu · Platts · NE Asia · IEA LNG tracker"}},
       {{"commodity": "TTF Natural Gas",    "value": "actual €/MWh",  "change_abs": "actual ±€", "change_pct": "actual ±%", "direction": "up/down/flat", "meta": "€/MWh · ICE Endex · Front-Month · Argus"}}
     ],
+    "sentiment": {{
+      "signal": "BULL or BEAR or NEUTRAL",
+      "basis": "2-3 sentences comparing IEA OMR, EIA STEO, and OPEC MOMR outlooks — cite divergences",
+      "source_label": "IEA OMR · EIA STEO · OPEC MOMR — {TODAY_SHORT}"
+    }},
+    "eia_stats": [
+      {{"label": "US Crude Inventories",  "value": "actual ±X.XM bbl", "change": "draw or build", "direction": "up or down"}},
+      {{"label": "Refinery Utilisation",  "value": "actual XX.X%",      "change": "actual ±X.Xpp WoW", "direction": "up or down or flat"}},
+      {{"label": "US Crude Production",   "value": "actual XX.X mb/d",  "change": "actual ±X.X mb/d WoW or flat WoW", "direction": "up or down or flat"}},
+      {{"label": "Cushing Stocks",        "value": "actual XX.XM bbl",  "change": "actual ±X.XM bbl", "direction": "up or down"}}
+    ],
     "drivers": [
-      {{"icon": "🛢️", "headline": "Supply driver from Energy News Beat or OGJ",          "body": "2-3 sentences — cite source"}},
-      {{"icon": "🌏", "headline": "Demand/Asia driver from World Oil or Oil Price",       "body": "2-3 sentences — cite source"}},
-      {{"icon": "⚠️", "headline": "Geopolitical driver from CSIS or Columbia CGEP or OIES","body": "2-3 sentences — cite source"}},
-      {{"icon": "📊", "headline": "Macro/structural driver from Doomberg or OIES",       "body": "2-3 sentences — cite source"}}
+      {{"icon": "🛢️", "headline": "Supply driver headline",           "body": "2-3 sentences", "source_label": "OGJ",           "source_url": "real URL"}},
+      {{"icon": "🌏", "headline": "Demand/Asia driver headline",      "body": "2-3 sentences", "source_label": "World Oil",     "source_url": "real URL"}},
+      {{"icon": "⚠️", "headline": "Geopolitical driver headline",     "body": "2-3 sentences", "source_label": "Columbia CGEP", "source_url": "real URL"}},
+      {{"icon": "📊", "headline": "Macro/structural driver headline", "body": "2-3 sentences", "source_label": "Doomberg",      "source_url": "real URL"}},
+      {{"icon": "⚙️", "headline": "Refining/downstream driver",      "body": "2-3 sentences", "source_label": "Platts",        "source_url": "real URL"}},
+      {{"icon": "📉", "headline": "Rig count / capex driver",        "body": "2-3 sentences", "source_label": "Baker Hughes",  "source_url": "real URL"}}
     ]
   }},
   "india": {{
