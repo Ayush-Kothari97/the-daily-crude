@@ -571,6 +571,7 @@ def inject_into_html(data: dict) -> None:
     data_block = f'<script id="daily-data">\nwindow.DAILY_DATA = {json_str};\n</script>'
 
     if 'id="daily-data"' in html:
+        # Use a lambda to prevent re.sub from interpreting \n in json_str as newlines
         html = re.sub(
             r'<script id="daily-data">.*?</script>',
             lambda _: data_block,
