@@ -320,16 +320,16 @@ svg.tc-spark{width:100%;height:300px;display:block;cursor:crosshair;border-radiu
 
 /* ── v13: MARKET DRIVERS — richer treatment ── */
 .drivers-separator{border:none;border-top:1px solid var(--border);margin:28px 0 28px;}
-.market-drivers{background:#112840;border:1px solid #2e6080;border-radius:var(--radius);padding:0;overflow:hidden;}
+.market-drivers{background:#0d2117;border:1px solid #1e5034;border-radius:var(--radius);padding:0;overflow:hidden;}
 .drivers-header{padding:20px 28px 16px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-.drivers-title{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#6a9abf;font-weight:700;margin:0;}
+.drivers-title{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#5ab88a;font-weight:700;margin:0;}
 /* v13: sentiment badge */
 .sentiment-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:3px;font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;}
 .sentiment-bull{background:rgba(26,122,64,0.2);border:1px solid rgba(26,122,64,0.4);color:#4dcc88;}
 .sentiment-bear{background:rgba(184,96,10,0.2);border:1px solid rgba(184,96,10,0.4);color:#f0a050;}
 .sentiment-neutral{background:rgba(184,134,11,0.2);border:1px solid rgba(184,134,11,0.4);color:#e8c060;}
 /* v13: EIA stat callout strip */
-.eia-stat-strip{display:flex;gap:28px;padding:14px 28px;background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;}
+.eia-stat-strip{display:flex;gap:28px;padding:14px 28px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.07);flex-wrap:wrap;}
 .eia-stat{display:flex;flex-direction:column;gap:3px;}
 .eia-stat-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#7ab0d0;font-weight:600;}
 .eia-stat-value{font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:#f0f6fa;}
@@ -337,7 +337,7 @@ svg.tc-spark{width:100%;height:300px;display:block;cursor:crosshair;border-radiu
 .eia-stat-chg.up{color:#4dcc88;}
 .eia-stat-chg.dn{color:#f0a050;}
 /* v13: sentiment basis explanation */
-.sentiment-basis{padding:12px 28px 16px;font-size:12px;color:#a8c8e0;line-height:1.7;border-bottom:1px solid rgba(255,255,255,0.08);font-style:italic;}
+.sentiment-basis{padding:12px 28px 16px;font-size:12px;color:#c8dff0;line-height:1.7;border-bottom:1px solid rgba(255,255,255,0.08);}
 /* v13: driver items */
 .drivers-body{padding:4px 0 4px;}
 .driver-item{display:flex;gap:14px;padding:14px 28px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:13px;line-height:1.55;transition:background 0.15s;}
@@ -348,9 +348,9 @@ svg.tc-spark{width:100%;height:300px;display:block;cursor:crosshair;border-radiu
 .driver-text{color:#d0dce8;font-size:13px;line-height:1.6;}
 .driver-text strong{color:#f0f5f8;font-weight:600;}
 .driver-source{margin-top:5px;}
-.driver-source a{font-family:'DM Mono',monospace;font-size:10px;color:#4a7abf;text-decoration:none;letter-spacing:0.5px;}
-.driver-source a:hover{color:#7aaaf0;text-decoration:underline;}
-.driver-source-plain{font-family:'DM Mono',monospace;font-size:10px;color:#6a9abf;margin-top:5px;letter-spacing:0.5px;}
+.driver-source a{font-family:'DM Mono',monospace;font-size:10px;color:#7ab8f0;text-decoration:none;letter-spacing:0.5px;}
+.driver-source a:hover{color:#a8d0ff;text-decoration:underline;}
+.driver-source-plain{font-family:'DM Mono',monospace;font-size:10px;color:#8ab8d8;margin-top:5px;letter-spacing:0.5px;}
 
 /* keep for any residual usage */
 .change-up{color:#1a7a40;}
@@ -424,7 +424,7 @@ svg.tc-spark{width:100%;height:300px;display:block;cursor:crosshair;border-radiu
 
 /* ── INDIA ── */
 .india-banner{background:linear-gradient(135deg,#ff9933 0%,#ff9933 33%,white 33%,white 66%,#138808 66%);height:4px;margin-bottom:24px;}
-.india-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:24px;}.india-grid>.news-card{grid-column:1/-1;}
+.india-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:24px;align-items:start;}.india-grid>.news-card{grid-column:1/-1;}
 .india-headline-card{background:var(--cream);border:2px solid #e8a020;border-radius:var(--radius);padding:28px;}
 .india-label{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#c57800;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 .india-headline{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;line-height:1.35;margin-bottom:14px;}
@@ -9481,12 +9481,18 @@ function safeVal(v, fb='') {
 /* ════════════════════════════════════════════════════════════
    NAV
 ════════════════════════════════════════════════════════════ */
-function switchSection(id, tab) {
+function switchSection(id, tab, skipHash) {
   document.querySelectorAll('.section-block').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   const el = document.getElementById('section-' + id);
   if (el) el.classList.add('active');
-  if (tab) tab.classList.add('active');
+  if (tab) {
+    tab.classList.add('active');
+  } else {
+    const match = document.querySelector(`.nav-tab[onclick*="'${id}'"]`);
+    if (match) match.classList.add('active');
+  }
+  if (!skipHash) history.replaceState(null, '', '#' + id);
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -9982,7 +9988,7 @@ function renderMarkets(data) {
         }).join('')}
         <div class="eia-stat" style="margin-left:auto;align-self:center;">
           <span class="eia-stat-label">Source</span>
-          <a href="https://www.eia.gov/outlooks/steo/" target="_blank" rel="noopener" style="font-family:'DM Mono',monospace;font-size:10px;color:#4a7abf;">EIA STEO →</a>
+          <a href="https://www.eia.gov/outlooks/steo/" target="_blank" rel="noopener" style="font-family:'DM Mono',monospace;font-size:10px;color:#7ab8f0;">EIA STEO →</a>
         </div>
       </div>` : '';
 
@@ -10002,7 +10008,7 @@ function renderMarkets(data) {
         <span class="drivers-title">Today's Market Drivers</span>
         <span class="sentiment-badge ${sentClass}">${sentEmoji} ${sig}</span>
       </div>
-      ${sent.basis ? `<div class="sentiment-basis"><strong>Sentiment basis:</strong> ${safeVal(sent.basis,'')} <em style="color:#4a7abf;">— ${safeVal(sent.source_label,'')}</em></div>` : ''}
+      ${sent.basis ? `<div class="sentiment-basis"><strong>Sentiment basis:</strong> ${safeVal(sent.basis,'')} <em style="color:#7ab8f0;">— ${safeVal(sent.source_label,'')}</em></div>` : ''}
       ${eiaHTML}
       <div class="drivers-body">${driversHTML}</div>`;
   }
@@ -10175,6 +10181,10 @@ document.addEventListener('DOMContentLoaded', () => {
   renderGlobalNews(data);
   renderStrategy(data);
   renderProjects(data);
+
+  const VALID_SECTIONS = ['markets','india','global','strategy','projects'];
+  const hash = location.hash.replace('#','');
+  if (hash && VALID_SECTIONS.includes(hash)) switchSection(hash, null, true);
 });
 
 /* Refinery SVG animation — pure CSS/SVG, no JS needed */
