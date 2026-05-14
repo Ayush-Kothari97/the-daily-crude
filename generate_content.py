@@ -393,9 +393,12 @@ def _check_prices(data: dict) -> list[str]:
 
 
 def _validate_trend(td: dict) -> list[str]:
-    """Verify every d90 array has exactly 90 numeric values."""
+    """Verify structure and that every d90 array has exactly 90 numeric values."""
     problems: list[str] = []
     for group in ("crude", "gas"):
+        if group not in td:
+            problems.append(f"trend_data missing required '{group}' group")
+            continue
         for key, obj in td.get(group, {}).items():
             arr = obj.get("d90", [])
             if len(arr) != 90:
