@@ -319,11 +319,11 @@ Return this exact JSON with ALL fields filled from real search results:
 
 
 # ── Trend Data Prompt (Monday only) ────────────────────────────────────────────
-# Fetches 30-day closing price series for 5 core benchmarks.
-# d7 (last 7 values) and d1m (full 30 values) are derived from d30.
+# Fetches 30-day closing price series for all 12 benchmarks.
+# d7, d1m, d3m, d6m, d1y are all derived from d30 (3M/6M/1Y fall back to 1M until longer data is available).
 TREND_PROMPT = f"""Today is {TODAY}.
 
-You have access to web_search. Fetch REAL daily closing/settlement prices for the past 30 calendar days for the 5 commodities below. Use these sources: eia.gov, oilprice.com, argusmedia.com, opec.org.
+You have access to web_search. Fetch REAL daily closing/settlement prices for the past 30 calendar days for each commodity below. Use these sources: eia.gov, oilprice.com, argusmedia.com, opec.org.
 
 For EACH commodity return a JSON array of exactly 30 numeric values in chronological order (oldest first, today last). Use actual closing/settlement prices. If a day has no trading (weekend/holiday), carry forward the prior trading day's close.
 
@@ -331,13 +331,20 @@ Return ONLY this raw JSON object — no markdown, no explanation:
 
 {{
   "crude": {{
-    "brent": {{"label":"Brent Crude",     "unit":"$/bbl",    "d30":[...30 values...]}},
-    "wti":   {{"label":"WTI Crude",       "unit":"$/bbl",    "d30":[...30 values...]}},
-    "opec":  {{"label":"OPEC Basket",     "unit":"$/bbl",    "d30":[...30 values...]}}
+    "brent":  {{"label":"Brent Crude",   "unit":"$/bbl",    "d30":[...30 values...]}},
+    "wti":    {{"label":"WTI Crude",     "unit":"$/bbl",    "d30":[...30 values...]}},
+    "dubai":  {{"label":"Dubai Crude",   "unit":"$/bbl",    "d30":[...30 values...]}},
+    "murban": {{"label":"Murban",        "unit":"$/bbl",    "d30":[...30 values...]}},
+    "mars":   {{"label":"Mars Blend",    "unit":"$/bbl",    "d30":[...30 values...]}},
+    "lls":    {{"label":"LLS",           "unit":"$/bbl",    "d30":[...30 values...]}},
+    "opec":   {{"label":"OPEC Basket",   "unit":"$/bbl",    "d30":[...30 values...]}}
   }},
   "gas": {{
-    "hh":  {{"label":"Henry Hub",         "unit":"$/MMBtu",  "d30":[...30 values...]}},
-    "ttf": {{"label":"TTF Natural Gas",   "unit":"€/MWh",    "d30":[...30 values...]}}
+    "hh":   {{"label":"Henry Hub",       "unit":"$/MMBtu",  "d30":[...30 values...]}},
+    "ttf":  {{"label":"TTF Natural Gas", "unit":"€/MWh",    "d30":[...30 values...]}},
+    "jkm":  {{"label":"JKM LNG Spot",   "unit":"$/MMBtu",  "d30":[...30 values...]}},
+    "nbp":  {{"label":"NBP UK Gas",      "unit":"p/therm",  "d30":[...30 values...]}},
+    "aeco": {{"label":"AECO Canada",     "unit":"CAD$/GJ",  "d30":[...30 values...]}}
   }}
 }}
 
@@ -403,12 +410,15 @@ def _validate_trend(td: dict) -> list[str]:
 
 
 def _derive_slices(td: dict) -> dict:
-    """Derive d7 (last 7) and d1m (full 30) from each d30 array."""
+    """Derive all horizon keys from d30. d3m/d6m/d1y fall back to d1m until longer data is available."""
     for group in ("crude", "gas"):
         for obj in td.get(group, {}).values():
             arr = obj.get("d30", [])
             obj["d7"]  = arr[-7:] if len(arr) >= 7 else arr
             obj["d1m"] = arr
+            obj["d3m"] = arr   # fallback — same series until 90-day fetch is viable
+            obj["d6m"] = arr
+            obj["d1y"] = arr
     return td
 
 
