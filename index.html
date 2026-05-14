@@ -1596,7 +1596,7 @@ function renderMarkets(data) {
     requestAnimationFrame(drawSparkLabels);
   } else {
     const placeholder = `<div style="padding:28px 30px;color:rgba(255,255,255,0.5);font-family:'DM Mono',monospace;font-size:12px;">
-      Trend series loading — refreshes Monday. Live prices in the ticker above.
+      Trend series unavailable — will retry on next content update. Live prices in the ticker above.
     </div>`;
     const crude = document.getElementById('trend-crude');
     const gas   = document.getElementById('trend-gas');

@@ -319,41 +319,34 @@ Return this exact JSON with ALL fields filled from real search results:
 
 
 # ── Trend Data Prompt (Monday only) ────────────────────────────────────────────
-# Fetches 90-day closing price series for all crude and gas benchmarks.
-# The 7-day and 30-day slices are derived from the last 7 and 30 values of the d90 array.
+# Fetches 30-day closing price series for 5 core benchmarks.
+# d7 (last 7 values) and d1m (full 30 values) are derived from d30.
 TREND_PROMPT = f"""Today is {TODAY}.
 
-You have access to web_search. Fetch REAL closing/settlement price data for the past 90 calendar days for each commodity below. Use these sources: spglobal.com/commodityinsights (Platts), argusmedia.com, eia.gov, opec.org, oilprice.com.
+You have access to web_search. Fetch REAL daily closing/settlement prices for the past 30 calendar days for the 5 commodities below. Use these sources: eia.gov, oilprice.com, argusmedia.com, opec.org.
 
-For EACH commodity return a JSON array of exactly 90 numeric values in chronological order (oldest first, today last). Use actual closing/settlement prices. If a day has no trading (weekend/holiday), carry forward the prior day's close.
+For EACH commodity return a JSON array of exactly 30 numeric values in chronological order (oldest first, today last). Use actual closing/settlement prices. If a day has no trading (weekend/holiday), carry forward the prior trading day's close.
 
 Return ONLY this raw JSON object — no markdown, no explanation:
 
 {{
   "crude": {{
-    "brent":  {{"label":"Brent Crude",  "unit":"$/bbl",     "d90":[...90 values...]}},
-    "wti":    {{"label":"WTI Crude",    "unit":"$/bbl",     "d90":[...90 values...]}},
-    "dubai":  {{"label":"Dubai Crude",  "unit":"$/bbl",     "d90":[...90 values...]}},
-    "murban": {{"label":"Murban",       "unit":"$/bbl",     "d90":[...90 values...]}},
-    "mars":   {{"label":"Mars Blend",   "unit":"$/bbl",     "d90":[...90 values...]}},
-    "lls":    {{"label":"LLS",          "unit":"$/bbl",     "d90":[...90 values...]}},
-    "opec":   {{"label":"OPEC Basket",  "unit":"$/bbl",     "d90":[...90 values...]}}
+    "brent": {{"label":"Brent Crude",     "unit":"$/bbl",    "d30":[...30 values...]}},
+    "wti":   {{"label":"WTI Crude",       "unit":"$/bbl",    "d30":[...30 values...]}},
+    "opec":  {{"label":"OPEC Basket",     "unit":"$/bbl",    "d30":[...30 values...]}}
   }},
   "gas": {{
-    "hh":   {{"label":"Henry Hub",       "unit":"$/MMBtu",  "d90":[...90 values...]}},
-    "ttf":  {{"label":"TTF Natural Gas", "unit":"€/MWh",    "d90":[...90 values...]}},
-    "jkm":  {{"label":"JKM LNG Spot",   "unit":"$/MMBtu",  "d90":[...90 values...]}},
-    "nbp":  {{"label":"NBP UK Gas",      "unit":"p/therm",  "d90":[...90 values...]}},
-    "aeco": {{"label":"AECO Canada",     "unit":"CAD$/GJ",  "d90":[...90 values...]}}
+    "hh":  {{"label":"Henry Hub",         "unit":"$/MMBtu",  "d30":[...30 values...]}},
+    "ttf": {{"label":"TTF Natural Gas",   "unit":"€/MWh",    "d30":[...30 values...]}}
   }}
 }}
 
 RULES:
-- Every d90 array must have EXACTLY 90 numeric values.
-- All values must be real numbers — no nulls, no strings, no zeros unless the actual price was zero.
-- Values must be in chronological order: index 0 = 90 days ago, index 89 = today.
+- Every d30 array must have EXACTLY 30 numeric values.
+- All values must be real numbers sourced from the above sites — no nulls, no strings.
+- Values must be in chronological order: index 0 = 30 days ago, index 29 = today.
 - Weekend/holiday gaps: carry the prior trading day's close forward.
-- Sources in priority order: Platts (spglobal.com) → Argus (argusmedia.com) → EIA (eia.gov) → oilprice.com.
+- Sources in priority order: EIA (eia.gov) → oilprice.com → Argus (argusmedia.com) → OPEC (opec.org).
 """
 
 # ── Validation ─────────────────────────────────────────────────────────────────
@@ -393,29 +386,29 @@ def _check_prices(data: dict) -> list[str]:
 
 
 def _validate_trend(td: dict) -> list[str]:
-    """Verify structure and that every d90 array has exactly 90 numeric values."""
+    """Verify structure and that every d30 array has exactly 30 numeric values."""
     problems: list[str] = []
     for group in ("crude", "gas"):
         if group not in td:
             problems.append(f"trend_data missing required '{group}' group")
             continue
         for key, obj in td.get(group, {}).items():
-            arr = obj.get("d90", [])
-            if len(arr) != 90:
-                problems.append(f"trend_data.{group}.{key}.d90 has {len(arr)} values (need 90)")
+            arr = obj.get("d30", [])
+            if len(arr) != 30:
+                problems.append(f"trend_data.{group}.{key}.d30 has {len(arr)} values (need 30)")
             bad_vals = [v for v in arr if not isinstance(v, (int, float))]
             if bad_vals:
-                problems.append(f"trend_data.{group}.{key}.d90 has non-numeric values: {bad_vals[:3]}")
+                problems.append(f"trend_data.{group}.{key}.d30 has non-numeric values: {bad_vals[:3]}")
     return problems
 
 
 def _derive_slices(td: dict) -> dict:
-    """Derive d7 and d30 from the last 7/30 values of each d90 array."""
+    """Derive d7 (last 7) and d1m (full 30) from each d30 array."""
     for group in ("crude", "gas"):
         for obj in td.get(group, {}).values():
-            arr = obj.get("d90", [])
-            obj["d7"]  = arr[-7:]  if len(arr) >= 7  else arr
-            obj["d30"] = arr[-30:] if len(arr) >= 30 else arr
+            arr = obj.get("d30", [])
+            obj["d7"]  = arr[-7:] if len(arr) >= 7 else arr
+            obj["d1m"] = arr
     return td
 
 
@@ -671,30 +664,21 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # ── Step 2: Resolve trend_data ────────────────────────────────────────────
-    if IS_MONDAY:
-        print("Monday detected — fetching fresh 90-day trend series…")
+    # Always try to preserve existing trend_data first; fetch fresh when absent.
+    # On Mondays, force a fresh fetch to keep the 30-day window current.
+    trend = None
+    if not IS_MONDAY:
+        print(f"{DOW_NAME}: reading existing trend_data…")
+        trend = read_existing_trend_data()
+        if trend:
+            print("Existing trend_data reused ✓")
+
+    if trend is None:
+        reason = "Monday refresh" if IS_MONDAY else "no valid existing data"
+        print(f"Fetching fresh 30-day trend series ({reason})…")
         trend = fetch_trend_data(client)
         if trend is None:
-            # All trend retries failed — fall back to existing trend_data if available
-            print("Monday trend fetch failed after all retries — attempting fallback to existing data…")
-            trend = read_existing_trend_data()
-            if trend is None:
-                # No fallback available — this is a hard failure for trend only;
-                # daily content is still injected but trend cards will be empty.
-                print("WARNING: No trend_data available. Trend cards will not render.")
-        else:
-            print(f"Monday trend data fetched and validated ✓")
-    else:
-        # Tuesday–Sunday: read existing trend_data, do not re-fetch
-        print(f"{DOW_NAME}: preserving existing trend_data unchanged…")
-        trend = read_existing_trend_data()
-        if trend is None:
-            # Existing HTML had no trend_data (e.g. first deploy or after a bad merge).
-            # Fall back to a fresh fetch so trend cards render correctly.
-            print("No existing trend_data found — fetching fresh series as one-time recovery…")
-            trend = fetch_trend_data(client)
-            if trend is None:
-                print("WARNING: Recovery fetch also failed. Trend cards will not render today.")
+            print("WARNING: Trend fetch failed after all retries. Trend cards will not render today.")
 
     # ── Step 3: Attach trend_data to markets block ────────────────────────────
     if trend:
