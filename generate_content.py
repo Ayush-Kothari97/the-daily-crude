@@ -314,6 +314,14 @@ Return this exact JSON with ALL fields filled from real search results:
     {{"name": "Real project", "company": "Real operator", "sector": "real sector", "data_sector": "downstream","stage": "stage", "stage_class": "class", "value": "$XB", "location": "City, Country", "description": "One real sentence", "event": "event", "event_color": "#1e3a5f"}},
     {{"name": "Real project", "company": "Real operator", "sector": "real sector", "data_sector": "upstream",  "stage": "stage", "stage_class": "class", "value": "$XB", "location": "City, Country", "description": "One real sentence", "event": "event", "event_color": "#1a5c38"}},
     {{"name": "Real project", "company": "Real operator", "sector": "real sector", "data_sector": "lng",       "stage": "stage", "stage_class": "class", "value": "$XB", "location": "City, Country", "description": "One real sentence", "event": "event", "event_color": "#1a5c38"}}
+  ],
+  "article_cards": [
+    {{"sector": "Upstream · OPEC+",        "sector_color": "#c8401a", "dot_color": "#c8401a", "title": "Real headline from OGJ or World Oil",           "synopsis": "2-3 real sentences",  "price_impact": "Real 2-3 sentence price impact analysis",  "source": "OGJ",             "source_url": "real URL", "time": "Today · HH:MM IST"}},
+    {{"sector": "Natural Gas · LNG",        "sector_color": "#1e3a5f", "dot_color": "#1e3a5f", "title": "Real headline from LNG Industry or Offshore Energy","synopsis": "2-3 real sentences","price_impact": "Real 2-3 sentence price impact analysis",  "source": "LNG Industry",    "source_url": "real URL", "time": "Today · HH:MM IST"}},
+    {{"sector": "Geopolitics · Sanctions",  "sector_color": "#5a3a00", "dot_color": "#5a3a00", "title": "Real headline from CSIS or Columbia CGEP",       "synopsis": "2-3 real sentences",  "price_impact": "Real 2-3 sentence price impact analysis",  "source": "Columbia CGEP",   "source_url": "real URL", "time": "Today · HH:MM IST"}},
+    {{"sector": "Downstream · Refining",    "sector_color": "#8b4500", "dot_color": "#8b4500", "title": "Real headline from Hydrocarbon Processing or OGJ","synopsis": "2-3 real sentences", "price_impact": "Real 2-3 sentence price impact analysis",  "source": "HC Processing",   "source_url": "real URL", "time": "Today · HH:MM IST"}},
+    {{"sector": "Offshore · Subsea",        "sector_color": "#1a5c38", "dot_color": "#1a5c38", "title": "Real headline from Offshore Magazine",           "synopsis": "2-3 real sentences",  "price_impact": "Real 2-3 sentence price impact analysis",  "source": "Offshore Mag",    "source_url": "real URL", "time": "Today · HH:MM IST"}},
+    {{"sector": "Macro · Energy Markets",   "sector_color": "#4a2060", "dot_color": "#4a2060", "title": "Real headline from Doomberg or Energy News Beat", "synopsis": "2-3 real sentences",  "price_impact": "Real 2-3 sentence price impact analysis",  "source": "Doomberg",        "source_url": "real URL", "time": "Today · HH:MM IST"}}
   ]
 }}"""
 
