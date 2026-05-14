@@ -577,7 +577,7 @@ def inject_into_html(data: dict) -> None:
     if 'id="daily-data"' in html:
         html = re.sub(
             r'<script id="daily-data">.*?</script>',
-            data_block,
+            lambda _: data_block,
             html,
             flags=re.DOTALL
         )
