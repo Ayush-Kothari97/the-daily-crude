@@ -9899,7 +9899,6 @@ function renderMarkets(data) {
   if (m.trend_data && m.trend_data.crude && m.trend_data.gas) {
     renderTrendCard('trend-crude', 'crude', m.trend_data.crude, data.ticker);
     renderTrendCard('trend-gas',   'gas',   m.trend_data.gas,   data.ticker);
-    requestAnimationFrame(drawSparkLabels);
   } else {
     const placeholder = `<div style="padding:28px 30px;color:rgba(255,255,255,0.5);font-family:'DM Mono',monospace;font-size:12px;">
       Trend series unavailable — will retry on next content update. Live prices in the ticker above.
