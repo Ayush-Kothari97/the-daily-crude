@@ -9481,12 +9481,18 @@ function safeVal(v, fb='') {
 /* ════════════════════════════════════════════════════════════
    NAV
 ════════════════════════════════════════════════════════════ */
-function switchSection(id, tab) {
+function switchSection(id, tab, skipHash) {
   document.querySelectorAll('.section-block').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   const el = document.getElementById('section-' + id);
   if (el) el.classList.add('active');
-  if (tab) tab.classList.add('active');
+  if (tab) {
+    tab.classList.add('active');
+  } else {
+    const match = document.querySelector(`.nav-tab[onclick*="'${id}'"]`);
+    if (match) match.classList.add('active');
+  }
+  if (!skipHash) history.replaceState(null, '', '#' + id);
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -10175,6 +10181,10 @@ document.addEventListener('DOMContentLoaded', () => {
   renderGlobalNews(data);
   renderStrategy(data);
   renderProjects(data);
+
+  const VALID_SECTIONS = ['markets','india','global','strategy','projects'];
+  const hash = location.hash.replace('#','');
+  if (hash && VALID_SECTIONS.includes(hash)) switchSection(hash, null, true);
 });
 
 /* Refinery SVG animation — pure CSS/SVG, no JS needed */
