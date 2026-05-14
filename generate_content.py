@@ -684,6 +684,13 @@ if __name__ == "__main__":
         # Tuesday–Sunday: read existing trend_data, do not re-fetch
         print(f"{DOW_NAME}: preserving existing trend_data unchanged…")
         trend = read_existing_trend_data()
+        if trend is None:
+            # Existing HTML had no trend_data (e.g. first deploy or after a bad merge).
+            # Fall back to a fresh fetch so trend cards render correctly.
+            print("No existing trend_data found — fetching fresh series as one-time recovery…")
+            trend = fetch_trend_data(client)
+            if trend is None:
+                print("WARNING: Recovery fetch also failed. Trend cards will not render today.")
 
     # ── Step 3: Attach trend_data to markets block ────────────────────────────
     if trend:
