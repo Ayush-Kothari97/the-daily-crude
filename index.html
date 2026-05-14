@@ -9823,15 +9823,27 @@ function setTrendHorizon(elId, type, horizon) {
 function renderMarkets(data) {
   const m = data.markets;
   const macroEl = document.getElementById('macro-signal');
-  if (macroEl) macroEl.textContent = safeVal(m.macro_signal, 'Market data loading…');
+  if (macroEl) {
+    const sig = safeVal(m.macro_signal, '');
+    macroEl.textContent = sig || (m.drivers && m.drivers[0] ? m.drivers[0].body : 'Prices as of 08:00 IST.');
+  }
 
   // Store globally for re-renders triggered by dropdown/toggle
   window._trendData   = (m.trend_data || null);
   window._tickerItems = (data.ticker  || []);
 
-  if (m.trend_data) {
+  if (m.trend_data && m.trend_data.crude && m.trend_data.gas) {
     renderTrendCard('trend-crude', 'crude', m.trend_data.crude, data.ticker);
     renderTrendCard('trend-gas',   'gas',   m.trend_data.gas,   data.ticker);
+    requestAnimationFrame(drawSparkLabels);
+  } else {
+    const placeholder = `<div style="padding:28px 30px;color:rgba(255,255,255,0.5);font-family:'DM Mono',monospace;font-size:12px;">
+      Trend series loading — refreshes Monday. Live prices in the ticker above.
+    </div>`;
+    const crude = document.getElementById('trend-crude');
+    const gas   = document.getElementById('trend-gas');
+    if (crude) crude.innerHTML = placeholder;
+    if (gas)   gas.innerHTML   = placeholder;
   }
 
   const driversEl = document.getElementById('market-drivers');
