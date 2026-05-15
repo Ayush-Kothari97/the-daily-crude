@@ -9732,7 +9732,7 @@ function buildTrendSpark(series, cardType, unit, elId, horizLabel) {
     <text x="${plotR}"  y="${(plotB+18).toFixed(1)}" text-anchor="end"   font-family="DM Mono,monospace" font-size="11" fill="rgba(255,255,255,0.42)">Today</text>
     <!-- hover dot (moves with mouse, hidden until hover) -->
     <circle id="${id}hd" cx="${lastX}" cy="${lastY}" r="5"
-      fill="${lineCol}" display="none"/>
+      fill="${lineCol}" style="display:none"/>
 
   </svg>
   <!-- tooltip element -->
@@ -9788,7 +9788,7 @@ function tcSparkHover(e, svgId, ttId) {
   const pctY = (ptY / H) * 100;
 
   // Move hover dot and show it
-  if (hd) { hd.setAttribute('cx', ptX.toFixed(1)); hd.setAttribute('cy', ptY.toFixed(1)); hd.setAttribute('display', 'inline'); }
+  if (hd) { hd.setAttribute('cx', ptX.toFixed(1)); hd.setAttribute('cy', ptY.toFixed(1)); hd.style.display = 'block'; }
 
   // Move crosshair line
   if (vl) {
@@ -9833,7 +9833,7 @@ function tcSparkLeave(svgId, ttId) {
   if (vl)  vl.setAttribute('display', 'none');
   // Hide the hover dot when mouse leaves
   const hd = document.getElementById(svgId + 'hd');
-  if (hd)  hd.setAttribute('display', 'none');
+  if (hd)  hd.style.display = 'none';
 }
 
 /* Render one trend card (crude or gas) */
