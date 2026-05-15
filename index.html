@@ -9901,9 +9901,9 @@ function renderTrendCard(elId, type, tdGroup, tickerItems) {
         <div class="tc-toggles">
           <button class="tc-toggle ${horizon==='d7' ?'active':''}" onclick="setTrendHorizon('${elId}','${type}','d7') ">7D</button>
           <button class="tc-toggle ${horizon==='d1m'?'active':''}" onclick="setTrendHorizon('${elId}','${type}','d1m')">1M</button>
-          <button class="tc-toggle ${horizon==='d3m'?'active':''}" onclick="setTrendHorizon('${elId}','${type}','d3m')">3M</button>
-          <button class="tc-toggle ${horizon==='d6m'?'active':''}" onclick="setTrendHorizon('${elId}','${type}','d6m')">6M</button>
-          <button class="tc-toggle ${horizon==='d1y'?'active':''}" onclick="setTrendHorizon('${elId}','${type}','d1y')">1Y</button>
+          ${(d.d3m||[]).length > 30 ? `<button class="tc-toggle ${horizon==='d3m'?'active':''}" onclick="setTrendHorizon('${elId}','${type}','d3m')">3M</button>` : ''}
+          ${(d.d6m||[]).length > 60 ? `<button class="tc-toggle ${horizon==='d6m'?'active':''}" onclick="setTrendHorizon('${elId}','${type}','d6m')">6M</button>` : ''}
+          ${(d.d1y||[]).length > 180 ? `<button class="tc-toggle ${horizon==='d1y'?'active':''}" onclick="setTrendHorizon('${elId}','${type}','d1y')">1Y</button>` : ''}
         </div>
       </div>
     </div>

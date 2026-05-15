@@ -413,6 +413,54 @@ def _check_prices(data: dict) -> list[str]:
     return problems
 
 
+def _check_structure(data: dict) -> list[str]:
+    """Validate required structural fields and data freshness."""
+    problems: list[str] = []
+
+    # article_cards must be present and non-empty
+    cards = data.get("article_cards", [])
+    if not cards:
+        problems.append("article_cards missing or empty")
+
+    # sentiment source_label must reference the current year, not a prior one
+    current_year = str(NOW_IST.year)
+    prior_year   = str(NOW_IST.year - 1)
+    sentiment = data.get("markets", {}).get("sentiment", {})
+    source_label = sentiment.get("source_label", "")
+    if prior_year in source_label and current_year not in source_label:
+        problems.append(f"sentiment.source_label references {prior_year}, not {current_year}: {source_label!r}")
+
+    # driver body text must not reference the prior year's outlooks as current
+    for i, driver in enumerate(data.get("markets", {}).get("drivers", [])):
+        body = driver.get("body", "")
+        if prior_year in body and current_year not in body:
+            problems.append(f"markets.drivers[{i}].body references stale year {prior_year}")
+
+    # driver body text must not cite a price level that contradicts the ticker by >50%
+    ticker_prices: dict[str, float] = {}
+    for item in data.get("ticker", []):
+        m = re.search(r"[\d,]+\.?\d*", str(item.get("price", "")))
+        if m:
+            ticker_prices[item.get("label", "").upper()] = float(m.group().replace(",", ""))
+
+    wti_price = ticker_prices.get("WTI")
+    brent_price = ticker_prices.get("BRENT")
+    if wti_price or brent_price:
+        ref_price = wti_price or brent_price
+        # Look for explicit price mentions (e.g. "sub-$65/bbl", "$65/bbl") in driver bodies
+        price_rx = re.compile(r"(?:sub-|above-)?\$(\d+(?:\.\d+)?)/bbl", re.IGNORECASE)
+        for i, driver in enumerate(data.get("markets", {}).get("drivers", [])):
+            for match in price_rx.findall(driver.get("body", "")):
+                mentioned = float(match)
+                # Flag if mentioned price is less than half or more than double the real ticker price
+                if mentioned < ref_price * 0.5 or mentioned > ref_price * 2:
+                    problems.append(
+                        f"markets.drivers[{i}].body mentions ${mentioned}/bbl but ticker shows ${ref_price}/bbl"
+                    )
+
+    return problems
+
+
 def _validate_trend(td: dict) -> list[str]:
     """Verify structure and that every d30 array has exactly 30 numeric values."""
     problems: list[str] = []
@@ -527,6 +575,11 @@ def fetch_content(client: OpenAI) -> dict:
         price_problems = _check_prices(data)
         if price_problems:
             print(f"  Blank prices ({len(price_problems)}): {price_problems[:3]}")
+            continue
+
+        struct_problems = _check_structure(data)
+        if struct_problems:
+            print(f"  Structure problems ({len(struct_problems)}): {struct_problems[:3]}")
             continue
 
         print("  Daily content validated ✓")
