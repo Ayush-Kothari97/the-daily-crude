@@ -436,7 +436,7 @@ def _check_structure(data: dict) -> list[str]:
     stale_date_rx = re.compile(
         r'\b(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|'
         r'Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?'
-        r'|Q[1-4])\s+' + prior_year + r'\b',
+        r'|Q[1-4])(?:\s+\d{1,2},?)?\s+' + prior_year + r'\b',
         re.IGNORECASE
     )
     for i, driver in enumerate(data.get("markets", {}).get("drivers", [])):
