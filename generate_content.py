@@ -430,6 +430,22 @@ def _check_structure(data: dict) -> list[str]:
     if prior_year in source_label and current_year not in source_label:
         problems.append(f"sentiment.source_label references {prior_year}, not {current_year}: {source_label!r}")
 
+    # Flag driver bodies that contain a month+prior_year date stamp (e.g. "May 2025",
+    # "Q2 2025") without any current-year context — these are stale report paragraphs
+    # reused verbatim. Generic "2025" without a month is allowed (valid YoY comparisons).
+    stale_date_rx = re.compile(
+        r'\b(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|'
+        r'Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?'
+        r'|Q[1-4])\s+' + prior_year + r'\b',
+        re.IGNORECASE
+    )
+    for i, driver in enumerate(data.get("markets", {}).get("drivers", [])):
+        body = driver.get("body", "")
+        if stale_date_rx.search(body) and current_year not in body:
+            problems.append(
+                f"markets.drivers[{i}].body uses a {prior_year} date stamp with no {current_year} context"
+            )
+
     # driver body text must not cite a price level that contradicts the ticker by >50%
     ticker_prices: dict[str, float] = {}
     for item in data.get("ticker", []):
