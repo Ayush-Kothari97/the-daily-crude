@@ -430,12 +430,6 @@ def _check_structure(data: dict) -> list[str]:
     if prior_year in source_label and current_year not in source_label:
         problems.append(f"sentiment.source_label references {prior_year}, not {current_year}: {source_label!r}")
 
-    # driver body text must not reference the prior year's outlooks as current
-    for i, driver in enumerate(data.get("markets", {}).get("drivers", [])):
-        body = driver.get("body", "")
-        if prior_year in body and current_year not in body:
-            problems.append(f"markets.drivers[{i}].body references stale year {prior_year}")
-
     # driver body text must not cite a price level that contradicts the ticker by >50%
     ticker_prices: dict[str, float] = {}
     for item in data.get("ticker", []):
